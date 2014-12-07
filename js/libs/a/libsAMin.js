@@ -111,15 +111,29 @@ Date.prototype.toDateInputValue = (function() {
  * })
  */
 
+var overlayQueue = [];
+
+function hasActiveOverlay(el) {
+	var elData = el.data();
+	return (elData['blockUI.isBlocked'] && elData['blockUI.isBlocked'] == 1 ? true : false);
+}
+
 (function($) {
     $.fn.overlay = function(params) {
 		if (typeof params != "object") params = new Object();
 		if (!params['show']) params['show'] = false;
 		if (!params['msg']) params['msg'] = '<i class="fa fa-spinner fa-spin fa-4x"></i>';
-		if (!params['delay']) params['delay'] = 0;
+		if (!params['delay']) params['delay'] = 250;
+		if (!params['cb']) params['cb'] = function(){};
 
 		if (params['show']) {
-			$.unblockUI();
+			
+			// If has overlay add to queue
+			if (hasActiveOverlay($(this))) {
+				overlayQueue.push(params);
+				return false;
+			}
+			
 			$.blockUI({ 
 				message: '<h2>' + params['msg']  + '</h2>',
 				css: {
@@ -128,16 +142,17 @@ Date.prototype.toDateInputValue = (function() {
 					border: '0px'
 				},
 				onBlock: function() {
-					if (params['cb']) params['cb']()
-					$.unblockUI();
+					$.when(params['cb']()).done(function() {
+						setTimeout(function() {
+							$.unblockUI();
+							if (overlayQueue.length) {
+								params = overlayQueue.pop();
+								$(this).overlay(params);
+							}
+						}, params['delay']);
+					})
 				}
 			});
-			if (params['delay']) {
-				_dataExport.lock_screen({
-					show: false,
-					delay: params['delay']
-				})
-			}
 		} else {
 			setTimeout(function() {
 				$.unblockUI();

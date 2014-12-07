@@ -288,6 +288,22 @@ header {
 	-webkit-box-shadow: 0 0 4px rgba(0,0,0,.14), 0 4px 8px rgba(0,0,0,.28);
 }
 
+body.offline header {
+	background: #f04124;
+}
+
+header #header-offline-alert {
+	display: none;
+	position: absolute;
+	width: 100%;
+	text-align: center;
+	opacity: .5;
+}
+
+body.offline header #header-offline-alert {
+	display: block;
+}
+
 header #header-fields {
 	max-width: 960px;
 	position: relative; 
@@ -333,6 +349,7 @@ header .search-wrapper .input-group .input-group-addon {
 	width: 100%;
 	max-width: 960px;
 }
+
 body.hasSearchField #content {
 	margin-top: 120px !important;
 }
@@ -372,11 +389,16 @@ body.noHeader #content {
 	margin: 0 10px;
 }
 
-#home-screen .panel {
+#home-screen .panel,
+#home-screen .jumbotron {
 	border-radius: 10px 10px 0 0;
 	box-shadow: 0 15px 10px -10px rgba(0, 0, 0, 0.2);
 	-moz-box-shadow: 0 15px 10px -10px rgba(34,25,25,0.4); 
 	-webkit-box-shadow: 0 15px 10px -10px rgba(34,25,25,0.4);
+}
+
+#home-screen .jumbotron {
+	padding: 20px;
 }
 
 #home-screen .panel .panel-heading {

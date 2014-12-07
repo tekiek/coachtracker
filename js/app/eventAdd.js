@@ -186,13 +186,8 @@ app['eventAdd'] = new function() {
 					data: data,
 					dataType: 'json'
 				})
-				.done(function(response) {
-					console.log('response', response);
-					if (response.success == 'true') {
-						_eventAdd.followUpConfirm();
-					} else {
-						app.ajaxError('Unable to save user.');
-					}
+				.always(function(response) {
+					_eventAdd.followUpConfirm();
 				});
 			}
 		});

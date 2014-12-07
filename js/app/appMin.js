@@ -1,7 +1,6 @@
 var app = new function() {
 	this.ls = $.sessionStorage();
 	//this.ls = $.localStorage();
-	this.isOnline = null;
 	
 	this.data = {};
 	this.config = {
@@ -13,8 +12,8 @@ var app = new function() {
 	}
 
 	this.init = function() {
-		//app.Pinger_ping()
 		app.startTimer('load-time');
+		app.online.init();
 		app.gtrack.init();
 		app.ajaxInit();
 		if (app.config.isIOS) addToHomescreen();
@@ -27,28 +26,6 @@ var app = new function() {
 			app.controller.loadFirstScreen();
 		}
 		app.endTimer('load-time');
-	}
-	
-	this.Pinger_ping = function(ip, callback) {
-	    this.img = new Image();
-
-	    this.img.onload = function() {
-			//app.isOnline = true;
-			alert('is online');
-		};
-	    this.img.onerror = function() {
-			//app.isOnline = true;
-			alert('is online');
-		};
-
-	    this.start = new Date().getTime();
-	    this.img.src = "http://coachtracker.org";
-		setTimeout(function() {
-			if (!app.isOnline) {
-				alert('not online');
-				app.isOnline = false;
-			}
-		}, 2000)
 	}
 
 	/* --- Timers ---- */
@@ -73,12 +50,11 @@ var app = new function() {
 	this.ajaxInit = function() {
 		$.ajaxSetup({
 			beforeSend: function(x, s) {
-				app.global.spinner({ show: true });
+				$(window).overlay({ show: true });
 			},
-			complete: function(e, x, s){
-				setTimeout(function() {
-					app.global.spinner(false);
-				}, 250)
+			complete: function(e, x, s) {
+				$(window).overlay({show: false, delay: 250 });
+				app.ajaxResponseLog(e);
 			},
 			success: function() {}
 		});
@@ -92,6 +68,18 @@ var app = new function() {
 
 		app.global.spinner(false);
 		app.gtrack.track_event('app:ajax', gtAct, gtLabel);
+	}
+	
+	this.ajaxResponseLog = function(e) {
+		try {
+			if (e && e.responseText) {
+				if (typeof e.responseText == 'string') { 
+					console.log('Response:', $.parseJSON(e.responseText)); 
+				} else {
+					console.log('Response:', e.responseText)
+				}
+			}
+		} catch (e) { console.log('Response: ERROR'); }
 	}
 	
 	this.ajaxError = function(msg) {
@@ -123,11 +111,14 @@ app['acl'] = new function() {
 	_acl = this;
 	this.acls = ['loggedin', 'admin', 'coach', 'counselor'];
 	this.can = [];
+	this.els = {
+		body	: $('body')
+	};
 
 	this.add = function(acl) {
 		console.log('ADD ACL:', acl);
 		_acl.can.push(acl);
-		$('body').addClass('acl-can-' + acl);
+		_acl.els.body.addClass('acl-can-' + acl);
 	}
 
 	this.remove = function(acl) {
@@ -135,7 +126,7 @@ app['acl'] = new function() {
 		_acl.can = $.grep(_acl.can, function(value) {
 		  return value != acl;
 		});
-		$('body').removeClass('acl-can-' + acl);
+		_acl.els.body.removeClass('acl-can-' + acl);
 	}
 	
 	this.has = function(acl) {
@@ -1301,7 +1292,6 @@ app['studentEdit'] = new function() {
 					dataType: 'json'
 				})
 				.done(function(response) {
-					console.log('response', response);
 					if (response.success == 'true') {
 						app.global.alert({
 							msg	:'Saved', 
@@ -1549,7 +1539,6 @@ app['eventAdd'] = new function() {
 					dataType: 'json'
 				})
 				.done(function(response) {
-					console.log('response', response);
 					if (response.success == 'true') {
 						_eventAdd.followUpConfirm();
 					} else {
@@ -2098,8 +2087,6 @@ app['scheduleAdd'] = new function() {
 				})
 				.done(function(response) {
 					response = $.parseJSON(response);
-					console.log(response);
-
 					if (response.success == 'true') {
 						app.global.alert({
 							msg	:'Saved', 
@@ -2197,34 +2184,8 @@ app['scheduleList'] = new function() {
 			dataType: 'json'
 		})
 		.done(function(response) {
-			console.log('response', response);
 			_scheduleList.showSchedule(response);
 			return;
-			
-			
-			// if (typeof response == 'object' && response.length > 0) {
-			// 
-			// 	// First Event Setup
-			// 	_eventList['events'] = response;
-			// 	_eventList['shownIndex'] = 0;
-			// 	_eventList.addNav();
-			// 	_eventList.addFields();
-			// } else {
-			// 	app.global.els['dialog']
-			// 		.text('No Events Found!')
-			// 		.dialog({
-			// 			resizable: false,
-			// 			modal: true,
-			// 			title: 'Error!',
-			// 			buttons: {
-			// 				'OK': function() {
-			// 					app.controller.prevSlide();
-			// 					$(this).dialog('close');
-			// 				} 
-			// 			}
-			// 		});
-			// }
-			
 		});
 	}
 	
@@ -2543,8 +2504,6 @@ app['login'] = new function() {
 		})
 		.done(function(r) {
 			var response =  $.parseJSON(r);
-			console.log('SIGNIN', response);
-
 			if (response.success == 'true') {
 				// Login
 				var user = response.user;
@@ -2583,8 +2542,6 @@ app['login'] = new function() {
 		})
 		.done(function(r) {
 			var response =  $.parseJSON(r);
-			console.log('response', response);
-
 			if (response.success == 'true') {
 				app.login.hideLogin();
 			} else {
@@ -2613,8 +2570,6 @@ app['login'] = new function() {
 		})
 		.done(function(r) {
 			var response =  $.parseJSON(r);
-			console.log('response', response);
-
 			if (response.success == 'true') {
 				app.global.alert({
 					msg	:'Emailed New Password', 
@@ -2831,7 +2786,6 @@ app['email'] = new function() {
 			dataType: 'json'
 		})
 		.done(function(response) {
-			console.log('response', response);
 			EventManager.fire('email:exit');
 		});
 	}
@@ -3018,8 +2972,6 @@ app['imageAdd'] = new function() {
 			contentType: false
 		})
 		.done(function(response) {
-			console.log('response', response);
-
 			if (response.success == 'true') {
 				var imgSrc = app.config.studentImagePath + response.value + "?z=" + _imageAdd.cacheBuster();
 
@@ -3036,4 +2988,46 @@ app['imageAdd'] = new function() {
 			}
 		});
 	}
+};
+app['online'] = new function() {
+	_online = this;
+	this.delay = 3000; // 30seconds
+	this.status = true;
+	
+	this.init = function() {
+		setInterval(function() {
+			var prevStatus = _online.status,
+				currStatus = _online.checkStatus();
+
+			if (currStatus != prevStatus) {
+				_online.toggleStatus(currStatus);
+			}
+		}, _online.delay)
+	}
+	
+	this.toggleStatus = function(online) {
+		app.global.els.body[online ? 'removeClass' : 'addClass']('offline');
+		_online.status = online;
+		console.log('Is Online:', online);
+	}
+	
+	this.checkStatus = function() {
+		// Handle IE and more capable browsers
+		var xhr = new ( window.ActiveXObject || XMLHttpRequest )( "Microsoft.XMLHTTP" );
+		var status;
+		var server = window.location.hostname;
+		if (window.location.port != '') server += ':'+window.location.port;
+
+		// Open new request as a HEAD to the root hostname with a random param to bust the cache
+		xhr.open( "HEAD", "//" + server + "/?rand=" + Math.floor((1 + Math.random()) * 0x10000), false );
+
+		// Issue request and handle response
+		try {
+			xhr.send();
+			return ( xhr.status >= 200 && xhr.status < 300 || xhr.status === 304 );
+		} catch (error) {
+			return false;
+		}
+	}
+
 };

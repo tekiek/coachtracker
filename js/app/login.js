@@ -258,8 +258,6 @@ app['login'] = new function() {
 		})
 		.done(function(r) {
 			var response =  $.parseJSON(r);
-			console.log('SIGNIN', response);
-
 			if (response.success == 'true') {
 				// Login
 				var user = response.user;
@@ -298,12 +296,8 @@ app['login'] = new function() {
 		})
 		.done(function(r) {
 			var response =  $.parseJSON(r);
-			console.log('response', response);
-
 			if (response.success == 'true') {
 				app.login.hideLogin();
-			} else {
-				app.ajaxError('Unable to Reset Password.');
 			}
 		});
 	}
@@ -328,8 +322,6 @@ app['login'] = new function() {
 		})
 		.done(function(r) {
 			var response =  $.parseJSON(r);
-			console.log('response', response);
-
 			if (response.success == 'true') {
 				app.global.alert({
 					msg	:'Emailed New Password', 

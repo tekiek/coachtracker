@@ -113,16 +113,12 @@ app['scheduleAdd'] = new function() {
 				})
 				.done(function(response) {
 					response = $.parseJSON(response);
-					console.log(response);
-
 					if (response.success == 'true') {
 						app.global.alert({
 							msg	:'Saved', 
 							icon: 'fa-check-circle',
 							cb	: app.controller.prevSlide
 						});
-					} else {
-						app.ajaxError('Unable to save user.');
 					}
 				});
 			}

@@ -35,34 +35,8 @@ app['scheduleList'] = new function() {
 			dataType: 'json'
 		})
 		.done(function(response) {
-			console.log('response', response);
 			_scheduleList.showSchedule(response);
 			return;
-			
-			
-			// if (typeof response == 'object' && response.length > 0) {
-			// 
-			// 	// First Event Setup
-			// 	_eventList['events'] = response;
-			// 	_eventList['shownIndex'] = 0;
-			// 	_eventList.addNav();
-			// 	_eventList.addFields();
-			// } else {
-			// 	app.global.els['dialog']
-			// 		.text('No Events Found!')
-			// 		.dialog({
-			// 			resizable: false,
-			// 			modal: true,
-			// 			title: 'Error!',
-			// 			buttons: {
-			// 				'OK': function() {
-			// 					app.controller.prevSlide();
-			// 					$(this).dialog('close');
-			// 				} 
-			// 			}
-			// 		});
-			// }
-			
 		});
 	}
 	

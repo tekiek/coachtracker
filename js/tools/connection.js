@@ -140,6 +140,7 @@ tools['connection'] = new function() {
 				tools.table.createTable({
 					'data'			: response.available,
 					'columns'		: response.columns,
+					'paging'		: true,
 					'prependTo'		: _connection['data']['activeTab']['available']['panel'],
 					'dataObj'		: _connection['data']['activeTab']['available'],
 					'selectToggle'	: true,
@@ -152,6 +153,7 @@ tools['connection'] = new function() {
 				tools.table.createTable({
 					'data'			: response.selected,
 					'columns'		: response.columns,
+					'paging'		: true,
 					'prependTo'		: _connection['data']['activeTab']['selected']['panel'],
 					'dataObj'		: _connection['data']['activeTab']['selected'],
 					'selectToggle'	: true,

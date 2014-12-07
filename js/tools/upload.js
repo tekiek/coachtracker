@@ -7,17 +7,19 @@ tools['upload'] = new function() {
 	}
 	
 	this.data = {
-		uploadFile: null
+		uploadFile: null,
+		dataTable: {}
 	};
 
 	_upload.els = {
 		fileSelect		: $('#file_select'),
 		fileImport		: $('#file_import'),
-		downloadCsv		: $('#download_template'),
+		getTemplateBtn	: $('#download_template'),
 		file			: $('#file'),
 		csvIframe		: $('#csv_iframe'),
 		tableSelect		: $('#table_select'),
-		filePreview		: $('#file-preview')
+		filePreview		: $('#file-preview'),
+		dataInsertBtn	: $('#database-insert-wrapper')
 	}
 	
 	_upload.forms = {
@@ -25,52 +27,68 @@ tools['upload'] = new function() {
 	}
 
 	this.init = function() {
+		// download template
+		_upload.els['getTemplateBtn'].click(_upload.getTemplate);
 
-		// Add Events
-		_upload.els['downloadCsv'].click(_upload.downloadCsv);
+		// upload selected file
 		_upload.els['fileSelect'].click(_upload.fileSelect);
-		_upload.els['fileImport'].click(_upload.fileImport).hide();
-		_upload.els['file'].on("change", _upload.fileUpload);
-		_upload.els['tableSelect'].on("change", _upload.changeTable);
+		_upload.els['fileImport'].click(_upload.fileImport);
+		_upload.els['file'].on("change", _upload.uploadSelectedFile);
+		_upload.els['tableSelect'].on("change", _upload.tableSelected);
 	}
 	
-	this.fileImport = function() {
-		$.ajax({
-			url: _upload.apis.importFile,
-			data: {
-				table: _upload.els['tableSelect'].val(),
-				file: _upload.data.uploadFile
-			}
-		})
-		.done(function(response) {
-			response = $.parseJSON(response);
-			console.log('response', response);
-			if (response.success == 'true') {
-				alert('success');
-				_upload.els['fileImport'].hide();
-				_upload.els.filePreview.hide();
-			}
-		});
+	/* ----------- DOWNLOAD TEMPLATE ----------- */
+	
+	/*
+	 * Get selected table
+	 */
+	this.getSelectedTable = function() {
+		return _upload.els.tableSelect.val();
 	}
 	
-	this.changeTable = function() {
-		var table = $(this).val();
-		
-		if (table.length > 0) {
-			window.location.href = window.location.href.split('?')[0] + "?table=" + table;
-		}
+	this.tableSelected = function() {
+		//window.history.pushState({}, "CT", "table=" + getSelectedTable.);
+	}
+
+	/*
+	 * Download table template 
+	 */
+	this.getTemplate = function() {
+		event.preventDefault();
+		var templateSrc =  _upload.apis.templateFile + "?table=" + _upload.getSelectedTable();
+
+		_upload.els.csvIframe.attr('src', templateSrc);
 	}
 	
-	this.fileUpload = function() {
+	/* ----------- UPLOAD FILE ----------- */
+	
+	/*
+	 * Callback for when user selects file
+	 */
+	this.fileSelect = function() {
+		event.preventDefault();
+		_upload.els['file'].trigger('click');
+	}
+	
+	this.uploadSelectedFile = function() {
 		event.preventDefault();
 		var file = event.target.files[0],
 			data = new FormData();
-		
-		_upload.els.filePreview.addClass('hidden');
+
+		// Hide preview table
+		_upload.filePreview({ 'show': false });
+
+		// Check file extension
 		if (file && file.name.match(/.csv/)) {
 			data.append('myfile', file);
 			data.append('extension', 'csv');
+			data.append('table', _upload.getSelectedTable());
 		} else {
+			$(window).overlay({
+				show: true, 
+				delay: 1000,
+				msg: "Invalid File!"
+			});
 			return false;
 		}
 
@@ -83,7 +101,6 @@ tools['upload'] = new function() {
 			contentType: false
 		})
 		.done(function(response) {
-			console.log('response', response);
 			if (response.success == 'true') {
 				var cols = response.columns,
 					data = [];
@@ -97,50 +114,78 @@ tools['upload'] = new function() {
 					data.push(row);
 				});
 
+				// Show preview data
 				_upload.data.uploadFile = response.file;
-				_upload.els['fileImport'].show();
-				_upload.els.filePreview.show();
-
 				_upload.filePreview({
+					'show': true,
 					'data': data,
 					'cols': cols
 				});
-				
+			} else {
+				$(window).overlay({
+					show: true, 
+					delay: 1000,
+					msg: response.error
+				});
 			}
-		});
-		
+		});	
 	}
 
+	/* ----------- PREVIEW FILE IN TABLE ----------- */
+
 	/*
-	 * Create table of uploaded file
+	 * Create table of uploaded file or hide it
 	 * params:
+	 * - show (boolean)
 	 * - data (array)
 	 * - cols (array)
 	 */
 	this.filePreview = function(params) {
-		_upload.els.filePreview
-			.empty()
-			.removeClass('hidden');
-		
-		tools.table.createTable({
-			'data'		: params.data,
-			'columns'	: params.cols,
-			'prependTo'	: _upload.els.filePreview
+		if (!params) return false;
+		if (!params['show']) params['show'] = false;
+
+		if (params['show']) {
+			_upload.els.filePreview.empty().show();
+			_upload.els.dataInsertBtn.show();
+
+			tools.table.createTable({
+				'data'		: params.data,
+				'columns'	: params.cols,
+				'dataObj'	: _upload.data.dataTable,
+				'paging'	: false,
+				'prependTo'	: _upload.els.filePreview
+			});
+		} else {
+			_upload.els.filePreview.hide();
+			_upload.els.dataInsertBtn.hide();
+		}
+	}
+
+
+	/* ----------- IMPORT FILE INTO DATABASE ----------- */
+
+	/*
+	 * Import file into database
+	 */
+	this.fileImport = function() {
+		$.ajax({
+			url: _upload.apis.importFile,
+			data: {
+				table: _upload.getSelectedTable(),
+				file: _upload.data.uploadFile
+			}
+		})
+		.done(function(response) {
+			response = $.parseJSON(response);
+			$(window).overlay({
+				show: true, 
+				delay: 1000,
+				msg: response.msg
+			});
+			_upload.filePreview({ 'show': false });
 		});
 	}
-	
-	this.fileSelect = function() {
-		event.preventDefault();
-		_upload.els['file'].trigger('click');
-	}
-	
-	this.downloadCsv = function() {
-		event.preventDefault();
-		var cols = $(this).data('cols'),
-			csv =  _upload.apis.templateFile + "?cols=" + cols;
-		
-		_upload.els.csvIframe.attr('src', csv);
-	}
+
 	
 
 }();

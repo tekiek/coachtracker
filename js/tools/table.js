@@ -22,6 +22,8 @@ tools['table'] = new function() {
 		if (!params['columns']) params['columns'] = new Array();
 		if (!params['selectToggle']) params['selectToggle'] = false;
 		if (!params['selectTableRows']) params['selectTableRows'] = false;
+		if (!params['editModeToggle']) params['editModeToggle'] = false;
+		if (!params['export']) params['export'] = false;
 		if (!params['export']) params['export'] = false;
 		if (!params['colLabels']) params['colLabels'] = params['columns'];
 
@@ -52,7 +54,7 @@ tools['table'] = new function() {
 		table.dataTable({
 			'data'				: data,
 			'columns'			: columns,
-			'paging'			: true,
+			'paging'			: params['paging'],
 			'ordering'			: false,
 			'info'				: false,
 			'jQueryUI'			: false,

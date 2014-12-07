@@ -120,8 +120,6 @@ app['imageAdd'] = new function() {
 			contentType: false
 		})
 		.done(function(response) {
-			console.log('response', response);
-
 			if (response.success == 'true') {
 				var imgSrc = app.config.studentImagePath + response.value + "?z=" + _imageAdd.cacheBuster();
 
@@ -133,8 +131,6 @@ app['imageAdd'] = new function() {
 					msg	:'Saved', 
 					icon: 'fa-check-circle'
 				});
-			} else {
-				app.ajaxError('Unable to save user.');
 			}
 		});
 	}

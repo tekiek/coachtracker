@@ -5,7 +5,8 @@ $params = get_params();
 
 $response = array(
 	"success" => "false",
-	"params" => $params
+	"params" => $params,
+	"msg" => "Server Error!"
 );
 
 $table = $params['table'];
@@ -15,6 +16,7 @@ $file_rows = $file_data['data'];
 $table_cols = $file_data['header'];
 $success_upload = array(); 
 $failed_upload = array();
+$successCount = 0;
 
 // Add data to table
 foreach($file_rows as $row) {
@@ -32,15 +34,18 @@ foreach($file_rows as $row) {
 
 	// Add to database
 	if (TableInsert($table, $table_values)) {
-		array_push($success_upload, $table_values);
+		//array_push($success_upload, $table_values);
+		$successCount += 1;
 	} else {
-		array_push($failed_upload, $table_values);
+		//array_push($failed_upload, $table_values);
 	}
-	
-	$response['success'] = "true";
-	$response['table'] = $table;
-	$response['tableV'] = $file_data;
 }
+
+if ($successCount > 0) {
+	$response['success'] = "true";
+	$response['msg'] = $successCount . " of " . count($file_rows) . " inserted!";
+}
+
 
 echo json_encode($response);
 ?>

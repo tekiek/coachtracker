@@ -27,7 +27,8 @@ app['global'] = new function() {
 		'listGroup'	: '<div class="list-group"></div>',
 		'listItem'	: '<a href="#" class="list-group-item"></a>',
 		'js' 		: '<script type="text/javascript" src="${src}"></script>',
-		'css'		: '<link rel="stylesheet" type="text/css" href="${src}" />'
+		'css'		: '<link rel="stylesheet" type="text/css" href="${src}" />',
+		'jumbo'		: '<div class="jumbotron"></div>'
 	}
 	
 	this.lazyLoadFiles = function(files) {

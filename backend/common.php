@@ -145,23 +145,6 @@ function SendMail($to, $subject, $body) {
 	mail($to, $subject, $body, $headers);
 }
 
-// Cleans out the fields we dont want user to see
-function uploadTableCols($table) {
-	$csvCols = array();
-	foreach($table as $col => $structure) {
-		if (strpos($structure, 'AUTO_INCREMENT') !== false) continue;
-		if (strpos($structure, 'TIMESTAMP') !== false) continue;
-		if (strpos($structure, 'NOT NULL') !== false) continue;
-		
-		// users table
-		if ($col == 'password') continue;
-		if ($col == 'pwReset') continue;
-		
-		array_push($csvCols, $col);
-	}
-	return $csvCols;
-}
-
 function uploadCsv($table, $file) {
 	$row = 0;
 	$table_cols;

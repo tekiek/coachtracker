@@ -46,6 +46,7 @@
 		'path' => 'js/app/',
 		'list' => array(
 			"app.js",
+			"ajax.js",
 			"acl.js",
 			"menu.js",
 			"common.js",
@@ -65,6 +66,7 @@
 			"email.js",
 			"gtrack.js",
 			"imageAdd.js",
+			"online.js"
 		),
 		'min' => array("appMin.js")
 	);

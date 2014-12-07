@@ -1,5 +1,5 @@
 <html>
-	<head>
+	<head manifest="app.appcache">
 		<title>Coach Tracker</title>
 		<?php require 'backend/common.php';  ?>
 		<meta id="Viewport" name="viewport" width="initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no" content="initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=yes, width=320">
@@ -8,11 +8,17 @@
 		<link rel="icon" type="image/png" href="images/icons/favicon.png">
 		<link rel="apple-touch-icon-precomposed" sizes="57x57" href="images/icons/apple-icon-57x57-precomposed.png" />
 		<link rel="apple-touch-icon-precomposed" sizes="144x144" href="images/icons/apple-icon-144x144-precomposed.png" />
-		<?php LoadCSS($CSSApp); ?>                                  
+		<?php LoadCSS($CSSApp); ?>    
+		<script type="text/javascript">
+		       // function unloadPage(){
+		       //     return "dont leave me this way";
+		       // }
+		       // window.onbeforeunload = unloadPage;
+		</script>                              
 	</head>                                   
 	<body>
-		
 		<header data-category="header">
+			<div id="header-offline-alert">OFFLINE!</div>
 			<div id="header-fields"></div>
 		</header>
 	

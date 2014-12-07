@@ -115,10 +115,10 @@ app['studentEdit'] = new function() {
 					type: "POST",
 					url: "backend/forms/student_field_update.php",
 					data: updateData,
-					dataType: 'json'
+					dataType: 'json',
+					offlineSafe: false
 				})
 				.done(function(response) {
-					console.log('response', response);
 					if (response.success == 'true') {
 						app.global.alert({
 							msg	:'Saved', 
@@ -128,8 +128,6 @@ app['studentEdit'] = new function() {
 						_studentEdit.user[userField['key']] = newVal;
 						_studentEdit.disableField(userField);
 						app.ls.setItem('user', app.data.user);
-					} else {
-						app.ajaxError('Unable to save user.');
 					}
 				});
 			}

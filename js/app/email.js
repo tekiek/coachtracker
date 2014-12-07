@@ -177,8 +177,7 @@ app['email'] = new function() {
 			data: data,
 			dataType: 'json'
 		})
-		.done(function(response) {
-			console.log('response', response);
+		.always(function(response) {
 			EventManager.fire('email:exit');
 		});
 	}

@@ -80,6 +80,7 @@ tools['dataExport'] = new function() {
 				'colLabels'		: response.colLabels,
 				'prependTo'		: _dataExport.els.tableWrapper,
 				'export'		: true,
+				'paging'		: true,
 				'dataObj'		: _dataExport.data,
 			});
 		});
