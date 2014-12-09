@@ -1,6 +1,4 @@
 <?php
-	require '../common.php';
-
 	foreach ($combine_file_list as &$file_list) {
 		$file_path = root_dir() . $file_list['path'];
 		$min_file = $file_path . $file_list['min'][0];

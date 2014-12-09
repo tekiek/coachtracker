@@ -117,7 +117,8 @@ app['imageAdd'] = new function() {
 			data: data,
 			dataType: 'json',
 			processData: false,
-			contentType: false
+			contentType: false,
+			offline: false
 		})
 		.done(function(response) {
 			if (response.success == 'true') {

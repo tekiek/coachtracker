@@ -1,7 +1,5 @@
 var app = new function() {
-	this.ls = $.sessionStorage();
-	//this.ls = $.localStorage();
-	
+	this.ls = $.localStorage();
 	this.data = {};
 	this.config = {
 		env: (document.domain == 'localhost' ? 'dev' : 'prod'),
@@ -15,7 +13,7 @@ var app = new function() {
 		app.startTimer('load-time');
 		app.online.init();
 		app.gtrack.init();
-		app.ajaxInit();
+		app.ajax.init();
 		if (app.config.isIOS) addToHomescreen();
 
 		// Must be logged in
@@ -44,32 +42,121 @@ var app = new function() {
 			app.gtrack.track_event('app', id, app.timers[id]['time']);
 		}
 	}
+}();
+$(document).ready(app.init);
+app['ajax'] = new function() {
+	_ajax = this;
+	this.queue = [];
+	this.queueStorageId = 'ajaxQueue';
 	
-	/* --- AJAX ---- */
-	
-	this.ajaxInit = function() {
+	this.init = function() {
+		
+		// Add global ajax events
 		$.ajaxSetup({
-			beforeSend: function(x, s) {
-				$(window).overlay({ show: true });
-			},
-			complete: function(e, x, s) {
-				$(window).overlay({show: false, delay: 250 });
-				app.ajaxResponseLog(e);
-			},
-			success: function() {}
+			beforeSend: _ajax.ajaxBeforeSend,
+			complete: _ajax.ajaxComplete,
+			error: _ajax.ajaxError
 		});
-		$(document).ajaxError(app.ajaxError);
-		$(document).ajaxComplete(app.ajaxComplete);
+		
+		// Get stored items in queue
+		if (app.ls.getItem(_ajax.queueStorageId)) _ajax.queue = app.ls.getItem(_ajax.queueStorageId);
+		
+		// Listen when user is back online
+		EventManager.observe('online', _ajax.sendCallsInQueue);
 	}
 	
-	this.ajaxComplete = function(e, x, s) {
-		var gtAct = (x && x.statusText ? x.statusText : ''),
-			gtLabel = (s && s.url ? s.url : '');
+	/*
+	 * Called before request sent
+	 */
+	this.ajaxBeforeSend = function(x, s) {
+		if (app.online.checkStatus()) {
+			$(window).overlay({ show: true });
+		} else {
+			if (s['offline']) {
+				_ajax.addToQueue(s);
+			} else {
+				$(window).overlay({ 
+					show: true,
+					delay: 2000,
+					msg: 'Feature is disabled when offline!'
+				});
+			}
+		}
+	} 
 
-		app.global.spinner(false);
+	/*
+	 * Called once received any response
+	 */
+	this.ajaxComplete = function(e, x, s) {
+		if (app.online.status) {
+			_ajax.ajaxResponseLog(e);
+			_ajax.trackRequest(x, this.url);
+			$(window).overlay({
+				show: false, 
+				delay: 0 
+			});
+		}
+	}
+
+	/*
+	 * Called if error response
+	 */
+	this.ajaxError = function() {
+		if (app.online.status) {
+			$(window).overlay({
+				show: true,
+				delay: 2000,
+				msg: "Sorry, there was an error!"
+			});
+		}
+	}
+	
+	/*
+	 * If user is offline store ajax request
+	 */
+	this.addToQueue = function(s) {
+		_ajax.queue.push(s);
+		app.ls.setItem(_ajax.queueStorageId, _ajax.queue);
+	}
+
+	/*
+	 * If user is back online send stored ajax request
+	 */
+	this.sendCallsInQueue = function() {
+		var queueLength = _ajax.queue.length;
+		if (queueLength == 0) {
+			$(window).overlay({ show: false });
+			return false;
+		}
+		var ajaxParams = _ajax.queue[0];
+		
+		$(window).overlay({
+			show: true,
+			delay: 999999999,
+			msg: "You are now back online.<br><br>Saving Data!"
+		});
+		
+		$.ajax(ajaxParams)
+		.always(function() {
+			// Remove call
+			_ajax.queue.shift();
+			
+			// Save new list of calls
+			app.ls.setItem(_ajax.queueStorageId, _ajax.queue);
+			_ajax.sendCallsInQueue();
+		});
+	}
+
+	/*
+	 * Send ajax details to GA
+	 */
+	this.trackRequest = function(gtAct, gtLabel) {
 		app.gtrack.track_event('app:ajax', gtAct, gtLabel);
 	}
-	
+
+	/*
+	 * Console log the ajax response
+	 */
 	this.ajaxResponseLog = function(e) {
 		try {
 			if (e && e.responseText) {
@@ -81,32 +168,7 @@ var app = new function() {
 			}
 		} catch (e) { console.log('Response: ERROR'); }
 	}
-	
-	this.ajaxError = function(msg) {
-		var alertIcon = $.tmpl(app.global.templates.icon, { icon : 'fa-info-circle fa-lg' });
-		if (!msg || typeof msg != 'string') msg = 'Sorry, there was an issue.';
-
-		app.global.spinner(false);
-		app['global']['els']['dialog']
-			.empty()
-			.append(alertIcon)
-			.append(' ' + msg)
-			.dialog({
-				resizable: false,
-				modal: true,
-				title: 'Error!',
-				buttons: {
-					Cancel:{
-						text: 'Ok',
-						click: function() {
-							$(this).dialog('close');
-						}
-					} 
-				}
-			});
-	}
-}();
-$(document).ready(app.init);
+}
 app['acl'] = new function() {
 	_acl = this;
 	this.acls = ['loggedin', 'admin', 'coach', 'counselor'];
@@ -202,6 +264,14 @@ app['menu'] = new function() {
 			'classes'		: 'shadow marginBottom10',
 			'acls'			: 'hidden',
 			'text'			: 'UPCOMING MEETINGS'
+		},
+		'offlineInfoBtn'	: {
+			'text'			: 'Learn More',
+			'color'			: 'btn-warning',
+			'classes'		: 'width_50 shadow'
+		},
+		'offLineMsg'		: {
+			'text'			: 'You have unsaved data!'
 		}
 	}
 	
@@ -302,7 +372,8 @@ app['global'] = new function() {
 		'listGroup'	: '<div class="list-group"></div>',
 		'listItem'	: '<a href="#" class="list-group-item"></a>',
 		'js' 		: '<script type="text/javascript" src="${src}"></script>',
-		'css'		: '<link rel="stylesheet" type="text/css" href="${src}" />'
+		'css'		: '<link rel="stylesheet" type="text/css" href="${src}" />',
+		'jumbo'		: '<div class="jumbotron"></div>'
 	}
 	
 	this.lazyLoadFiles = function(files) {
@@ -1289,21 +1360,18 @@ app['studentEdit'] = new function() {
 					type: "POST",
 					url: "backend/forms/student_field_update.php",
 					data: updateData,
-					dataType: 'json'
+					dataType: 'json',
+					offline: true
 				})
-				.done(function(response) {
-					if (response.success == 'true') {
-						app.global.alert({
-							msg	:'Saved', 
-							icon: 'fa-check-circle'
-						});
-						userField['value'] = newVal;
-						_studentEdit.user[userField['key']] = newVal;
-						_studentEdit.disableField(userField);
-						app.ls.setItem('user', app.data.user);
-					} else {
-						app.ajaxError('Unable to save user.');
-					}
+				.always(function(response) {
+					app.global.alert({
+						msg	:'Saved', 
+						icon: 'fa-check-circle'
+					});
+					userField['value'] = newVal;
+					_studentEdit.user[userField['key']] = newVal;
+					_studentEdit.disableField(userField);
+					app.ls.setItem('user', app.data.user);
 				});
 			}
 		});
@@ -1513,11 +1581,29 @@ app['eventAdd'] = new function() {
 		return data;
 	}
 	
-	this.saveExit = function() {
-		app.global.alert({
-			msg	:'Saved', 
-			icon: 'fa-check-circle',
-			cb	: app.controller.prevSlide
+	this.saveExit = function(params) {
+		var data = _eventAdd.getFieldData();
+		
+		// Add followup email data
+		if (params && params['email']) {
+			data = $.extend({}, data, {
+				followup: 1
+			});
+		}
+		
+		$.ajax({
+			type: "POST",
+			url: "backend/forms/event_add.php",
+			data: data,
+			dataType: 'json',
+			offline: true
+		})
+		.always(function(response) {
+			app.global.alert({
+				msg	:'Saved', 
+				icon: 'fa-check-circle',
+				cb	: app.controller.prevSlide
+			});
 		});
 	}
 	
@@ -1527,24 +1613,11 @@ app['eventAdd'] = new function() {
 			app.login.loginDialog();
 			return false;
 		}
-		var data = _eventAdd.getFieldData();
-
+		
 		app.global.dialogConfirm({
 			msg: 'Would you like to save this event?',
-			saveCallback: function() {
-				$.ajax({
-					type: "POST",
-					url: "backend/forms/event_add.php",
-					data: data,
-					dataType: 'json'
-				})
-				.done(function(response) {
-					if (response.success == 'true') {
-						_eventAdd.followUpConfirm();
-					} else {
-						app.ajaxError('Unable to save user.');
-					}
-				});
+			saveCloseCallback: function() {
+				_eventAdd.followUpConfirm();
 			}
 		});
 	}
@@ -2093,8 +2166,6 @@ app['scheduleAdd'] = new function() {
 							icon: 'fa-check-circle',
 							cb	: app.controller.prevSlide
 						});
-					} else {
-						app.ajaxError('Unable to save user.');
 					}
 				});
 			}
@@ -2500,7 +2571,8 @@ app['login'] = new function() {
 		$.ajax({
 			type: "POST",
 			url: "backend/forms/users_login.php",
-			data: params
+			data: params,
+			offline: false
 		})
 		.done(function(r) {
 			var response =  $.parseJSON(r);
@@ -2538,14 +2610,13 @@ app['login'] = new function() {
 		$.ajax({
 			type: "POST",
 			url: "backend/forms/users_update_password.php",
-			data: params
+			data: params,
+			offline: false
 		})
 		.done(function(r) {
 			var response =  $.parseJSON(r);
 			if (response.success == 'true') {
 				app.login.hideLogin();
-			} else {
-				app.ajaxError('Unable to Reset Password.');
 			}
 		});
 	}
@@ -2566,7 +2637,8 @@ app['login'] = new function() {
 		$.ajax({
 			type: "POST",
 			url: "backend/forms/users_reset_password.php",
-			data: params
+			data: params,
+			offline: false
 		})
 		.done(function(r) {
 			var response =  $.parseJSON(r);
@@ -2590,9 +2662,10 @@ app['login'] = new function() {
 			'noBtn': 'Cancel',
 			saveCallback: function() {
 				$.ajax({
-					url: "backend/forms/users_logout.php"
+					url: "backend/forms/users_logout.php",
+					offline: true
 				})
-				.done(function() {
+				.always(function() {
 					app.header.destroy();
 					app.ls.removeItem('user');
 					delete app['data']['user'];
@@ -2783,10 +2856,13 @@ app['email'] = new function() {
 			type: "POST",
 			url: "backend/forms/event_followup.php",
 			data: data,
-			dataType: 'json'
+			dataType: 'json',
+			offline: true
 		})
-		.done(function(response) {
-			EventManager.fire('email:exit');
+		.always(function(response) {
+			EventManager.fire('email:exit', {
+				email: data
+			});
 		});
 	}
 	
@@ -2969,7 +3045,8 @@ app['imageAdd'] = new function() {
 			data: data,
 			dataType: 'json',
 			processData: false,
-			contentType: false
+			contentType: false,
+			offline: false
 		})
 		.done(function(response) {
 			if (response.success == 'true') {
@@ -2983,8 +3060,6 @@ app['imageAdd'] = new function() {
 					msg	:'Saved', 
 					icon: 'fa-check-circle'
 				});
-			} else {
-				app.ajaxError('Unable to save user.');
 			}
 		});
 	}
@@ -2992,7 +3067,7 @@ app['imageAdd'] = new function() {
 app['online'] = new function() {
 	_online = this;
 	this.delay = 3000; // 30seconds
-	this.status = true;
+	this.status = null;
 	
 	this.init = function() {
 		setInterval(function() {
@@ -3008,6 +3083,7 @@ app['online'] = new function() {
 	this.toggleStatus = function(online) {
 		app.global.els.body[online ? 'removeClass' : 'addClass']('offline');
 		_online.status = online;
+		EventManager.fire(online ? 'online' : 'offline');
 		console.log('Is Online:', online);
 	}
 	

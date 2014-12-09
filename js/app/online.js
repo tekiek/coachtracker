@@ -1,7 +1,7 @@
 app['online'] = new function() {
 	_online = this;
 	this.delay = 3000; // 30seconds
-	this.status = true;
+	this.status = null;
 	
 	this.init = function() {
 		setInterval(function() {

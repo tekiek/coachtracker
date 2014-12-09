@@ -68,7 +68,8 @@
 			'reason' 	=> 'varchar(255)',
 			'notes' 	=> 'varchar(255)',
 			'signature' => 'LONGTEXT',
-			'timestamp' => 'DATE'
+			'timestamp' => 'DATE',
+			'followup' => 'BOOLEAN DEFAULT FALSE NOT NULL'
 		);
 		return $events;
 	}

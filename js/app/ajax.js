@@ -23,11 +23,18 @@ app['ajax'] = new function() {
 	 * Called before request sent
 	 */
 	this.ajaxBeforeSend = function(x, s) {
-		console.log(x, s);
 		if (app.online.checkStatus()) {
 			$(window).overlay({ show: true });
 		} else {
-			_ajax.addToQueue(s);
+			if (s['offline']) {
+				_ajax.addToQueue(s);
+			} else {
+				$(window).overlay({ 
+					show: true,
+					delay: 2000,
+					msg: 'Feature is disabled when offline!'
+				});
+			}
 		}
 	} 
 
@@ -58,25 +65,40 @@ app['ajax'] = new function() {
 		}
 	}
 	
+	/*
+	 * If user is offline store ajax request
+	 */
 	this.addToQueue = function(s) {
-		// _ajax.queue.push(s);
-		// app.ls.setItem(_ajax.queueStorageId, _ajax.queue);
-		// $(window).overlay({
-		// 	show: true,
-		// 	delay: 2000,
-		// 	msg: "You are offline. We will try to save once you are back online."
-		// });
+		_ajax.queue.push(s);
+		app.ls.setItem(_ajax.queueStorageId, _ajax.queue);
 	}
-	
+
+	/*
+	 * If user is back online send stored ajax request
+	 */
 	this.sendCallsInQueue = function() {
-		// var queueLength = _ajax.queue.length;
-		// if (queueLength == 0) return false;
+		var queueLength = _ajax.queue.length;
+		if (queueLength == 0) {
+			$(window).overlay({ show: false });
+			return false;
+		}
+		var ajaxParams = _ajax.queue[0];
 		
-		// app.global.dialogConfirm({
-		// 	msg: "You have unsaved data. Would you like to save the data now?"
-		// })
-		// $.ajax(ajaxParams)
-		// 	.done()
+		$(window).overlay({
+			show: true,
+			delay: 999999999,
+			msg: "You are now back online.<br><br>Saving Data!"
+		});
+		
+		$.ajax(ajaxParams)
+		.always(function() {
+			// Remove call
+			_ajax.queue.shift();
+			
+			// Save new list of calls
+			app.ls.setItem(_ajax.queueStorageId, _ajax.queue);
+			_ajax.sendCallsInQueue();
+		});
 	}
 
 	/*

@@ -161,11 +161,29 @@ app['eventAdd'] = new function() {
 		return data;
 	}
 	
-	this.saveExit = function() {
-		app.global.alert({
-			msg	:'Saved', 
-			icon: 'fa-check-circle',
-			cb	: app.controller.prevSlide
+	this.saveExit = function(params) {
+		var data = _eventAdd.getFieldData();
+		
+		// Add followup email data
+		if (params && params['email']) {
+			data = $.extend({}, data, {
+				followup: 1
+			});
+		}
+		
+		$.ajax({
+			type: "POST",
+			url: "backend/forms/event_add.php",
+			data: data,
+			dataType: 'json',
+			offline: true
+		})
+		.always(function(response) {
+			app.global.alert({
+				msg	:'Saved', 
+				icon: 'fa-check-circle',
+				cb	: app.controller.prevSlide
+			});
 		});
 	}
 	
@@ -175,20 +193,11 @@ app['eventAdd'] = new function() {
 			app.login.loginDialog();
 			return false;
 		}
-		var data = _eventAdd.getFieldData();
-
+		
 		app.global.dialogConfirm({
 			msg: 'Would you like to save this event?',
-			saveCallback: function() {
-				$.ajax({
-					type: "POST",
-					url: "backend/forms/event_add.php",
-					data: data,
-					dataType: 'json'
-				})
-				.always(function(response) {
-					_eventAdd.followUpConfirm();
-				});
+			saveCloseCallback: function() {
+				_eventAdd.followUpConfirm();
 			}
 		});
 	}

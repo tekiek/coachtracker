@@ -554,7 +554,7 @@ function _extend (target, obj) {
 	}
 
 	return target;
-}
+} 
 
 function _removeToken () {
 	if ( document.location.hash == '#ath' ) {

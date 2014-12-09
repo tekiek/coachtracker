@@ -254,7 +254,8 @@ app['login'] = new function() {
 		$.ajax({
 			type: "POST",
 			url: "backend/forms/users_login.php",
-			data: params
+			data: params,
+			offline: false
 		})
 		.done(function(r) {
 			var response =  $.parseJSON(r);
@@ -292,7 +293,8 @@ app['login'] = new function() {
 		$.ajax({
 			type: "POST",
 			url: "backend/forms/users_update_password.php",
-			data: params
+			data: params,
+			offline: false
 		})
 		.done(function(r) {
 			var response =  $.parseJSON(r);
@@ -318,7 +320,8 @@ app['login'] = new function() {
 		$.ajax({
 			type: "POST",
 			url: "backend/forms/users_reset_password.php",
-			data: params
+			data: params,
+			offline: false
 		})
 		.done(function(r) {
 			var response =  $.parseJSON(r);
@@ -342,9 +345,10 @@ app['login'] = new function() {
 			'noBtn': 'Cancel',
 			saveCallback: function() {
 				$.ajax({
-					url: "backend/forms/users_logout.php"
+					url: "backend/forms/users_logout.php",
+					offline: true
 				})
-				.done(function() {
+				.always(function() {
 					app.header.destroy();
 					app.ls.removeItem('user');
 					delete app['data']['user'];

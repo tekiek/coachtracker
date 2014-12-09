@@ -116,19 +116,17 @@ app['studentEdit'] = new function() {
 					url: "backend/forms/student_field_update.php",
 					data: updateData,
 					dataType: 'json',
-					offlineSafe: false
+					offline: true
 				})
-				.done(function(response) {
-					if (response.success == 'true') {
-						app.global.alert({
-							msg	:'Saved', 
-							icon: 'fa-check-circle'
-						});
-						userField['value'] = newVal;
-						_studentEdit.user[userField['key']] = newVal;
-						_studentEdit.disableField(userField);
-						app.ls.setItem('user', app.data.user);
-					}
+				.always(function(response) {
+					app.global.alert({
+						msg	:'Saved', 
+						icon: 'fa-check-circle'
+					});
+					userField['value'] = newVal;
+					_studentEdit.user[userField['key']] = newVal;
+					_studentEdit.disableField(userField);
+					app.ls.setItem('user', app.data.user);
 				});
 			}
 		});

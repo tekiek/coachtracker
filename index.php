@@ -1,20 +1,15 @@
+<!DOCTYPE html>
+<?php require 'backend/common.php';  ?>
 <html>
-	<head manifest="app.appcache">
+	<head>
 		<title>Coach Tracker</title>
-		<?php require 'backend/common.php';  ?>
 		<meta id="Viewport" name="viewport" width="initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no" content="initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=yes, width=320">
 		<meta name="apple-mobile-web-app-capable" content="yes">
 		<meta name="mobile-web-app-capable" content="yes">
 		<link rel="icon" type="image/png" href="images/icons/favicon.png">
 		<link rel="apple-touch-icon-precomposed" sizes="57x57" href="images/icons/apple-icon-57x57-precomposed.png" />
 		<link rel="apple-touch-icon-precomposed" sizes="144x144" href="images/icons/apple-icon-144x144-precomposed.png" />
-		<?php LoadCSS($CSSApp); ?>    
-		<script type="text/javascript">
-		       // function unloadPage(){
-		       //     return "dont leave me this way";
-		       // }
-		       // window.onbeforeunload = unloadPage;
-		</script>                              
+		<link rel="stylesheet" type="text/css" href="/min/g=cssapp">                          
 	</head>                                   
 	<body>
 		<header data-category="header">
@@ -42,10 +37,8 @@
 		<div id="alert"></div>
 		<div id="spinner"></div>
 		<div id="dialog"></div>
-
-		<?php LoadJS($JSLibsA); ?>
-		<?php LoadJS($JSApp); ?>
-		<?php LoadJS($JSLibsB);  ?> 
+		<script type="text/javascript" src="/min/g=jslibs"></script>
+		<script type="text/javascript" src="/min/g=jsapp"></script>
 		<?php ga_lib(); ?>
 	</body>                                                                 
 </html>

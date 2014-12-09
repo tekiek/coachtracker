@@ -25,6 +25,12 @@ var app = new function() {
 		}
 		app.endTimer('load-time');
 	}
+	
+	this.exit = function() {
+		// $(window).bind('beforeunload', function() {
+		//         alert('test');
+		//     });
+	}
 
 	/* --- Timers ---- */
 

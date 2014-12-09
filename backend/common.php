@@ -11,7 +11,6 @@ require 'db/table_create.php';
 require 'db/table_delete.php';
 require 'db/table_add_col.php';
 require 'includes/elements.php';
-require 'includes/externals.php';
 
 function env() {
 	if ($_SERVER['HTTP_HOST'] == 'coachtracker.org' || $_SERVER['HTTP_HOST'] == 'www.coachtracker.org') {

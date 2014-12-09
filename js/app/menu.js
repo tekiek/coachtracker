@@ -84,7 +84,6 @@ app['menu'] = new function() {
 	
 	this.init = function() {
 		_menu.setupHeader();
-		_menu.addOfflineMsg();
 		_menu.addButtons();
 		_menu.addAdminButtons();
 	}
@@ -92,34 +91,6 @@ app['menu'] = new function() {
 	this.setupHeader = function() {
 		app.header.addLogo();
 		app.header.addUserField();
-	}
-	
-	this.addOfflineMsg = function() {
-		var ajaxQueue = _ajax.queue;
-
-		if (ajaxQueue.length > 0) {
-			var jumboEl = $.tmpl(app.global.templates.jumbo),
-				msg = $.tmpl(app.global.templates.h2, _menu.template_data['offLineMsg']),
-				infoBtn = $.tmpl(app.global.templates.button, _menu.template_data['offlineInfoBtn']);
-			
-			jumboEl
-				.append(msg)
-				.append(infoBtn);
-			_menu.els['parent'].append(jumboEl);
-			
-			infoBtn.click(function() {
-				app.global.dialog({
-					title: 'Offline Info',
-					msg: 'Although you are offline we will continue to save all your data on your computer. Once you are back online we will notify you and begin trying to save your data. To ensure a stable enviroment please wait to input any more data once you are back online.',
-					animate: true,
-					buttons: {
-						'OK': function() {
-							$(this).dialog('close');
-						}
-					}
-				})
-			})
-		}
 	}
 	
 	this.addButtons = function() {

@@ -1,7 +1,5 @@
 <?php
-	require '../common.php';
-
-	$file_path = root_dir() . "app.appcache";
+	$file_path = root_dir() . "mycache.manifest";
 	$out = fopen($file_path, "w");
 	
 	
@@ -24,6 +22,8 @@
 	$manifest .= "*\n\n";
 	
 	$manifest .= "FALLBACK:\n";
+	$manifest .= "/ /offline.html";
 
 	fwrite($out, $manifest);
+	echo "Manifest: Created";
 ?>

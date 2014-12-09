@@ -175,10 +175,13 @@ app['email'] = new function() {
 			type: "POST",
 			url: "backend/forms/event_followup.php",
 			data: data,
-			dataType: 'json'
+			dataType: 'json',
+			offline: true
 		})
 		.always(function(response) {
-			EventManager.fire('email:exit');
+			EventManager.fire('email:exit', {
+				email: data
+			});
 		});
 	}
 	

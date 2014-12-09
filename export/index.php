@@ -1,8 +1,7 @@
 <?php require '_config.php';  ?>
 <html>
 	<head>
-		<?php LoadCSS($CSSTools); ?>
-		<?php LoadJS($JSLibsA); ?>
+		<link rel="stylesheet" type="text/css" href="../min/g=csstools">  
 	</head>
 
 	<body class="export">
@@ -26,7 +25,8 @@
 		</div>
 	
 		<input type="hidden" id="userId" value="<?php echo $params['user']; ?>">
-		<?php LoadJS($JSTools); ?>
+		<script type="text/javascript" src="../min/g=jslibs"></script>
+		<script type="text/javascript" src="../min/g=jstools"></script>
 	</body>
 </html>
 
