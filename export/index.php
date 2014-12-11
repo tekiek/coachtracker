@@ -19,6 +19,10 @@
 					<span class="input-group-addon">To</span>
 					<input class="form-control" type="text" id="date-picker-to" name="to">
 				</div>
+				<div id="table-type" style="display:none">
+				    <input type="radio" value="events" id="events" name="table-type" checked="checked"><label for="events">Meeting Notes</label>
+				    <input type="radio" value="signatures" id="signatures" name="table-type"><label for="signatures">Signatures</label>
+				  </div>
 			</div>
 
 			<div id="table-wrapper" class="field_wrapper"></div>

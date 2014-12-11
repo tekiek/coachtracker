@@ -68,7 +68,14 @@ tools['table'] = new function() {
 					},
 					{
 						'sExtends': 'xls', 
-						'sFileName': 'TableTools.xls'
+						'sFileName': 'Events.xls'
+					},
+					{
+						'sExtends': 'print'
+					},
+					{
+						'sExtends': 'pdf', 
+						'sFileName': 'Events.pdf'
 					},
 				]
 			} : ''),

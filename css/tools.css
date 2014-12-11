@@ -51,6 +51,15 @@ body.DTTT_Print * {
 	max-width: 100% !important;
 }
 
+body.DTTT_Print table {
+	table-layout: auto;
+}
+
+body.DTTT_Print table th {
+	min-width: 100px;
+}
+
+
 .ui-dialog button {
 	width: auto;
 }
@@ -249,7 +258,8 @@ body.connection .ui-selected td {
  */
 
 body.export #data-picker-wrapper,
-body.export #table-wrapper {
+body.export #table-wrapper,
+body.export #table-type-wrapper {
 	overflow: hidden;
 	padding: 0 10px;
 	border-color: #dddddd;
@@ -266,4 +276,9 @@ body.export #table-wrapper {
 body.export #data-picker-wrapper .input-group {
 	float: left;
 	width: 50%;
+}
+
+body.export table td.signature img {
+	width: 100%;
+	max-width: 300px;
 }

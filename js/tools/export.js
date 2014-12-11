@@ -1,6 +1,7 @@
 tools['dataExport'] = new function() {
 	_dataExport = this;
 	this.data = {
+		type: null,
 		table: null
 	};
 
@@ -8,18 +9,40 @@ tools['dataExport'] = new function() {
 		'fromDate': $('#date-picker-from'),
 		'toDate': $('#date-picker-to'),
 		'tableWrapper': $('#table-wrapper'),
-		'userId': $('#userId')
+		'userId': $('#userId'),
+		'tableType': $('#table-type')
 	};
 
 	this.apis = {
-		'eventData': '_eventData.php'
+		'events': '_eventData.php',
+		'signatures': '_signatureData.php',
 	}
 
 	this.init = function() {
 		_dataExport.getUserId();
 		_dataExport.datePicker();
-		_dataExport.getEventData();
+		_dataExport.tableTypeSelect();
+		_dataExport.getTableData();
 		$(window).overlay({show: false, delay: 250 });
+	}
+	
+	this.tableTypeSelect = function() {
+		_dataExport.els.tableType
+			.buttonset()
+			.show();
+		_dataExport.data.type = _dataExport.tableTypeValue();
+
+		// Add Events
+		_dataExport.els.tableType.find('input[type=radio]').click(function() {
+			var selected = $(this).attr('value')
+			_dataExport.data.type = selected;
+			_dataExport.getTableData();
+			_dataExport.data.table.addClass(selected)
+		});
+	}
+	
+	this.tableTypeValue = function() {
+		return _dataExport.els.tableType.find(':checked').attr('value');
 	}
 	
 	this.getUserId = function() {
@@ -40,7 +63,7 @@ tools['dataExport'] = new function() {
 				maxDate: 0,
 				onClose: function(selectedDate) {
 					_dataExport.els.toDate.datepicker('option', 'minDate', selectedDate);
-					_dataExport.getEventData();
+					_dataExport.getTableData();
 				}
 			})
 			.datepicker('setDate', lastMonth());
@@ -52,13 +75,13 @@ tools['dataExport'] = new function() {
 				onClose: function(selectedDate) {
 					if (!selectedDate) selectedDate = 0;
 					_dataExport.els.fromDate.datepicker('option', 'maxDate', selectedDate);
-					_dataExport.getEventData();
+					_dataExport.getTableData();
 				}
 			})
 			.datepicker('setDate', today);
 	}
 	
-	this.getEventData = function() {
+	this.getTableData = function() {
 		params = {
 			user: _dataExport.data.userId,
 			fromDate: _dataExport.els.fromDate.val(),
@@ -66,7 +89,7 @@ tools['dataExport'] = new function() {
 		}
 
 		$.ajax({
-			url: _dataExport.apis.eventData,
+			url: _dataExport.apis[_dataExport.data.type],
 			data: params
 		})
 		.done(function(response) {

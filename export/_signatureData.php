@@ -18,32 +18,32 @@
 	// user config
 	$config = array(
 		'admin' => array(
-			'headerLabels' => array('interviewer', 'coach', 'id', 'first', 'last', 'DOB', 'CBO', 'college', 'date', 'location', 'reason', 'duration', 'notes'),
-			'header'=> array('name', 'coach', 'dbId', 'fname', 'lname', 'dob', 'cbo', 'college', 'timestamp', 'location', 'reason', 'duration', 'notes'),
-			'users' => array('name', 'coach'),
-			'students' => array('dbId', 'fname', 'lname', 'dob', 'cbo', 'college'),
-			'event' => array('timestamp', 'location', 'reason', 'duration', 'notes')
+			'headerLabels' => array('interviewer', 'first', 'last', 'date', 'location', 'duration', 'signature'),
+			'header'=> array('name', 'fname', 'lname', 'timestamp', 'location', 'duration', 'signature'),
+			'users' => array('name'),
+			'students' => array('dbId', 'fname', 'lname', ),
+			'event' => array('timestamp', 'location', 'duration', 'signature')
 		),
 		'captain' => array(
-			'headerLabels' => array('interviewer', 'coach', 'id', 'first', 'last', 'DOB', 'CBO', 'college', 'date', 'location', 'reason', 'duration', 'notes'),
-			'header'=> array('name', 'coach', 'dbId', 'fname', 'lname', 'dob', 'cbo', 'college', 'timestamp', 'location', 'reason', 'duration', 'notes'),
-			'users' => array('name', 'coach'),
-			'students' => array('dbId', 'fname', 'lname', 'dob', 'cbo', 'college'),
-			'event' => array('timestamp', 'location', 'reason', 'duration', 'notes', 'signature')
+			'headerLabels' => array('interviewer', 'first', 'last', 'date', 'location', 'duration', 'signature'),
+			'header'=> array('name', 'fname', 'lname', 'timestamp', 'location', 'duration', 'signature'),
+			'users' => array('name'),
+			'students' => array('dbId', 'fname', 'lname', ),
+			'event' => array('timestamp', 'location', 'duration', 'signature')
 		),
 		'counselor' => array(
-			'headerLabels' => array('interviewer', 'first', 'last', 'DOB', 'CBO', 'date', 'location', 'reason', 'duration', 'notes'),
-			'header'=> array('name', 'fname', 'lname', 'dob', 'cbo', 'timestamp', 'location', 'reason', 'duration', 'notes'),
+			'headerLabels' => array('interviewer', 'first', 'last', 'date', 'location', 'duration', 'signature'),
+			'header'=> array('name', 'fname', 'lname', 'timestamp', 'location', 'duration', 'signature'),
 			'users' => array('name'),
-			'students' => array('fname', 'lname', 'dob', 'cbo'),
-			'event' => array('timestamp', 'location', 'reason', 'duration', 'notes', 'signature')
+			'students' => array('dbId', 'fname', 'lname', ),
+			'event' => array('timestamp', 'location', 'duration', 'signature')
 		),
 		'coach' => array(
-			'headerLabels' => array('interviewer', 'first', 'last', 'phone', 'email', 'CBO', 'date', 'location', 'reason', 'duration', 'notes'),
-			'header'=> array('name', 'fname', 'lname', 'phone', 'email', 'cbo', 'timestamp', 'location', 'reason', 'duration', 'notes'),
+			'headerLabels' => array('interviewer', 'first', 'last', 'date', 'location', 'duration', 'signature'),
+			'header'=> array('name', 'fname', 'lname', 'timestamp', 'location', 'duration', 'signature'),
 			'users' => array('name'),
-			'students' => array('fname', 'lname', 'phone', 'email', 'cbo'),
-			'event' => array('timestamp', 'location', 'reason', 'duration', 'notes')
+			'students' => array('dbId', 'fname', 'lname', ),
+			'event' => array('timestamp', 'location', 'duration', 'signature')
 		)
 	);
 	$config = $config[$acl];
@@ -86,7 +86,13 @@
 	
 		// Event Data
 		foreach($config['event'] as $col) {
-			$row[$col] = $event[$col];
+			if ($col == 'signature') {
+				// hack for signature
+				$row[$col] = '<img src="' . $event[$col] . '">';
+			} else {
+				$row[$col] = $event[$col];
+			}
+			
 		}
 		
 		array_push($rows, $row);
