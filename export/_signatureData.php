@@ -86,7 +86,7 @@
 	
 		// Event Data
 		foreach($config['event'] as $col) {
-			if ($col == 'signature') {
+			if ($col == 'signature' && $event[$col] != "") {
 				// hack for signature
 				$row[$col] = '<img src="' . $event[$col] . '">';
 			} else {
