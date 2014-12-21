@@ -19,7 +19,7 @@ function hasActiveOverlay(el) {
 		if (!params['show']) params['show'] = false;
 		if (!params['msg']) params['msg'] = '<i class="fa fa-spinner fa-spin fa-4x"></i>';
 		if (!params['delay']) params['delay'] = 500;
-		if (!params['cb']) params['cb'] = function(){};
+		if (!params['cb']) params['cb'] = function(){ return true; };
 
 		if (params['show']) {
 			
@@ -41,10 +41,12 @@ function hasActiveOverlay(el) {
 				onBlock: function() {
 					$.when(params['cb']()).done(function() {
 						setTimeout(function() {
-							$.unblockUI();
 							if (overlayQueue.length) {
 								params = overlayQueue.pop();
+								$.unblockUI();
 								$(this).overlay(params);
+							} else {
+								$.unblockUI();
 							}
 						}, params['delay']);
 					})

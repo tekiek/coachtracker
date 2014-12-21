@@ -12,7 +12,8 @@
  **/
 
 return array(
-	'jslibs' => array(
+	// APP
+	'js-app-libs' => array(
 		"//js/libs/a/jquery.js",
 		"//js/libs/a/jquery.ui.js",
 		"//js/libs/a/jquery.addons.js",
@@ -28,7 +29,7 @@ return array(
 		"//js/libs/b/jquery.scrollintoview.js",
 		"//js/libs/b/addtohomescreen.js",
 	),
-	'jsapp' => array(
+	'js-app-core' => array(
 		"//js/app/app.js",
 		"//js/app/ajax.js",
 		"//js/app/acl.js",
@@ -52,7 +53,7 @@ return array(
 		"//js/app/imageAdd.js",
 		"//js/app/online.js",
 	),
-	'cssapp' => array(
+	'css-app' => array(
 		"//css/app.css",
 		"//css/fontawesome.css",
 		"//css/bootstrap.css",
@@ -61,15 +62,30 @@ return array(
 		"//css/addtohomescreen.css",
 		"//css/animate.css",
 	),
-	'jstools' => array(
-		'//js/tools/table_filter.js',
+	
+	// TOOLS
+	'js-tools-libs' => array(
+		"//js/libs/b/charts.js",
+		"//js/libs/a/jquery.js",
+		"//js/libs/a/jquery.ui.js",
+		"//js/libs/a/jquery.blockui.js",
+		"//js/libs/a/jquery.template.js",
+		"//js/libs/a/event.manager.js",
+		"//js/libs/b/jquery.form.js",
+		"//js/libs/b/jquery.upload.js",
+		"//js/libs/b/data.tables.js",
+		"//js/libs/b/table.tools.js",
+	),
+	'js-tools-core' => array(
 		'//js/tools/tools.js',
 		'//js/tools/table.js',
+		'//js/tools/charts.js',
 		'//js/tools/upload.js',
 		'//js/tools/export.js',
 		'//js/tools/connection.js',
+		'//js/tools/reports.js',
 	),
-	'csstools' => array(
+	'css-tools' => array(
 		"//css/app.css",
 		"//css/fontawesome.css",
 		"//css/bootstrap.css",

@@ -9,7 +9,7 @@
 		<link rel="icon" type="image/png" href="images/icons/favicon.png">
 		<link rel="apple-touch-icon-precomposed" sizes="57x57" href="images/icons/apple-icon-57x57-precomposed.png" />
 		<link rel="apple-touch-icon-precomposed" sizes="144x144" href="images/icons/apple-icon-144x144-precomposed.png" />
-		<link rel="stylesheet" type="text/css" href="/min/g=cssapp">                          
+		<link rel="stylesheet" type="text/css" href="/min/g=css-app">                          
 	</head>                                   
 	<body>
 		<header data-category="header">
@@ -37,8 +37,8 @@
 		<div id="alert"></div>
 		<div id="spinner"></div>
 		<div id="dialog"></div>
-		<script type="text/javascript" src="/min/g=jslibs"></script>
-		<script type="text/javascript" src="/min/g=jsapp"></script>
+		<script type="text/javascript" src="/min/g=js-app-libs"></script>
+		<script type="text/javascript" src="/min/g=js-app-core"></script>
 		<?php ga_lib(); ?>
 	</body>                                                                 
 </html>

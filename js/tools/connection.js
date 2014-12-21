@@ -140,7 +140,7 @@ tools['connection'] = new function() {
 				tools.table.createTable({
 					'data'			: response.available,
 					'columns'		: response.columns,
-					'paging'		: true,
+					'paging'		: false,
 					'prependTo'		: _connection['data']['activeTab']['available']['panel'],
 					'dataObj'		: _connection['data']['activeTab']['available'],
 					'selectToggle'	: true,
@@ -153,7 +153,7 @@ tools['connection'] = new function() {
 				tools.table.createTable({
 					'data'			: response.selected,
 					'columns'		: response.columns,
-					'paging'		: true,
+					'paging'		: false,
 					'prependTo'		: _connection['data']['activeTab']['selected']['panel'],
 					'dataObj'		: _connection['data']['activeTab']['selected'],
 					'selectToggle'	: true,
@@ -257,6 +257,8 @@ tools['connection'] = new function() {
 		var params = e.data;
 		if (!params) return false;
 		if (!params['ids'] || params['ids'].length == 0) return false;
+		
+		console.log('AddSelected', params);
 
 		$.ajax({
 			url: _connection.apis.connectUpdate,
@@ -317,19 +319,18 @@ tools['connection'] = new function() {
 			to = (params.action == 'add' ? tab['selected'] : tab['available']),
 			toTableTbody = to['table'].find('tbody'),
 			row_ids = params.ids;
-
+	
 		// Remove Filters
 		from['table'].dataTable().fnFilter('');
 		to['table'].dataTable().fnFilter('');
-
+	
 		// Loop through rows to find ones to move
 		var fromRows = from['table'].find('tbody tr');
 		$.each(fromRows, function(x, row) {
 			var rowIndex = row._DT_RowIndex,
 				rowData = from['table'].fnGetData(rowIndex),
 				tableId = rowData[0];
-
-			
+	
 			if ($.inArray(tableId, row_ids) >= 0) {
 				// Clear selected id
 				tools['table'].toggleSelectedIds({
@@ -337,9 +338,9 @@ tools['connection'] = new function() {
 					ids: [tableId],
 					action: 'remove'
 				});
-
+	
 				// Move rows
-				var rowIndex = to['table'].fnAddData(rowData);
+				to['table'].fnAddData(rowData);
 				from['table'].fnDeleteRow(row);
 				EventManager.fire('TableRowCount');
 			}

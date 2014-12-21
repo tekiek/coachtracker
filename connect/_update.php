@@ -11,12 +11,11 @@
 		$userid = $params['userid'];
 		$ids = $params['ids'];
 		$action = $params['action'];
+		$type = $params['type'];
 		$result = false;
 
 		// Add Connection
 		if ($action == 'add' && $params['type']) {
-			$type = $params['type'];
-
 			foreach($ids as $id) {
 				$table_values = array(
 					'type' 			=> $type,
@@ -30,21 +29,21 @@
 		// Remove Connection
 		if ($action == 'remove') {
 			$ANDs = array();
-			$ORs = array();
 
 			// ANDs
 			array_push($ANDs, array(
-				'userid' => $userid
+				'userid' => $userid,
+				'type'	=> $type,
 			));
 
 			// ORs
 			foreach($ids as $id) {
+				$ORs = array();
 				array_push($ORs, array(
 					'connectionid' => $id
 				));
+				$result = TableDelete($table, $ORs, $ANDs);
 			}
-
-			$result = TableDelete($table, $ORs, $ANDs);
 		}
 		
 		if ($result) {

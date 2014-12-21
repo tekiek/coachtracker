@@ -1,5 +1,6 @@
 var app = new function() {
-	this.ls = $.localStorage();
+	this.ls = new $.localStorage();
+	this.ss = new $.sessionStorage();
 	this.data = {};
 	this.config = {
 		env: (document.domain == 'localhost' ? 'dev' : 'prod'),

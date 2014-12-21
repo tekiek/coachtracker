@@ -13,6 +13,7 @@ function TableCreate($table, $config) {
 		if (!lastInArray($config, $col)) $sql .= ",";
 		else $sql .= ");";
 	}
+	logTableChange($sql, json_encode(debug_backtrace()));
 	$result = mysql_query($sql);
 	
 	if ($result) {

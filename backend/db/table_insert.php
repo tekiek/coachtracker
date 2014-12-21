@@ -8,7 +8,7 @@ function TableInsert($table, $data) {
 	$sql .= "');";
 	#echo $sql . "<br>";
 
-	
+	logTableChange($sql, json_encode(debug_backtrace()));
 	$result = mysql_query($sql);
 	if ($result) {
 		return true;

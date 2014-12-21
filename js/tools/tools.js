@@ -21,6 +21,7 @@ var tools = new function() {
 		if (_tools.els['body'].hasClass('connection')) _tools.connection.init();
 		if (_tools.els['body'].hasClass('export')) _tools.dataExport.init();
 		if (_tools.els['body'].hasClass('upload')) _tools.upload.init();
+		if (_tools.els['body'].hasClass('reports')) _tools.reports.init();
 	}
 	
 	this.ajaxInit = function() {

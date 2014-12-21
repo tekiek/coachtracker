@@ -1,6 +1,24 @@
 /* 
  * Global 
  */
+
+table.dataTable thead th.sorting,
+table.dataTable thead th.sorting_asc,
+table.dataTable thead th.sorting_desc {
+    position: relative;
+    background-image: none !important;
+	cursor: pointer;
+}
+
+table.dataTable thead th.sorting:before,
+table.dataTable thead th.sorting_asc:before,
+table.dataTable thead th.sorting_desc:before {
+	color: #CCC;
+    font-family: FontAwesome;
+	content: "\f0dc";
+	margin: 0 5px 0 0;
+}
+
 .dataTables_length  {
 	margin: 10px 0 0 10px;
 }
@@ -149,6 +167,11 @@ body .dataTables_filter .select-toggle:hover {
  * Connect 
  */
 
+body.connection .dataTables_wrapper {
+	overflow: scroll;
+	height: 300px;
+}
+
 .filter-coach,
 .filter-counselor {
 	display: none;
@@ -281,4 +304,17 @@ body.export #data-picker-wrapper .input-group {
 body.export table td.signature img {
 	width: 100%;
 	max-width: 300px;
+}
+
+/*
+ * Reports
+ */
+body.reports .chartWrapper {
+	width: 100%;
+}
+
+body.reports .chartWrapper h1 {
+	text-align: center;
+	font-size: 48px;
+	color: #777;
 }

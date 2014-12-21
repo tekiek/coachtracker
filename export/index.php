@@ -1,7 +1,9 @@
 <?php require '_config.php';  ?>
+<!doctype html>
 <html>
 	<head>
-		<link rel="stylesheet" type="text/css" href="../min/g=csstools">  
+		<link rel="stylesheet" type="text/css" href="../min/g=css-tools">  
+		<script type="text/javascript" src="../min/g=js-tools-libs"></script>
 	</head>
 
 	<body class="export">
@@ -29,8 +31,7 @@
 		</div>
 	
 		<input type="hidden" id="userId" value="<?php echo $params['user']; ?>">
-		<script type="text/javascript" src="../min/g=jslibs"></script>
-		<script type="text/javascript" src="../min/g=jstools"></script>
+		<script type="text/javascript" src="../min/g=js-tools-core"></script>
 	</body>
 </html>
 

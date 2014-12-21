@@ -110,18 +110,46 @@ app['login'] = new function() {
 		_login.setAcls();
 	}
 	
+	this.logoutUserIfTheyLeave = function() {
+		$(window).bind('beforeunload', function() {
+			
+		});
+	}
+	
 	this.loggedIn = function(user) {
-		app.ls.setItem('user', user);
 		app['data']['user'] = user;
+		_login.saveUserData();
 		_login.setAcls();
 		app.controller.loadFirstScreen();
+	}
+	
+	/*
+	 * Copy user obect in app data to storage
+	 */
+	this.saveUserData = function() {
+		app.ss.setItem('user', app.data.user);
+	}
+	
+	/*
+	 * Copy user data from storage to app object
+	 */
+	this.getUserData = function() {
+		return app.ss.getItem('user');
+	}
+	
+	/*
+	 * Clear user data from app object and storage
+	 */
+	this.clearUserData = function() {
+		app.ss.removeItem('user');
+		delete app.data.user;
 	}
 	
 	this.getLoggedInStatus = function() {
 		if (app['data']['user']) {
 			return true;
 		} else {
-			var user = app.ls.getItem('user');
+			var user = _login.getUserData();
 			if (user) {
 				app['data']['user'] = user;
 				return true;
@@ -350,9 +378,8 @@ app['login'] = new function() {
 				})
 				.always(function() {
 					app.header.destroy();
-					app.ls.removeItem('user');
-					delete app['data']['user'];
-					app.login.setAcls();
+					_login.clearUserData();
+					_login.setAcls();
 				});
 			},
 			saveCloseCallback: function() {

@@ -87,12 +87,14 @@
 		// Event Data
 		foreach($config['event'] as $col) {
 			if ($col == 'signature' && $event[$col] != "") {
-				// hack for signature
 				$row[$col] = '<img src="' . $event[$col] . '">';
-			} else {
+			} 
+			else if ($col == 'timestamp') {
+				$row[$col] = date("m-d-Y", strtotime($event[$col]));
+			}
+			else {
 				$row[$col] = $event[$col];
 			}
-			
 		}
 		
 		array_push($rows, $row);
@@ -101,7 +103,8 @@
 	$response = array(
 		'rows' => $rows,
 		'cols' => $config['header'],
-		'colLabels' => $config['headerLabels']
+		'colLabels' => $config['headerLabels'],
+		'sort' => array_search('date', $config['headerLabels'])
 	);
 	echo json_encode($response);
 ?>

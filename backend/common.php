@@ -12,6 +12,13 @@ require 'db/table_delete.php';
 require 'db/table_add_col.php';
 require 'includes/elements.php';
 
+function logTableChange($sql, $caller) {
+	$tableLogFile = data_dir() . "table-change.txt";
+	$newData = $caller . "\n";
+	$newData .= date("Y.m.d.h.i") . " : " . loginUserid() . " : " . $sql . "\n";
+	file_put_contents($tableLogFile,  $newData, FILE_APPEND);
+}
+
 function env() {
 	if ($_SERVER['HTTP_HOST'] == 'coachtracker.org' || $_SERVER['HTTP_HOST'] == 'www.coachtracker.org') {
 		return 'prod';

@@ -1,6 +1,6 @@
 <?php
 
-	require '../backend/common.php';
+	require '_config.php';
 	$params = get_params();
 	$rows = array();
 
@@ -58,7 +58,6 @@
 	// Get all events
 	$events_table = TableData('events', array());
 	$events = table_to_array($events_table);
-	$events = array_reverse($events);
 	
 	// Row Data
 	foreach($events as $event) {
@@ -73,7 +72,12 @@
 			'id' => $event['userid']
 		));
 		foreach($config['users'] as $col) {
-			$row[$col] = $user[$col];
+			if ($col == 'coach') {
+				// Hack for if is coach or not
+				$row[$col] = ($user[$col] == '1' ? 'Yes' : 'No');
+			} else {
+				$row[$col] = $user[$col];
+			}
 		}
 	
 		// Student Data
@@ -86,16 +90,22 @@
 	
 		// Event Data
 		foreach($config['event'] as $col) {
-			$row[$col] = $event[$col];
+			if ($col == 'timestamp') {
+				$row[$col] = date("m-d-Y", strtotime($event[$col]));
+			} else {
+				$row[$col] = $event[$col];
+			}
 		}
 		
 		array_push($rows, $row);
 	}
+	
 
 	$response = array(
 		'rows' => $rows,
 		'cols' => $config['header'],
-		'colLabels' => $config['headerLabels']
+		'colLabels' => $config['headerLabels'],
+		'sort' => array_search('date', $config['headerLabels'])
 	);
 	echo json_encode($response);
 ?>

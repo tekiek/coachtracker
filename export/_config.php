@@ -4,5 +4,4 @@
 	
 	$params = get_params();
 
-
 ?>

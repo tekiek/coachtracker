@@ -16,6 +16,7 @@ function TableData($table, $data, $orderBy) {
 	}
 	
 	DBConnect();
+	logTableChange($sql, json_encode(debug_backtrace()));
 	$result = mysql_query($sql);
 	
 	if ($result) {

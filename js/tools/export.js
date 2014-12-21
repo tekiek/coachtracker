@@ -98,6 +98,7 @@ tools['dataExport'] = new function() {
 			
 			_dataExport.els.tableWrapper.empty();
 			tools.table.createTable({
+				'sort'			: (response.sort ? [[response.sort, 'desc']] : null),
 				'data'			: response.rows,
 				'columns'		: response.cols,
 				'colLabels'		: response.colLabels,

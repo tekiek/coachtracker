@@ -11,6 +11,7 @@ function TableRow($table, $data) {
 	}
 	
 	DBConnect();
+	logTableChange($sql, json_encode(debug_backtrace()));
 	$table_data = mysql_query($sql);
 	
 	if ($table_data) {

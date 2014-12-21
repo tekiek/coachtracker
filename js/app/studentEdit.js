@@ -126,7 +126,7 @@ app['studentEdit'] = new function() {
 					userField['value'] = newVal;
 					_studentEdit.user[userField['key']] = newVal;
 					_studentEdit.disableField(userField);
-					app.ls.setItem('user', app.data.user);
+					app.login.saveUserData();
 				});
 			}
 		});

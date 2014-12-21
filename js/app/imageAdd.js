@@ -126,7 +126,7 @@ app['imageAdd'] = new function() {
 
 				imgEl.attr('src', imgSrc);
 				params.user[response.field] = response.value;
-				app.ls.setItem('user', app.data.user);
+				app.login.saveUserData();
 
 				app.global.alert({
 					msg	:'Saved', 

@@ -47,15 +47,16 @@ tools['table'] = new function() {
 		});
 		
 		// Create table
-		var table = $('<table class="table table-striped table-bordered"></table>'),
+		var table = $('<table class="table table-striped table-bordered order-column"></table>'),
 			wrapper = $('<div></div>');
 		wrapper.append(table);
 
 		table.dataTable({
+			"order"				: params['sort'] ? params['sort'] : [],
 			'data'				: data,
 			'columns'			: columns,
 			'paging'			: params['paging'],
-			'ordering'			: false,
+			'ordering'			: true,
 			'info'				: false,
 			'jQueryUI'			: false,
 			'dom'				: (params['export'] ? 'T<"clear">lfrtip' : '<"clear">lfrtip'),
@@ -80,13 +81,12 @@ tools['table'] = new function() {
 				]
 			} : ''),
 			fnPreDrawCallback	: function() {
-				$(window).overlay({ show: true });
+				//$(window).overlay({ show: true });
 			},
 			'fnDrawCallback'	: function() {
-				$(window).overlay({show: false, delay: 250 });
+				//$(window).overlay({show: false, delay: 250 });
 			},
 			'fnInitComplete'	: function() {
-				
 				// Add to ui
 				if (params['dataObj']) {
 					params['dataObj']['table'] = table;
@@ -94,10 +94,13 @@ tools['table'] = new function() {
 					params['dataObj']['columns'] = columns;
 				}
 				params['prependTo'].prepend(wrapper);
-
+				
+				// Add column sorting events
+				_table.columnSort(params['dataObj']);
+				
 				// Add select & unselect
 				if (params['selectToggle']) _table.addSelectToggle(params['dataObj']);
-
+				
 				// Add row selection
 				if (params['selectTableRows']) _table.selectTableRows(params['dataObj']);
 				
@@ -114,14 +117,32 @@ tools['table'] = new function() {
 	}
 	
 	/*
+	 * Add events to column sorting
+	 * params:
+	 * - table (element)
+	 * - storageId (string) selected | available
+	 */
+	this.columnSort = function(params) {
+		var cols = params['table'].find('thead th');
+		
+		cols.click(function() {
+			$(window).overlay({
+				show: true, 
+				delay: 250 
+			});
+		})
+	}
+	
+	/*
 	 * Add table row selector
 	 * params:
 	 * - table (element)
 	 * - storageId (string) selected | available
 	 */
 	this.selectTableRows = function(params) {
+		var tableBody = params['table'].find('tbody');
 		var options = {
-			filter: 'tbody tr',
+			filter: 'tr',
 			stop: function() {
 				EventManager.fire('RowSelectUpdate');
 			},
@@ -149,7 +170,7 @@ tools['table'] = new function() {
 			}
 		}
 		
-		params['table'].selectable(options);
+		tableBody.selectable(options);
 	}
 	
 	/*

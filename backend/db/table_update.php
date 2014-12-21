@@ -19,6 +19,7 @@ function TableUpdate($table, $key, $data) {
 	$sql .= ";";
 
 	DBConnect();
+	logTableChange($sql, json_encode(debug_backtrace()));
 	return mysql_query($sql);
 }
 ?>

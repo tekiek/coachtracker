@@ -20,6 +20,7 @@ if ($_FILES['myfile']) {
 		
 		// Check if file headers match table cols
 		if (count(array_diff($file_data['header'], $table_cols)) > 0) {
+			$response['diff'] = array_diff($file_data['header'], $table_cols);
 			$response['error'] = "Table columns do not match!";
 		} else {
 			$response['success'] = "true";

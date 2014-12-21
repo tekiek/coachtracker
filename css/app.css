@@ -8,8 +8,7 @@ body {
 	font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif !important;
 	-webkit-font-smoothing: antialiased;
 	color: #333 !important;
-	background: #ececec !important;
-	xbackground: #0F9FB4 !important;
+	background-color: #f7f7f7 !important;
 }
 
 /**************** ANIMATION ****************/
@@ -286,6 +285,9 @@ header {
 	box-shadow: 0 0 4px rgba(0,0,0,.14), 0 4px 8px rgba(0,0,0,.28);
 	-moz-box-shadow: 0 0 4px rgba(0,0,0,.14), 0 4px 8px rgba(0,0,0,.28);
 	-webkit-box-shadow: 0 0 4px rgba(0,0,0,.14), 0 4px 8px rgba(0,0,0,.28);
+/*	border-bottom: 1px solid #C7C7C7;
+	background: white;
+	color: #868485;*/
 }
 
 body.offline header {
@@ -455,7 +457,7 @@ body.noHeader #content {
 }
 
 /**************** Signature ****************/
-canvas { 
+.signatureWrapper canvas { 
 	width: 100% !important; 
 	height: auto !important; 
 }

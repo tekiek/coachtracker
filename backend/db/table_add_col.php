@@ -8,6 +8,7 @@ function TableAddCol($table, $col) {
 	$sql .= "ADD $col $colDetails ";
 
 	DBConnect();
+	logTableChange($sql, json_encode(debug_backtrace()));
 	return mysql_query($sql);
 }
 ?>

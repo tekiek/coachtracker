@@ -11,6 +11,15 @@ foreach($_POST as $name => $value) {
 	$params[$name] = $value;
 }
 
+// Validate date
+$jsDateTS = strtotime($params['timestamp']);
+if ($jsDateTS !== false) {
+	$params['timestamp'] =  date('Y-m-d G:i:s', $jsDateTS);
+} else {
+	$params['timestamp'] = NULL;
+}
+
+
 // Create table data array
 foreach($table_cols as $col => $structure) {
 	if ($params[$col]) $table_values[$col] = $params[$col];
@@ -20,12 +29,14 @@ foreach($table_cols as $col => $structure) {
 if (TableInsert($table, $table_values)) {
 	$response = array(
 		"success" => "true",
-		"status" => "1"
+		"status" => "1",
+		"params" => $params
 	);
 } else {
 	$response = array(
 		"success" => "false",
-		"status" => "0"
+		"status" => "0",
+		"params" => $params
 	);
 }
 
