@@ -42,10 +42,10 @@ app['eventAdd'] = new function() {
 	}
 	
 	this.userSelected = function() {
-		_eventAdd.addStudentImage();
 		_eventAdd.addFields();
 		_eventAdd.addSignatureBtn();
 		_eventAdd.addSaveBtn();
+		_eventAdd.addStudentImage();
 	}
 	
 	this.addStudentImage = function() {

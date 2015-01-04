@@ -1,9 +1,17 @@
 app['imageAdd'] = new function() {
 	_imageAdd = this;
 	
+	this.els = {
+		'parent': $('#user-header')
+	}
+	
 	this.templates = {
 		'imgFile'		: '<input name="myfile" data-field="${dbId}" type="file" accept="image/*" capture="camera">',
 		'userImage'		: '<img class="user-image" src="' + app.config.studentImagePath + '${userImg}?z=${rndNum}">',
+		'userHeadline'	: '<div class="user-headline"><div class="userBgImg"></div></div>',
+		'backgroundImg'	: '',
+		'userDetails'	: '<span class="user-details text-shadow">${fname} ${lname}<br>${email}</span>',
+		'userWrapper'	: '<div class="user-wrapper"></div>'
 	}
 	
 	this.template_data = {
@@ -29,12 +37,50 @@ app['imageAdd'] = new function() {
 	 */
 	this.addUserImage = function(params) {
 		var image = $.tmpl(_imageAdd.templates.userImage, $.extend({}, params.user, { rndNum: _imageAdd.cacheBuster() }) ),
-			uploadBtn = $.tmpl(app.global.templates.button, _imageAdd.template_data.uploadBtn);
+			uploadBtn = $.tmpl(app.global.templates.button, _imageAdd.template_data.uploadBtn),
+			userHeadline = $.tmpl(_imageAdd.templates.userHeadline),
+			userWrapper = $.tmpl(_imageAdd.templates.userWrapper),
+			userDetails = $.tmpl(_imageAdd.templates.userDetails, {
+				fname: params.user.fname,
+				lname: params.user.fname,
+				email: params.user.email
+			});
+
+		$(window).scroll(function() {
+			st = $(this).scrollTop();
+			if (st > 200 ) {
+				$('.userBgImg').removeAttr('class').addClass('userBgImg blur4')
+			}
+			else if (st > 150 ) {
+				$('.userBgImg').removeAttr('class').addClass('userBgImg blur3')
+			}
+			else if (st > 100 ) {
+				$('.userBgImg').removeAttr('class').addClass('userBgImg blur2')
+			}
+			else if (st > 50 ) {
+				$('.userBgImg').removeAttr('class').addClass('userBgImg blur1')
+			}
+		})
+
+		userWrapper
+			.append(image)
+			.append(userDetails);
+		userHeadline
+			.append(userWrapper);
+			
 
 		// Add to DOM
+		var a = $('<div style="background-color: #f7f7f7 !important;"></div>');
+		a
+			.append(uploadBtn)
+			.append(params['appendTo'].html());
+			
+		params['appendTo'].empty();
+		
+		
 		params['appendTo']
-			.append(image)
-			.append(uploadBtn);
+			.append(userHeadline)
+			.append(a);
 
 		app.imageAdd.createUploadBtn({
 			btnEl: uploadBtn,
@@ -42,6 +88,8 @@ app['imageAdd'] = new function() {
 			user: params.user
 		});
 	}
+	
+	this.addScrollBlur
 
 	/*
 	 * Create upload button for new user image

@@ -17,6 +17,81 @@
 			<div id="header-fields"></div>
 		</header>
 	
+		<style>
+		.user-wrapper {
+			position: absolute;
+			top: 10%;
+			z-index: 9;
+			width: 100%;
+			text-align: center;
+		}
+		.user-image {
+			margin: 0 auto;
+			width: 150px;
+			height: 150px;
+			border-radius: 100px !important;
+		}
+		.user-details {
+			font-size: 24px;
+			width: 100%;
+		}
+		.userBgImg {
+			background-image: url('http://cdn.history.com/sites/2/2013/12/new-york-city-H.jpeg');
+			position: fixed;
+			width: 920px;
+			height: 300px;
+			overflow: hidden;
+		}
+		.userBgImg.blur0 {
+			-webkit-filter: blur(0px);
+			-moz-filter: blur(0px);
+			-o-filter: blur(0px);
+			-ms-filter: blur(0px);
+			filter: blur(0px);
+		}
+		.userBgImg.blur1 {
+			-webkit-filter: blur(1px);
+			-moz-filter: blur(1px);
+			-o-filter: blur(1px);
+			-ms-filter: blur(1px);
+			filter: blur(1px);
+		}
+		.userBgImg.blur2 {
+			-webkit-filter: blur(2px);
+			-moz-filter: blur(2px);
+			-o-filter: blur(2px);
+			-ms-filter: blur(2px);
+			filter: blur(2px);
+		}
+		.userBgImg.blur3 {
+			-webkit-filter: blur(3px);
+			-moz-filter: blur(3px);
+			-o-filter: blur(3px);
+			-ms-filter: blur(3px);
+			filter: blur(3px);
+		}
+		.userBgImg.blur4 {
+			-webkit-filter: blur(4px);
+			-moz-filter: blur(4px);
+			-o-filter: blur(4px);
+			-ms-filter: blur(4px);
+			filter: blur(4px);
+		}
+		.user-headline {
+			width: 100%;
+			overflow: hidden;
+			position: relative;
+			height: 300px;
+			z-index: -1;
+		}
+		#user-header {
+			margin-top: 120px !important;
+			width: 920px;
+		    margin: 0 auto;
+		    z-index: -1;
+		}
+		</style>
+	
 		<div id="sub-content">
 			<div data-category="event-signature" id="event-signature"></div>
 		</div>
