@@ -18,32 +18,32 @@
 	// user config
 	$config = array(
 		'admin' => array(
-			'headerLabels' => array('id', 'inputted', 'interviewer', 'coach', 'dbId', 'first', 'last', 'DOB', 'CBO', 'college', 'date', 'location', 'reason', 'duration', 'notes'),
-			'header'=> array('id', 'dateInserted', 'name', 'coach', 'dbId', 'fname', 'lname', 'dob', 'cbo', 'college', 'timestamp', 'location', 'reason', 'duration', 'notes'),
+			'headerLabels' => array('interviewer', 'coach', 'dbId', 'first', 'last', 'DOB', 'CBO', 'college', 'date', 'location', 'reason', 'duration', 'notes'),
+			'header'=> array('name', 'coach', 'dbId', 'fname', 'lname', 'dob', 'cbo', 'college', 'timestamp', 'location', 'reason', 'duration', 'notes'),
 			'users' => array('name', 'coach'),
 			'students' => array('dbId', 'fname', 'lname', 'dob', 'cbo', 'college'),
-			'event' => array('id', 'timestamp', 'location', 'reason', 'duration', 'notes', 'dateInserted')
+			'event' => array('timestamp', 'location', 'reason', 'duration', 'notes')
 		),
 		'captain' => array(
-			'headerLabels' => array('id', 'interviewer', 'coach', 'dbId', 'first', 'last', 'DOB', 'CBO', 'college', 'date', 'location', 'reason', 'duration', 'notes', 'inputted'),
-			'header'=> array('id', 'name', 'coach', 'dbId', 'fname', 'lname', 'dob', 'cbo', 'college', 'timestamp', 'location', 'reason', 'duration', 'notes', 'dateInserted'),
+			'headerLabels' => array('interviewer', 'coach', 'dbId', 'first', 'last', 'DOB', 'CBO', 'college', 'date', 'location', 'reason', 'duration', 'notes'),
+			'header'=> array('name', 'coach', 'dbId', 'fname', 'lname', 'dob', 'cbo', 'college', 'timestamp', 'location', 'reason', 'duration', 'notes'),
 			'users' => array('name', 'coach'),
 			'students' => array('dbId', 'fname', 'lname', 'dob', 'cbo', 'college'),
-			'event' => array('id', 'timestamp', 'location', 'reason', 'duration', 'notes', 'dateInserted')
+			'event' => array('timestamp', 'location', 'reason', 'duration', 'notes')
 		),
 		'counselor' => array(
-			'headerLabels' => array('id', 'interviewer', 'first', 'last', 'DOB', 'CBO', 'college', 'date', 'location', 'reason', 'duration', 'notes'),
-			'header'=> array('id', 'name', 'fname', 'lname', 'dob', 'cbo', 'college', 'timestamp', 'location', 'reason', 'duration', 'notes'),
+			'headerLabels' => array('interviewer', 'first', 'last', 'DOB', 'CBO', 'college', 'date', 'location', 'reason', 'duration', 'notes'),
+			'header'=> array('name', 'fname', 'lname', 'dob', 'cbo', 'college', 'timestamp', 'location', 'reason', 'duration', 'notes'),
 			'users' => array('name'),
 			'students' => array('fname', 'lname', 'dob', 'cbo', 'college'),
-			'event' => array('id', 'timestamp', 'location', 'reason', 'duration', 'notes')
+			'event' => array('timestamp', 'location', 'reason', 'duration', 'notes')
 		),
 		'coach' => array(
-			'headerLabels' => array('id', 'interviewer', 'first', 'last', 'phone', 'email', 'CBO', 'date', 'location', 'reason', 'duration', 'notes'),
-			'header'=> array('id', 'name', 'fname', 'lname', 'phone', 'email', 'cbo', 'timestamp', 'location', 'reason', 'duration', 'notes'),
+			'headerLabels' => array('interviewer', 'first', 'last', 'phone', 'email', 'CBO', 'date', 'location', 'reason', 'duration', 'notes'),
+			'header'=> array('name', 'fname', 'lname', 'phone', 'email', 'cbo', 'timestamp', 'location', 'reason', 'duration', 'notes'),
 			'users' => array('name'),
 			'students' => array('fname', 'lname', 'phone', 'email', 'cbo'),
-			'event' => array('id', 'timestamp', 'location', 'reason', 'duration', 'notes')
+			'event' => array('timestamp', 'location', 'reason', 'duration', 'notes')
 		)
 	);
 	$config = $config[$acl];
@@ -63,7 +63,7 @@
 	foreach($events as $event) {
 		if (!in_array($event['studentid'], $myStudents)) { continue; }
 		if ($params['fromDate'] && strtotime($params['fromDate']) > strtotime($event['timestamp'])) { continue; }
-		if ($params['toDate'] && strtotime($params['toDate']) < strtotime($event['timestamp'])) { continue; }
+		if ($params['toDate'] && strtotime($params['toDate'] . '+ 1 day') < strtotime($event['timestamp'])) { continue; }
 	
 		$row = array();
 	
