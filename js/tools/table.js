@@ -105,13 +105,16 @@ tools['table'] = new function() {
 				if (params['selectTableRows']) _table.selectTableRows(params['dataObj']);
 				
 				// Toggle Modes
-				if (params['editModeToggle']) _table.modeToggle(params['dataObj']);
+				if (params['editModeToggle']) _table.modeToggle(params['dataObj'], params['editModeToggle']);
 				
 				// Fix Search
 				_table.searchField(params['dataObj']);
 				
 				// Set table row count
 				EventManager.fire('TableRowCount');
+				
+				// Callback
+				if (params['cb']) params['cb']();
 			}
 		});
 	}
@@ -140,9 +143,9 @@ tools['table'] = new function() {
 	 * - storageId (string) selected | available
 	 */
 	this.selectTableRows = function(params) {
-		var tableBody = params['table'].find('tbody');
+		var tableBody = params['table'];
 		var options = {
-			filter: 'tr',
+			filter: 'tbody tr',
 			stop: function() {
 				EventManager.fire('RowSelectUpdate');
 			},
@@ -207,7 +210,7 @@ tools['table'] = new function() {
 			})
 	}
 	
-	this.modeToggle = function(params) {
+	this.modeToggle = function(params, editModeToggle) {
 		var table = params['table'],
 			dataTable = params['dataTable'];
 			tableId = table.attr('id'),
@@ -219,27 +222,27 @@ tools['table'] = new function() {
 				classes: 'table-mode-toggle'
 			}),
 			addToggle = $.tmpl(_table.templates.modeOption, {
-				text: 'Add Users',
+				text: 'Add',
 				id: tableId + 'addRadio',
 				name: toggleName,
 				checked: 'checked'
 			}),
 			editToggle = $.tmpl(_table.templates.modeOption, {
-				text: 'Edit Users',
+				text: 'Edit',
 				id: tableId + 'editRadio',
 				name: toggleName
 			}),
 			deleteToggle = $.tmpl(_table.templates.modeOption, {
-				text: 'Delete Users',
+				text: 'Delete',
 				id: tableId + 'deleteRadio',
 				name: toggleName
 			});
 
-		toggleWrapper
-			.append(addToggle)
-			.append(editToggle)
-			.append(deleteToggle)
-			.buttonset();
+		if ($.inArray('add', editModeToggle) > -1) toggleWrapper.append(addToggle);
+		if ($.inArray('edit', editModeToggle) > -1) toggleWrapper.append(editToggle);
+		if ($.inArray('delete', editModeToggle) > -1) toggleWrapper.append(deleteToggle);
+		toggleWrapper.buttonset();
+		
 
 		searchEl
 			.after(toggleWrapper);
@@ -299,8 +302,7 @@ tools['table'] = new function() {
 		var table = params['table'],
 			newMode = params['mode'],
 			currMode = table.attr('data-mode'),
-			disableTableSelect = params['disableSelect'],
-			isTableSelectDisabled = table.selectable("option", "disabled");
+			disableTableSelect = params['disableSelect'];
 
 		// Selected current mode
 		if (newMode == currMode) { return false; }
@@ -308,10 +310,15 @@ tools['table'] = new function() {
 		$(window).overlay({ 
 			show: true,
 			cb: function() {
-				if (disableTableSelect != isTableSelectDisabled) table.selectable("option", "disabled", disableTableSelect);
+				// Need to wrap in try/catch to avoid errors 
+				try {
+					var isTableSelectDisabled = table.selectable("option", "disabled");
+					if (disableTableSelect != isTableSelectDisabled) {
+						table.selectable("option", "disabled", disableTableSelect);
+					}
+				} catch (err) {  }
 				_table.unselectAll(params['params']);
 				table.attr('data-mode', newMode);
-				
 			}
 		});
 	}

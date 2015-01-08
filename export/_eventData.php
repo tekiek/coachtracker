@@ -18,32 +18,32 @@
 	// user config
 	$config = array(
 		'admin' => array(
-			'headerLabels' => array('interviewer', 'coach', 'id', 'first', 'last', 'DOB', 'CBO', 'college', 'date', 'location', 'reason', 'duration', 'notes'),
-			'header'=> array('name', 'coach', 'dbId', 'fname', 'lname', 'dob', 'cbo', 'college', 'timestamp', 'location', 'reason', 'duration', 'notes'),
+			'headerLabels' => array('id', 'inputted', 'interviewer', 'coach', 'dbId', 'first', 'last', 'DOB', 'CBO', 'college', 'date', 'location', 'reason', 'duration', 'notes'),
+			'header'=> array('id', 'dateInserted', 'name', 'coach', 'dbId', 'fname', 'lname', 'dob', 'cbo', 'college', 'timestamp', 'location', 'reason', 'duration', 'notes'),
 			'users' => array('name', 'coach'),
 			'students' => array('dbId', 'fname', 'lname', 'dob', 'cbo', 'college'),
-			'event' => array('timestamp', 'location', 'reason', 'duration', 'notes')
+			'event' => array('id', 'timestamp', 'location', 'reason', 'duration', 'notes', 'dateInserted')
 		),
 		'captain' => array(
-			'headerLabels' => array('interviewer', 'coach', 'id', 'first', 'last', 'DOB', 'CBO', 'college', 'date', 'location', 'reason', 'duration', 'notes'),
-			'header'=> array('name', 'coach', 'dbId', 'fname', 'lname', 'dob', 'cbo', 'college', 'timestamp', 'location', 'reason', 'duration', 'notes'),
+			'headerLabels' => array('id', 'interviewer', 'coach', 'dbId', 'first', 'last', 'DOB', 'CBO', 'college', 'date', 'location', 'reason', 'duration', 'notes', 'inputted'),
+			'header'=> array('id', 'name', 'coach', 'dbId', 'fname', 'lname', 'dob', 'cbo', 'college', 'timestamp', 'location', 'reason', 'duration', 'notes', 'dateInserted'),
 			'users' => array('name', 'coach'),
 			'students' => array('dbId', 'fname', 'lname', 'dob', 'cbo', 'college'),
-			'event' => array('timestamp', 'location', 'reason', 'duration', 'notes', 'signature')
+			'event' => array('id', 'timestamp', 'location', 'reason', 'duration', 'notes', 'dateInserted')
 		),
 		'counselor' => array(
-			'headerLabels' => array('interviewer', 'first', 'last', 'DOB', 'CBO', 'date', 'location', 'reason', 'duration', 'notes'),
-			'header'=> array('name', 'fname', 'lname', 'dob', 'cbo', 'timestamp', 'location', 'reason', 'duration', 'notes'),
+			'headerLabels' => array('id', 'interviewer', 'first', 'last', 'DOB', 'CBO', 'college', 'date', 'location', 'reason', 'duration', 'notes'),
+			'header'=> array('id', 'name', 'fname', 'lname', 'dob', 'cbo', 'college', 'timestamp', 'location', 'reason', 'duration', 'notes'),
 			'users' => array('name'),
-			'students' => array('fname', 'lname', 'dob', 'cbo'),
-			'event' => array('timestamp', 'location', 'reason', 'duration', 'notes', 'signature')
+			'students' => array('fname', 'lname', 'dob', 'cbo', 'college'),
+			'event' => array('id', 'timestamp', 'location', 'reason', 'duration', 'notes')
 		),
 		'coach' => array(
-			'headerLabels' => array('interviewer', 'first', 'last', 'phone', 'email', 'CBO', 'date', 'location', 'reason', 'duration', 'notes'),
-			'header'=> array('name', 'fname', 'lname', 'phone', 'email', 'cbo', 'timestamp', 'location', 'reason', 'duration', 'notes'),
+			'headerLabels' => array('id', 'interviewer', 'first', 'last', 'phone', 'email', 'CBO', 'date', 'location', 'reason', 'duration', 'notes'),
+			'header'=> array('id', 'name', 'fname', 'lname', 'phone', 'email', 'cbo', 'timestamp', 'location', 'reason', 'duration', 'notes'),
 			'users' => array('name'),
 			'students' => array('fname', 'lname', 'phone', 'email', 'cbo'),
-			'event' => array('timestamp', 'location', 'reason', 'duration', 'notes')
+			'event' => array('id', 'timestamp', 'location', 'reason', 'duration', 'notes')
 		)
 	);
 	$config = $config[$acl];
@@ -90,7 +90,7 @@
 	
 		// Event Data
 		foreach($config['event'] as $col) {
-			if ($col == 'timestamp') {
+			if ($col == 'timestamp' || $col == 'dateInserted') {
 				$row[$col] = date("m-d-Y", strtotime($event[$col]));
 			} else {
 				$row[$col] = $event[$col];

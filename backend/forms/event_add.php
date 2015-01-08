@@ -14,9 +14,9 @@ foreach($_POST as $name => $value) {
 // Validate date
 $jsDateTS = strtotime($params['timestamp']);
 if ($jsDateTS !== false) {
-	$params['timestamp'] =  date('Y-m-d G:i:s', $jsDateTS);
+	$params['timestamp'] =  date('Y-m-d', $jsDateTS);
 } else {
-	$params['timestamp'] = NULL;
+	$params['timestamp'] = date('Y-m-d', time());
 }
 
 

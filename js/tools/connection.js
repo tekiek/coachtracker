@@ -131,9 +131,6 @@ tools['connection'] = new function() {
 		})
 		.done(function(response) {
 			response = $.parseJSON(response);
-			console.log('response', response);
-			var totalTime = new Date().getTime()-ajaxTime;
-			console.log('totalTime', totalTime);
 			
 			if (response.success == 'true') {
 				// Available table
@@ -145,7 +142,7 @@ tools['connection'] = new function() {
 					'dataObj'		: _connection['data']['activeTab']['available'],
 					'selectToggle'	: true,
 					'selectTableRows': true,
-					'editModeToggle': true
+					'editModeToggle': ['add', 'edit', 'delete']
 				});
 				
 
@@ -158,7 +155,7 @@ tools['connection'] = new function() {
 					'dataObj'		: _connection['data']['activeTab']['selected'],
 					'selectToggle'	: true,
 					'selectTableRows': true,
-					'editModeToggle': true
+					'editModeToggle': ['add', 'edit', 'delete']
 				});
 				
 			}

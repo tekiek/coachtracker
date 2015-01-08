@@ -14,8 +14,9 @@ tools['dataExport'] = new function() {
 	};
 
 	this.apis = {
-		'events': '_eventData.php',
-		'signatures': '_signatureData.php',
+		'events'		: '_eventData.php',
+		'signatures'	: '_signatureData.php',
+		'eventDelete'	: '_eventDelete.php'
 	}
 
 	this.init = function() {
@@ -24,6 +25,12 @@ tools['dataExport'] = new function() {
 		_dataExport.tableTypeSelect();
 		_dataExport.getTableData();
 		$(window).overlay({show: false, delay: 250 });
+		
+		// Listen for row selection in Delete Mode
+		EventManager.observe('RowSelect:delete', _dataExport.rowDelete);
+		
+		// Listen for row selection in Edit Mode
+		EventManager.observe('RowSelect:edit', _dataExport.rowEdit);
 	}
 	
 	this.tableTypeSelect = function() {
@@ -94,7 +101,6 @@ tools['dataExport'] = new function() {
 		})
 		.done(function(response) {
 			response = $.parseJSON(response);
-			console.log('response', response);
 			
 			_dataExport.els.tableWrapper.empty();
 			tools.table.createTable({
@@ -105,9 +111,37 @@ tools['dataExport'] = new function() {
 				'prependTo'		: _dataExport.els.tableWrapper,
 				'export'		: true,
 				'paging'		: true,
-				'dataObj'		: _dataExport.data,
+				'dataObj'		: _dataExport.data
 			});
 		});
 	}
+	
+	this.rowDelete = function(params) {
+		var data = params['data'],
+			table = data['table'],
+			rowEl = params['row'],
+			rowId = rowEl.find('.id').text();
 
+		var response = false;
+		if (confirm("Delete this user?") == true) {
+			response = true;
+		}
+
+		if (!response || !rowId) { return true; }
+		$.ajax({
+			url: _dataExport.apis.eventDelete,
+			data: {
+				id: rowId
+			}
+		})
+		.done(function(response) {
+			response = $.parseJSON(response);
+		
+			if (response.status) {
+				rowEl.effect('pulsate', {}, 500, function() {
+					table.fnDeleteRow(rowEl);
+				});
+			}
+		});
+	}
 }();

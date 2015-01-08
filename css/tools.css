@@ -2,6 +2,37 @@
  * Global 
  */
 
+table td:hover { 
+	cursor: pointer;  
+}
+table tr:hover:not(.ui-selected) td {
+	background: rgba(255,255,0,0.2) !important;
+}
+table[data-mode="edit"] tr:hover:not(.ui-selected) td {
+	background: rgba(0,255,0,0.2) !important;
+}
+table[data-mode="edit"] tr.ui-selected td {
+	background: rgba(0,255,0,0.4) !important;
+}
+table[data-mode="delete"] tr:hover:not(.ui-selected) td {
+	background: rgba(255,0,0,0.2) !important;
+}
+table[data-mode="delete"] tr.ui-selected td {
+	background: rgba(255,0,0,0.4) !important;
+}
+
+table {
+	opacity: 1.0 !important;
+}
+
+.dataTables_filter .table-mode-toggle {
+	float: right;
+}
+
+.dataTables_filter > label {
+	display: block;
+}
+
 table.dataTable thead th.sorting,
 table.dataTable thead th.sorting_asc,
 table.dataTable thead th.sorting_desc {
@@ -152,6 +183,7 @@ body.upload #loading-message {
 /* Data Tables */
 body .dataTables_filter {
 	padding: 5px 10px;
+	clear: both;
 }
 body .dataTables_filter input {
 	padding: 2px 10px;
@@ -233,41 +265,11 @@ body.connection #user_select_field {
 	-webkit-box-shadow: 0 15px 10px -10px rgba(34,25,25,0.4);
 }
 
-body.connection .dataTables_filter > label {
-	display: block;
-}
-
-body.connection .dataTables_filter .table-mode-toggle {
-	float: right;
-}
-
-body.connection table.ui-state-disabled {
-	opacity: 1.0;
-}
-
 body.connection #tabs .data-window {
 	border: 0px;
 }
 body.connection #tabs table {
 	border: 1px solid #aaa;
-}
-body.connection td:hover { 
-	cursor: pointer;  
-}
-body.connection table tr:hover:not(.ui-selected) td {
-	background: rgba(255,255,0,0.2) !important;
-}
-body.connection table[data-mode="edit"] tr:hover:not(.ui-selected) td {
-	background: rgba(0,255,0,0.2) !important;
-}
-body.connection table[data-mode="edit"] tr.ui-selected td {
-	background: rgba(0,255,0,0.4) !important;
-}
-body.connection table[data-mode="delete"] tr:hover:not(.ui-selected) td {
-	background: rgba(255,0,0,0.2) !important;
-}
-body.connection table[data-mode="delete"] tr.ui-selected td {
-	background: rgba(255,0,0,0.4) !important;
 }
 
 

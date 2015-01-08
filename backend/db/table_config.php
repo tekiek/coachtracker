@@ -68,7 +68,8 @@
 			'reason' 	=> 'varchar(255)',
 			'notes' 	=> 'varchar(255)',
 			'signature' => 'LONGTEXT',
-			'timestamp' => 'TIMESTAMP DEFAULT CURRENT_TIMESTAMP',
+			'timestamp' => 'TIMESTAMP NULL',
+			'dateInserted' => 'TIMESTAMP DEFAULT CURRENT_TIMESTAMP',
 			'followup' => 'BOOLEAN DEFAULT FALSE NOT NULL'
 		);
 		return $events;

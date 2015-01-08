@@ -5,7 +5,7 @@ app['studentEdit'] = new function() {
 		parent: $('div#user-screen')
 	}
 	this.templates = {
-		'userField'	: '<div class="input-group input-group-lg"></div>',
+		'userField'	: '<div class="input-group input-group-lg ${dbId}"></div>',
 		'editBtn'	: '<span class="input-group-addon edit-user-btn"><i data-action="edit" class="fa fa-pencil fa-lg"></i></span>',
 		'cancelBtn'	: '<span class="input-group-addon edit-user-btn"><i data-action="cancel" class="fa fa-times fa-lg"></i></span>',
 		'saveBtn'	: '<span class="input-group-addon edit-user-btn"><i data-action="save" class="fa fa-floppy-o fa-lg"></i></span>',
@@ -44,7 +44,7 @@ app['studentEdit'] = new function() {
 	
 		$.each(userFields, function(key, fieldData) {
 			fieldData['value'] = _studentEdit.user[key];
-			var userField = $.tmpl(_studentEdit.templates.userField, {}),
+			var userField = $.tmpl(_studentEdit.templates.userField, fieldData),
 				editBtn = $.tmpl(_studentEdit.templates.editBtn, {}),
 				cancelBtn = $.tmpl(_studentEdit.templates.cancelBtn, {}),
 				saveBtn = $.tmpl(_studentEdit.templates.saveBtn, {}),

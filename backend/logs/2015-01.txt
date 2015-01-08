@@ -1,0 +1,332 @@
+[{"file":"\/Users\/CMK\/Desktop\/Dev\/coachtracker\/connect\/_update.php","line":25,"function":"TableInsert","args":["connections",{"type":"student","userid":"37","connectionid":"1"}]}]
+2015.01.07.03.19 : 1 : INSERT INTO connections (type, userid, connectionid) VALUES ('student', '37', '1');
+[{"file":"\/Users\/CMK\/Desktop\/Dev\/coachtracker\/connect\/_userDelete.php","line":22,"function":"TableDelete","args":["students",[{"id":"40"}]]}]
+2015.01.07.03.19 : 1 : DELETE FROM students WHERE id='40';
+[{"file":"\/Users\/CMK\/Desktop\/Dev\/coachtracker\/connect\/_config.php","line":24,"function":"TableData","args":["users",[],"name"]},{"file":"\/Users\/CMK\/Desktop\/Dev\/coachtracker\/connect\/_config.php","line":6,"function":"getUserList","args":[]},{"file":"\/Users\/CMK\/Desktop\/Dev\/coachtracker\/connect\/index.php","line":1,"args":["\/Users\/CMK\/Desktop\/Dev\/coachtracker\/connect\/_config.php"],"function":"require"}]
+2015.01.07.03.21 : 1 : SELECT * FROM users ORDER BY name
+[{"file":"\/Users\/CMK\/Desktop\/Dev\/coachtracker\/connect\/_userDetails.php","line":5,"function":"TableRow","args":["users",{"id":"37"}]}]
+2015.01.07.03.21 : 1 : SELECT * FROM users WHERE id='37' 
+[{"file":"\/Users\/CMK\/Desktop\/Dev\/coachtracker\/connect\/_connections.php","line":18,"function":"TableData","args":["connections",{"userid":"37","type":"student"}]}]
+2015.01.07.03.21 : 1 : SELECT * FROM connections WHERE userid='37'  and type='student' 
+[{"file":"\/Users\/CMK\/Desktop\/Dev\/coachtracker\/connect\/_connections.php","line":29,"function":"TableData","args":["students",null]}]
+2015.01.07.03.21 : 1 : SELECT * FROM students
+[{"file":"\/Users\/CMK\/Desktop\/Dev\/coachtracker\/export\/_eventData.php","line":10,"function":"TableRow","args":["users",{"id":"1"}]}]
+2015.01.07.03.24 : 1 : SELECT * FROM users WHERE id='1' 
+[{"file":"\/Users\/CMK\/Desktop\/Dev\/coachtracker\/backend\/includes\/connections.php","line":15,"function":"TableData","args":["connections",{"userid":"1","type":"student"}]},{"file":"\/Users\/CMK\/Desktop\/Dev\/coachtracker\/export\/_eventData.php","line":52,"function":"getConnections","args":["student","1"]}]
+2015.01.07.03.24 : 1 : SELECT * FROM connections WHERE userid='1'  and type='student' 
+[{"file":"\/Users\/CMK\/Desktop\/Dev\/coachtracker\/backend\/includes\/connections.php","line":38,"function":"TableData","args":["students",null]},{"file":"\/Users\/CMK\/Desktop\/Dev\/coachtracker\/export\/_eventData.php","line":52,"function":"getConnections","args":["student","1"]}]
+2015.01.07.03.24 : 1 : SELECT * FROM students
+[{"file":"\/Users\/CMK\/Desktop\/Dev\/coachtracker\/export\/_eventData.php","line":59,"function":"TableData","args":["events",[]]}]
+2015.01.07.03.24 : 1 : SELECT * FROM events
+[{"file":"\/Users\/CMK\/Desktop\/Dev\/coachtracker\/export\/_eventData.php","line":73,"function":"TableRow","args":["users",{"id":"17"}]}]
+2015.01.07.03.24 : 1 : SELECT * FROM users WHERE id='17' 
+[{"file":"\/Users\/CMK\/Desktop\/Dev\/coachtracker\/export\/_eventData.php","line":86,"function":"TableRow","args":["students",{"id":"2"}]}]
+2015.01.07.03.24 : 1 : SELECT * FROM students WHERE id='2' 
+[{"file":"\/Users\/CMK\/Desktop\/Dev\/coachtracker\/export\/_eventData.php","line":73,"function":"TableRow","args":["users",{"id":"1"}]}]
+2015.01.07.03.24 : 1 : SELECT * FROM users WHERE id='1' 
+[{"file":"\/Users\/CMK\/Desktop\/Dev\/coachtracker\/export\/_eventData.php","line":86,"function":"TableRow","args":["students",{"id":"2"}]}]
+2015.01.07.03.24 : 1 : SELECT * FROM students WHERE id='2' 
+[{"file":"\/Users\/CMK\/Desktop\/Dev\/coachtracker\/export\/_eventData.php","line":73,"function":"TableRow","args":["users",{"id":"1"}]}]
+2015.01.07.03.24 : 1 : SELECT * FROM users WHERE id='1' 
+[{"file":"\/Users\/CMK\/Desktop\/Dev\/coachtracker\/export\/_eventData.php","line":86,"function":"TableRow","args":["students",{"id":"260"}]}]
+2015.01.07.03.24 : 1 : SELECT * FROM students WHERE id='260' 
+[{"file":"\/Users\/CMK\/Desktop\/Dev\/coachtracker\/export\/_eventData.php","line":73,"function":"TableRow","args":["users",{"id":"1"}]}]
+2015.01.07.03.24 : 1 : SELECT * FROM users WHERE id='1' 
+[{"file":"\/Users\/CMK\/Desktop\/Dev\/coachtracker\/export\/_eventData.php","line":86,"function":"TableRow","args":["students",{"id":"260"}]}]
+2015.01.07.03.24 : 1 : SELECT * FROM students WHERE id='260' 
+[{"file":"\/Users\/CMK\/Desktop\/Dev\/coachtracker\/export\/_eventData.php","line":10,"function":"TableRow","args":["users",{"id":"1"}]}]
+2015.01.07.03.26 : 1 : SELECT * FROM users WHERE id='1' 
+[{"file":"\/Users\/CMK\/Desktop\/Dev\/coachtracker\/backend\/includes\/connections.php","line":15,"function":"TableData","args":["connections",{"userid":"1","type":"student"}]},{"file":"\/Users\/CMK\/Desktop\/Dev\/coachtracker\/export\/_eventData.php","line":52,"function":"getConnections","args":["student","1"]}]
+2015.01.07.03.26 : 1 : SELECT * FROM connections WHERE userid='1'  and type='student' 
+[{"file":"\/Users\/CMK\/Desktop\/Dev\/coachtracker\/backend\/includes\/connections.php","line":38,"function":"TableData","args":["students",null]},{"file":"\/Users\/CMK\/Desktop\/Dev\/coachtracker\/export\/_eventData.php","line":52,"function":"getConnections","args":["student","1"]}]
+2015.01.07.03.26 : 1 : SELECT * FROM students
+[{"file":"\/Users\/CMK\/Desktop\/Dev\/coachtracker\/export\/_eventData.php","line":59,"function":"TableData","args":["events",[]]}]
+2015.01.07.03.26 : 1 : SELECT * FROM events
+[{"file":"\/Users\/CMK\/Desktop\/Dev\/coachtracker\/export\/_eventData.php","line":73,"function":"TableRow","args":["users",{"id":"17"}]}]
+2015.01.07.03.26 : 1 : SELECT * FROM users WHERE id='17' 
+[{"file":"\/Users\/CMK\/Desktop\/Dev\/coachtracker\/export\/_eventData.php","line":86,"function":"TableRow","args":["students",{"id":"2"}]}]
+2015.01.07.03.26 : 1 : SELECT * FROM students WHERE id='2' 
+[{"file":"\/Users\/CMK\/Desktop\/Dev\/coachtracker\/export\/_eventData.php","line":73,"function":"TableRow","args":["users",{"id":"1"}]}]
+2015.01.07.03.26 : 1 : SELECT * FROM users WHERE id='1' 
+[{"file":"\/Users\/CMK\/Desktop\/Dev\/coachtracker\/export\/_eventData.php","line":86,"function":"TableRow","args":["students",{"id":"2"}]}]
+2015.01.07.03.26 : 1 : SELECT * FROM students WHERE id='2' 
+[{"file":"\/Users\/CMK\/Desktop\/Dev\/coachtracker\/export\/_eventData.php","line":73,"function":"TableRow","args":["users",{"id":"1"}]}]
+2015.01.07.03.26 : 1 : SELECT * FROM users WHERE id='1' 
+[{"file":"\/Users\/CMK\/Desktop\/Dev\/coachtracker\/export\/_eventData.php","line":86,"function":"TableRow","args":["students",{"id":"260"}]}]
+2015.01.07.03.26 : 1 : SELECT * FROM students WHERE id='260' 
+[{"file":"\/Users\/CMK\/Desktop\/Dev\/coachtracker\/export\/_eventData.php","line":73,"function":"TableRow","args":["users",{"id":"1"}]}]
+2015.01.07.03.26 : 1 : SELECT * FROM users WHERE id='1' 
+[{"file":"\/Users\/CMK\/Desktop\/Dev\/coachtracker\/export\/_eventData.php","line":86,"function":"TableRow","args":["students",{"id":"260"}]}]
+2015.01.07.03.26 : 1 : SELECT * FROM students WHERE id='260' 
+[{"file":"\/Users\/CMK\/Desktop\/Dev\/coachtracker\/connect\/_config.php","line":24,"function":"TableData","args":["users",[],"name"]},{"file":"\/Users\/CMK\/Desktop\/Dev\/coachtracker\/connect\/_config.php","line":6,"function":"getUserList","args":[]},{"file":"\/Users\/CMK\/Desktop\/Dev\/coachtracker\/connect\/index.php","line":1,"args":["\/Users\/CMK\/Desktop\/Dev\/coachtracker\/connect\/_config.php"],"function":"require"}]
+2015.01.07.03.28 : 1 : SELECT * FROM users ORDER BY name
+[{"file":"\/Users\/CMK\/Desktop\/Dev\/coachtracker\/connect\/_userDetails.php","line":5,"function":"TableRow","args":["users",{"id":"37"}]}]
+2015.01.07.03.28 : 1 : SELECT * FROM users WHERE id='37' 
+[{"file":"\/Users\/CMK\/Desktop\/Dev\/coachtracker\/connect\/_connections.php","line":18,"function":"TableData","args":["connections",{"userid":"37","type":"student"}]}]
+2015.01.07.03.28 : 1 : SELECT * FROM connections WHERE userid='37'  and type='student' 
+[{"file":"\/Users\/CMK\/Desktop\/Dev\/coachtracker\/connect\/_connections.php","line":29,"function":"TableData","args":["students",null]}]
+2015.01.07.03.28 : 1 : SELECT * FROM students
+[{"file":"\/Users\/CMK\/Desktop\/Dev\/coachtracker\/connect\/_config.php","line":24,"function":"TableData","args":["users",[],"name"]},{"file":"\/Users\/CMK\/Desktop\/Dev\/coachtracker\/connect\/_config.php","line":6,"function":"getUserList","args":[]},{"file":"\/Users\/CMK\/Desktop\/Dev\/coachtracker\/connect\/index.php","line":1,"args":["\/Users\/CMK\/Desktop\/Dev\/coachtracker\/connect\/_config.php"],"function":"require"}]
+2015.01.07.03.28 : 1 : SELECT * FROM users ORDER BY name
+[{"file":"\/Users\/CMK\/Desktop\/Dev\/coachtracker\/connect\/_userDetails.php","line":5,"function":"TableRow","args":["users",{"id":"32"}]}]
+2015.01.07.03.28 : 1 : SELECT * FROM users WHERE id='32' 
+[{"file":"\/Users\/CMK\/Desktop\/Dev\/coachtracker\/connect\/_connections.php","line":18,"function":"TableData","args":["connections",{"userid":"32","type":"student"}]}]
+2015.01.07.03.28 : 1 : SELECT * FROM connections WHERE userid='32'  and type='student' 
+[{"file":"\/Users\/CMK\/Desktop\/Dev\/coachtracker\/connect\/_connections.php","line":29,"function":"TableData","args":["students",null]}]
+2015.01.07.03.28 : 1 : SELECT * FROM students
+[{"file":"\/Users\/CMK\/Desktop\/Dev\/coachtracker\/export\/_eventData.php","line":10,"function":"TableRow","args":["users",{"id":"1"}]}]
+2015.01.07.03.33 : 1 : SELECT * FROM users WHERE id='1' 
+[{"file":"\/Users\/CMK\/Desktop\/Dev\/coachtracker\/backend\/includes\/connections.php","line":15,"function":"TableData","args":["connections",{"userid":"1","type":"student"}]},{"file":"\/Users\/CMK\/Desktop\/Dev\/coachtracker\/export\/_eventData.php","line":52,"function":"getConnections","args":["student","1"]}]
+2015.01.07.03.33 : 1 : SELECT * FROM connections WHERE userid='1'  and type='student' 
+[{"file":"\/Users\/CMK\/Desktop\/Dev\/coachtracker\/backend\/includes\/connections.php","line":38,"function":"TableData","args":["students",null]},{"file":"\/Users\/CMK\/Desktop\/Dev\/coachtracker\/export\/_eventData.php","line":52,"function":"getConnections","args":["student","1"]}]
+2015.01.07.03.33 : 1 : SELECT * FROM students
+[{"file":"\/Users\/CMK\/Desktop\/Dev\/coachtracker\/export\/_eventData.php","line":59,"function":"TableData","args":["events",[]]}]
+2015.01.07.03.33 : 1 : SELECT * FROM events
+[{"file":"\/Users\/CMK\/Desktop\/Dev\/coachtracker\/export\/_eventData.php","line":73,"function":"TableRow","args":["users",{"id":"17"}]}]
+2015.01.07.03.33 : 1 : SELECT * FROM users WHERE id='17' 
+[{"file":"\/Users\/CMK\/Desktop\/Dev\/coachtracker\/export\/_eventData.php","line":86,"function":"TableRow","args":["students",{"id":"2"}]}]
+2015.01.07.03.33 : 1 : SELECT * FROM students WHERE id='2' 
+[{"file":"\/Users\/CMK\/Desktop\/Dev\/coachtracker\/export\/_eventData.php","line":73,"function":"TableRow","args":["users",{"id":"1"}]}]
+2015.01.07.03.33 : 1 : SELECT * FROM users WHERE id='1' 
+[{"file":"\/Users\/CMK\/Desktop\/Dev\/coachtracker\/export\/_eventData.php","line":86,"function":"TableRow","args":["students",{"id":"2"}]}]
+2015.01.07.03.33 : 1 : SELECT * FROM students WHERE id='2' 
+[{"file":"\/Users\/CMK\/Desktop\/Dev\/coachtracker\/export\/_eventData.php","line":73,"function":"TableRow","args":["users",{"id":"1"}]}]
+2015.01.07.03.33 : 1 : SELECT * FROM users WHERE id='1' 
+[{"file":"\/Users\/CMK\/Desktop\/Dev\/coachtracker\/export\/_eventData.php","line":86,"function":"TableRow","args":["students",{"id":"260"}]}]
+2015.01.07.03.33 : 1 : SELECT * FROM students WHERE id='260' 
+[{"file":"\/Users\/CMK\/Desktop\/Dev\/coachtracker\/export\/_eventData.php","line":73,"function":"TableRow","args":["users",{"id":"1"}]}]
+2015.01.07.03.33 : 1 : SELECT * FROM users WHERE id='1' 
+[{"file":"\/Users\/CMK\/Desktop\/Dev\/coachtracker\/export\/_eventData.php","line":86,"function":"TableRow","args":["students",{"id":"260"}]}]
+2015.01.07.03.33 : 1 : SELECT * FROM students WHERE id='260' 
+[{"file":"\/Users\/CMK\/Desktop\/Dev\/coachtracker\/export\/_eventData.php","line":10,"function":"TableRow","args":["users",{"id":"1"}]}]
+2015.01.07.03.34 : 1 : SELECT * FROM users WHERE id='1' 
+[{"file":"\/Users\/CMK\/Desktop\/Dev\/coachtracker\/backend\/includes\/connections.php","line":15,"function":"TableData","args":["connections",{"userid":"1","type":"student"}]},{"file":"\/Users\/CMK\/Desktop\/Dev\/coachtracker\/export\/_eventData.php","line":52,"function":"getConnections","args":["student","1"]}]
+2015.01.07.03.34 : 1 : SELECT * FROM connections WHERE userid='1'  and type='student' 
+[{"file":"\/Users\/CMK\/Desktop\/Dev\/coachtracker\/backend\/includes\/connections.php","line":38,"function":"TableData","args":["students",null]},{"file":"\/Users\/CMK\/Desktop\/Dev\/coachtracker\/export\/_eventData.php","line":52,"function":"getConnections","args":["student","1"]}]
+2015.01.07.03.34 : 1 : SELECT * FROM students
+[{"file":"\/Users\/CMK\/Desktop\/Dev\/coachtracker\/export\/_eventData.php","line":59,"function":"TableData","args":["events",[]]}]
+2015.01.07.03.34 : 1 : SELECT * FROM events
+[{"file":"\/Users\/CMK\/Desktop\/Dev\/coachtracker\/export\/_eventData.php","line":73,"function":"TableRow","args":["users",{"id":"17"}]}]
+2015.01.07.03.34 : 1 : SELECT * FROM users WHERE id='17' 
+[{"file":"\/Users\/CMK\/Desktop\/Dev\/coachtracker\/export\/_eventData.php","line":86,"function":"TableRow","args":["students",{"id":"2"}]}]
+2015.01.07.03.34 : 1 : SELECT * FROM students WHERE id='2' 
+[{"file":"\/Users\/CMK\/Desktop\/Dev\/coachtracker\/export\/_eventData.php","line":73,"function":"TableRow","args":["users",{"id":"1"}]}]
+2015.01.07.03.34 : 1 : SELECT * FROM users WHERE id='1' 
+[{"file":"\/Users\/CMK\/Desktop\/Dev\/coachtracker\/export\/_eventData.php","line":86,"function":"TableRow","args":["students",{"id":"2"}]}]
+2015.01.07.03.34 : 1 : SELECT * FROM students WHERE id='2' 
+[{"file":"\/Users\/CMK\/Desktop\/Dev\/coachtracker\/export\/_eventData.php","line":73,"function":"TableRow","args":["users",{"id":"1"}]}]
+2015.01.07.03.34 : 1 : SELECT * FROM users WHERE id='1' 
+[{"file":"\/Users\/CMK\/Desktop\/Dev\/coachtracker\/export\/_eventData.php","line":86,"function":"TableRow","args":["students",{"id":"260"}]}]
+2015.01.07.03.34 : 1 : SELECT * FROM students WHERE id='260' 
+[{"file":"\/Users\/CMK\/Desktop\/Dev\/coachtracker\/export\/_eventData.php","line":73,"function":"TableRow","args":["users",{"id":"1"}]}]
+2015.01.07.03.34 : 1 : SELECT * FROM users WHERE id='1' 
+[{"file":"\/Users\/CMK\/Desktop\/Dev\/coachtracker\/export\/_eventData.php","line":86,"function":"TableRow","args":["students",{"id":"260"}]}]
+2015.01.07.03.34 : 1 : SELECT * FROM students WHERE id='260' 
+[{"file":"\/Users\/CMK\/Desktop\/Dev\/coachtracker\/export\/_eventData.php","line":10,"function":"TableRow","args":["users",{"id":"1"}]}]
+2015.01.07.03.34 : 1 : SELECT * FROM users WHERE id='1' 
+[{"file":"\/Users\/CMK\/Desktop\/Dev\/coachtracker\/backend\/includes\/connections.php","line":15,"function":"TableData","args":["connections",{"userid":"1","type":"student"}]},{"file":"\/Users\/CMK\/Desktop\/Dev\/coachtracker\/export\/_eventData.php","line":52,"function":"getConnections","args":["student","1"]}]
+2015.01.07.03.34 : 1 : SELECT * FROM connections WHERE userid='1'  and type='student' 
+[{"file":"\/Users\/CMK\/Desktop\/Dev\/coachtracker\/backend\/includes\/connections.php","line":38,"function":"TableData","args":["students",null]},{"file":"\/Users\/CMK\/Desktop\/Dev\/coachtracker\/export\/_eventData.php","line":52,"function":"getConnections","args":["student","1"]}]
+2015.01.07.03.34 : 1 : SELECT * FROM students
+[{"file":"\/Users\/CMK\/Desktop\/Dev\/coachtracker\/export\/_eventData.php","line":59,"function":"TableData","args":["events",[]]}]
+2015.01.07.03.34 : 1 : SELECT * FROM events
+[{"file":"\/Users\/CMK\/Desktop\/Dev\/coachtracker\/export\/_eventData.php","line":73,"function":"TableRow","args":["users",{"id":"17"}]}]
+2015.01.07.03.34 : 1 : SELECT * FROM users WHERE id='17' 
+[{"file":"\/Users\/CMK\/Desktop\/Dev\/coachtracker\/export\/_eventData.php","line":86,"function":"TableRow","args":["students",{"id":"2"}]}]
+2015.01.07.03.34 : 1 : SELECT * FROM students WHERE id='2' 
+[{"file":"\/Users\/CMK\/Desktop\/Dev\/coachtracker\/export\/_eventData.php","line":73,"function":"TableRow","args":["users",{"id":"1"}]}]
+2015.01.07.03.34 : 1 : SELECT * FROM users WHERE id='1' 
+[{"file":"\/Users\/CMK\/Desktop\/Dev\/coachtracker\/export\/_eventData.php","line":86,"function":"TableRow","args":["students",{"id":"2"}]}]
+2015.01.07.03.34 : 1 : SELECT * FROM students WHERE id='2' 
+[{"file":"\/Users\/CMK\/Desktop\/Dev\/coachtracker\/export\/_eventData.php","line":73,"function":"TableRow","args":["users",{"id":"1"}]}]
+2015.01.07.03.34 : 1 : SELECT * FROM users WHERE id='1' 
+[{"file":"\/Users\/CMK\/Desktop\/Dev\/coachtracker\/export\/_eventData.php","line":86,"function":"TableRow","args":["students",{"id":"260"}]}]
+2015.01.07.03.34 : 1 : SELECT * FROM students WHERE id='260' 
+[{"file":"\/Users\/CMK\/Desktop\/Dev\/coachtracker\/export\/_eventData.php","line":73,"function":"TableRow","args":["users",{"id":"1"}]}]
+2015.01.07.03.34 : 1 : SELECT * FROM users WHERE id='1' 
+[{"file":"\/Users\/CMK\/Desktop\/Dev\/coachtracker\/export\/_eventData.php","line":86,"function":"TableRow","args":["students",{"id":"260"}]}]
+2015.01.07.03.34 : 1 : SELECT * FROM students WHERE id='260' 
+[{"file":"\/Users\/CMK\/Desktop\/Dev\/coachtracker\/export\/_eventDelete.php","line":21,"function":"TableDelete","args":["events",[{"id":"815"}]]}]
+2015.01.07.03.34 : 1 : DELETE FROM events WHERE id='815';
+[{"file":"\/Users\/CMK\/Desktop\/Dev\/coachtracker\/export\/_eventData.php","line":10,"function":"TableRow","args":["users",{"id":"1"}]}]
+2015.01.07.03.34 : 1 : SELECT * FROM users WHERE id='1' 
+[{"file":"\/Users\/CMK\/Desktop\/Dev\/coachtracker\/backend\/includes\/connections.php","line":15,"function":"TableData","args":["connections",{"userid":"1","type":"student"}]},{"file":"\/Users\/CMK\/Desktop\/Dev\/coachtracker\/export\/_eventData.php","line":52,"function":"getConnections","args":["student","1"]}]
+2015.01.07.03.34 : 1 : SELECT * FROM connections WHERE userid='1'  and type='student' 
+[{"file":"\/Users\/CMK\/Desktop\/Dev\/coachtracker\/backend\/includes\/connections.php","line":38,"function":"TableData","args":["students",null]},{"file":"\/Users\/CMK\/Desktop\/Dev\/coachtracker\/export\/_eventData.php","line":52,"function":"getConnections","args":["student","1"]}]
+2015.01.07.03.34 : 1 : SELECT * FROM students
+[{"file":"\/Users\/CMK\/Desktop\/Dev\/coachtracker\/export\/_eventData.php","line":59,"function":"TableData","args":["events",[]]}]
+2015.01.07.03.34 : 1 : SELECT * FROM events
+[{"file":"\/Users\/CMK\/Desktop\/Dev\/coachtracker\/export\/_eventData.php","line":73,"function":"TableRow","args":["users",{"id":"17"}]}]
+2015.01.07.03.34 : 1 : SELECT * FROM users WHERE id='17' 
+[{"file":"\/Users\/CMK\/Desktop\/Dev\/coachtracker\/export\/_eventData.php","line":86,"function":"TableRow","args":["students",{"id":"2"}]}]
+2015.01.07.03.34 : 1 : SELECT * FROM students WHERE id='2' 
+[{"file":"\/Users\/CMK\/Desktop\/Dev\/coachtracker\/export\/_eventData.php","line":73,"function":"TableRow","args":["users",{"id":"1"}]}]
+2015.01.07.03.34 : 1 : SELECT * FROM users WHERE id='1' 
+[{"file":"\/Users\/CMK\/Desktop\/Dev\/coachtracker\/export\/_eventData.php","line":86,"function":"TableRow","args":["students",{"id":"2"}]}]
+2015.01.07.03.34 : 1 : SELECT * FROM students WHERE id='2' 
+[{"file":"\/Users\/CMK\/Desktop\/Dev\/coachtracker\/export\/_eventData.php","line":73,"function":"TableRow","args":["users",{"id":"1"}]}]
+2015.01.07.03.34 : 1 : SELECT * FROM users WHERE id='1' 
+[{"file":"\/Users\/CMK\/Desktop\/Dev\/coachtracker\/export\/_eventData.php","line":86,"function":"TableRow","args":["students",{"id":"260"}]}]
+2015.01.07.03.34 : 1 : SELECT * FROM students WHERE id='260' 
+[{"file":"\/Users\/CMK\/Desktop\/Dev\/coachtracker\/export\/_eventData.php","line":10,"function":"TableRow","args":["users",{"id":"1"}]}]
+2015.01.07.03.35 : 1 : SELECT * FROM users WHERE id='1' 
+[{"file":"\/Users\/CMK\/Desktop\/Dev\/coachtracker\/backend\/includes\/connections.php","line":15,"function":"TableData","args":["connections",{"userid":"1","type":"student"}]},{"file":"\/Users\/CMK\/Desktop\/Dev\/coachtracker\/export\/_eventData.php","line":52,"function":"getConnections","args":["student","1"]}]
+2015.01.07.03.35 : 1 : SELECT * FROM connections WHERE userid='1'  and type='student' 
+[{"file":"\/Users\/CMK\/Desktop\/Dev\/coachtracker\/backend\/includes\/connections.php","line":38,"function":"TableData","args":["students",null]},{"file":"\/Users\/CMK\/Desktop\/Dev\/coachtracker\/export\/_eventData.php","line":52,"function":"getConnections","args":["student","1"]}]
+2015.01.07.03.35 : 1 : SELECT * FROM students
+[{"file":"\/Users\/CMK\/Desktop\/Dev\/coachtracker\/export\/_eventData.php","line":59,"function":"TableData","args":["events",[]]}]
+2015.01.07.03.35 : 1 : SELECT * FROM events
+[{"file":"\/Users\/CMK\/Desktop\/Dev\/coachtracker\/export\/_eventData.php","line":73,"function":"TableRow","args":["users",{"id":"17"}]}]
+2015.01.07.03.35 : 1 : SELECT * FROM users WHERE id='17' 
+[{"file":"\/Users\/CMK\/Desktop\/Dev\/coachtracker\/export\/_eventData.php","line":86,"function":"TableRow","args":["students",{"id":"2"}]}]
+2015.01.07.03.35 : 1 : SELECT * FROM students WHERE id='2' 
+[{"file":"\/Users\/CMK\/Desktop\/Dev\/coachtracker\/export\/_eventData.php","line":73,"function":"TableRow","args":["users",{"id":"1"}]}]
+2015.01.07.03.35 : 1 : SELECT * FROM users WHERE id='1' 
+[{"file":"\/Users\/CMK\/Desktop\/Dev\/coachtracker\/export\/_eventData.php","line":86,"function":"TableRow","args":["students",{"id":"2"}]}]
+2015.01.07.03.35 : 1 : SELECT * FROM students WHERE id='2' 
+[{"file":"\/Users\/CMK\/Desktop\/Dev\/coachtracker\/export\/_eventData.php","line":73,"function":"TableRow","args":["users",{"id":"1"}]}]
+2015.01.07.03.35 : 1 : SELECT * FROM users WHERE id='1' 
+[{"file":"\/Users\/CMK\/Desktop\/Dev\/coachtracker\/export\/_eventData.php","line":86,"function":"TableRow","args":["students",{"id":"260"}]}]
+2015.01.07.03.35 : 1 : SELECT * FROM students WHERE id='260' 
+[{"file":"\/Users\/CMK\/Desktop\/Dev\/coachtracker\/export\/_eventDelete.php","line":21,"function":"TableDelete","args":["events",[{"id":"814"}]]}]
+2015.01.07.03.35 : 1 : DELETE FROM events WHERE id='814';
+[{"file":"\/Users\/CMK\/Desktop\/Dev\/coachtracker\/export\/_eventDelete.php","line":21,"function":"TableDelete","args":["events",[{"id":"504"}]]}]
+2015.01.07.03.35 : 1 : DELETE FROM events WHERE id='504';
+[{"file":"\/Users\/CMK\/Desktop\/Dev\/coachtracker\/export\/_eventData.php","line":10,"function":"TableRow","args":["users",{"id":"1"}]}]
+2015.01.07.03.37 : 1 : SELECT * FROM users WHERE id='1' 
+[{"file":"\/Users\/CMK\/Desktop\/Dev\/coachtracker\/backend\/includes\/connections.php","line":15,"function":"TableData","args":["connections",{"userid":"1","type":"student"}]},{"file":"\/Users\/CMK\/Desktop\/Dev\/coachtracker\/export\/_eventData.php","line":52,"function":"getConnections","args":["student","1"]}]
+2015.01.07.03.37 : 1 : SELECT * FROM connections WHERE userid='1'  and type='student' 
+[{"file":"\/Users\/CMK\/Desktop\/Dev\/coachtracker\/backend\/includes\/connections.php","line":38,"function":"TableData","args":["students",null]},{"file":"\/Users\/CMK\/Desktop\/Dev\/coachtracker\/export\/_eventData.php","line":52,"function":"getConnections","args":["student","1"]}]
+2015.01.07.03.37 : 1 : SELECT * FROM students
+[{"file":"\/Users\/CMK\/Desktop\/Dev\/coachtracker\/export\/_eventData.php","line":59,"function":"TableData","args":["events",[]]}]
+2015.01.07.03.37 : 1 : SELECT * FROM events
+[{"file":"\/Users\/CMK\/Desktop\/Dev\/coachtracker\/export\/_eventData.php","line":73,"function":"TableRow","args":["users",{"id":"1"}]}]
+2015.01.07.03.37 : 1 : SELECT * FROM users WHERE id='1' 
+[{"file":"\/Users\/CMK\/Desktop\/Dev\/coachtracker\/export\/_eventData.php","line":86,"function":"TableRow","args":["students",{"id":"2"}]}]
+2015.01.07.03.37 : 1 : SELECT * FROM students WHERE id='2' 
+[{"file":"\/Users\/CMK\/Desktop\/Dev\/coachtracker\/export\/_eventData.php","line":10,"function":"TableRow","args":["users",{"id":"1"}]}]
+2015.01.07.03.40 : 1 : SELECT * FROM users WHERE id='1' 
+[{"file":"\/Users\/CMK\/Desktop\/Dev\/coachtracker\/backend\/includes\/connections.php","line":15,"function":"TableData","args":["connections",{"userid":"1","type":"student"}]},{"file":"\/Users\/CMK\/Desktop\/Dev\/coachtracker\/export\/_eventData.php","line":52,"function":"getConnections","args":["student","1"]}]
+2015.01.07.03.40 : 1 : SELECT * FROM connections WHERE userid='1'  and type='student' 
+[{"file":"\/Users\/CMK\/Desktop\/Dev\/coachtracker\/backend\/includes\/connections.php","line":38,"function":"TableData","args":["students",null]},{"file":"\/Users\/CMK\/Desktop\/Dev\/coachtracker\/export\/_eventData.php","line":52,"function":"getConnections","args":["student","1"]}]
+2015.01.07.03.40 : 1 : SELECT * FROM students
+[{"file":"\/Users\/CMK\/Desktop\/Dev\/coachtracker\/export\/_eventData.php","line":59,"function":"TableData","args":["events",[]]}]
+2015.01.07.03.40 : 1 : SELECT * FROM events
+[{"file":"\/Users\/CMK\/Desktop\/Dev\/coachtracker\/export\/_eventData.php","line":73,"function":"TableRow","args":["users",{"id":"1"}]}]
+2015.01.07.03.40 : 1 : SELECT * FROM users WHERE id='1' 
+[{"file":"\/Users\/CMK\/Desktop\/Dev\/coachtracker\/export\/_eventData.php","line":86,"function":"TableRow","args":["students",{"id":"2"}]}]
+2015.01.07.03.40 : 1 : SELECT * FROM students WHERE id='2' 
+[{"file":"\/Users\/CMK\/Desktop\/Dev\/coachtracker\/export\/_eventData.php","line":10,"function":"TableRow","args":["users",{"id":"1"}]}]
+2015.01.07.03.49 : 1 : SELECT * FROM users WHERE id='1' 
+[{"file":"\/Users\/CMK\/Desktop\/Dev\/coachtracker\/backend\/includes\/connections.php","line":15,"function":"TableData","args":["connections",{"userid":"1","type":"student"}]},{"file":"\/Users\/CMK\/Desktop\/Dev\/coachtracker\/export\/_eventData.php","line":52,"function":"getConnections","args":["student","1"]}]
+2015.01.07.03.49 : 1 : SELECT * FROM connections WHERE userid='1'  and type='student' 
+[{"file":"\/Users\/CMK\/Desktop\/Dev\/coachtracker\/backend\/includes\/connections.php","line":38,"function":"TableData","args":["students",null]},{"file":"\/Users\/CMK\/Desktop\/Dev\/coachtracker\/export\/_eventData.php","line":52,"function":"getConnections","args":["student","1"]}]
+2015.01.07.03.49 : 1 : SELECT * FROM students
+[{"file":"\/Users\/CMK\/Desktop\/Dev\/coachtracker\/export\/_eventData.php","line":59,"function":"TableData","args":["events",[]]}]
+2015.01.07.03.49 : 1 : SELECT * FROM events
+[{"file":"\/Users\/CMK\/Desktop\/Dev\/coachtracker\/export\/_eventData.php","line":73,"function":"TableRow","args":["users",{"id":"1"}]}]
+2015.01.07.03.49 : 1 : SELECT * FROM users WHERE id='1' 
+[{"file":"\/Users\/CMK\/Desktop\/Dev\/coachtracker\/export\/_eventData.php","line":86,"function":"TableRow","args":["students",{"id":"2"}]}]
+2015.01.07.03.49 : 1 : SELECT * FROM students WHERE id='2' 
+[{"file":"\/Users\/CMK\/Desktop\/Dev\/coachtracker\/export\/_eventData.php","line":10,"function":"TableRow","args":["users",{"id":"1"}]}]
+2015.01.07.03.51 : 1 : SELECT * FROM users WHERE id='1' 
+[{"file":"\/Users\/CMK\/Desktop\/Dev\/coachtracker\/backend\/includes\/connections.php","line":15,"function":"TableData","args":["connections",{"userid":"1","type":"student"}]},{"file":"\/Users\/CMK\/Desktop\/Dev\/coachtracker\/export\/_eventData.php","line":52,"function":"getConnections","args":["student","1"]}]
+2015.01.07.03.51 : 1 : SELECT * FROM connections WHERE userid='1'  and type='student' 
+[{"file":"\/Users\/CMK\/Desktop\/Dev\/coachtracker\/backend\/includes\/connections.php","line":38,"function":"TableData","args":["students",null]},{"file":"\/Users\/CMK\/Desktop\/Dev\/coachtracker\/export\/_eventData.php","line":52,"function":"getConnections","args":["student","1"]}]
+2015.01.07.03.51 : 1 : SELECT * FROM students
+[{"file":"\/Users\/CMK\/Desktop\/Dev\/coachtracker\/export\/_eventData.php","line":59,"function":"TableData","args":["events",[]]}]
+2015.01.07.03.51 : 1 : SELECT * FROM events
+[{"file":"\/Users\/CMK\/Desktop\/Dev\/coachtracker\/export\/_eventData.php","line":73,"function":"TableRow","args":["users",{"id":"1"}]}]
+2015.01.07.03.51 : 1 : SELECT * FROM users WHERE id='1' 
+[{"file":"\/Users\/CMK\/Desktop\/Dev\/coachtracker\/export\/_eventData.php","line":86,"function":"TableRow","args":["students",{"id":"2"}]}]
+2015.01.07.03.51 : 1 : SELECT * FROM students WHERE id='2' 
+[{"file":"\/Users\/CMK\/Desktop\/Dev\/coachtracker\/export\/_eventEdit.php","line":12,"function":"TableUpdate","args":["events",{"id":"608"},{"id":"608","inputted":"11-30--0001","interviewer":"Chris Kelley","coach":"No","dbId":"A1","first":"poop","last":"Smith","DOB":"null","CBO":"null","college":"SUNY IT","date":"12-08-2014","location":"cbo-office","reason":"Financial Aid;Money Issues","duration":"00:05","notes":"null"}]}]
+2015.01.07.03.51 : 1 : UPDATE events SET id = '608', inputted = '11-30--0001', interviewer = 'Chris Kelley', coach = 'No', dbId = 'A1', first = 'poop', last = 'Smith', DOB = 'null', CBO = 'null', college = 'SUNY IT', date = '12-08-2014', location = 'cbo-office', reason = 'Financial Aid;Money Issues', duration = '00:05', notes = 'null' WHERE id = '608';
+[{"file":"\/Users\/CMK\/Desktop\/Dev\/coachtracker\/export\/_eventEdit.php","line":15,"function":"TableRow","args":["events",{"id":"608"}]}]
+2015.01.07.03.51 : 1 : SELECT * FROM events WHERE id='608' 
+[{"file":"\/Users\/CMK\/Desktop\/Dev\/coachtracker\/export\/_eventData.php","line":10,"function":"TableRow","args":["users",{"id":"1"}]}]
+2015.01.07.03.51 : 1 : SELECT * FROM users WHERE id='1' 
+[{"file":"\/Users\/CMK\/Desktop\/Dev\/coachtracker\/backend\/includes\/connections.php","line":15,"function":"TableData","args":["connections",{"userid":"1","type":"student"}]},{"file":"\/Users\/CMK\/Desktop\/Dev\/coachtracker\/export\/_eventData.php","line":52,"function":"getConnections","args":["student","1"]}]
+2015.01.07.03.51 : 1 : SELECT * FROM connections WHERE userid='1'  and type='student' 
+[{"file":"\/Users\/CMK\/Desktop\/Dev\/coachtracker\/backend\/includes\/connections.php","line":38,"function":"TableData","args":["students",null]},{"file":"\/Users\/CMK\/Desktop\/Dev\/coachtracker\/export\/_eventData.php","line":52,"function":"getConnections","args":["student","1"]}]
+2015.01.07.03.51 : 1 : SELECT * FROM students
+[{"file":"\/Users\/CMK\/Desktop\/Dev\/coachtracker\/export\/_eventData.php","line":59,"function":"TableData","args":["events",[]]}]
+2015.01.07.03.51 : 1 : SELECT * FROM events
+[{"file":"\/Users\/CMK\/Desktop\/Dev\/coachtracker\/export\/_eventData.php","line":73,"function":"TableRow","args":["users",{"id":"1"}]}]
+2015.01.07.03.51 : 1 : SELECT * FROM users WHERE id='1' 
+[{"file":"\/Users\/CMK\/Desktop\/Dev\/coachtracker\/export\/_eventData.php","line":86,"function":"TableRow","args":["students",{"id":"2"}]}]
+2015.01.07.03.51 : 1 : SELECT * FROM students WHERE id='2' 
+[{"file":"\/Users\/CMK\/Desktop\/Dev\/coachtracker\/export\/_eventEdit.php","line":12,"function":"TableUpdate","args":["events",{"id":"608"},{"id":"608","inputted":"11-30--0001","interviewer":"bob","coach":"No","dbId":"A1","first":"poop","last":"Smith","DOB":"null","CBO":"null","college":"SUNY IT","date":"12-08-2014","location":"cbo-office","reason":"Financial Aid;Money Issues","duration":"00:05","notes":"null"}]}]
+2015.01.07.03.52 : 1 : UPDATE events SET id = '608', inputted = '11-30--0001', interviewer = 'bob', coach = 'No', dbId = 'A1', first = 'poop', last = 'Smith', DOB = 'null', CBO = 'null', college = 'SUNY IT', date = '12-08-2014', location = 'cbo-office', reason = 'Financial Aid;Money Issues', duration = '00:05', notes = 'null' WHERE id = '608';
+[{"file":"\/Users\/CMK\/Desktop\/Dev\/coachtracker\/export\/_eventEdit.php","line":15,"function":"TableRow","args":["events",{"id":"608"}]}]
+2015.01.07.03.52 : 1 : SELECT * FROM events WHERE id='608' 
+[{"file":"\/Users\/CMK\/Desktop\/Dev\/coachtracker\/export\/_eventData.php","line":10,"function":"TableRow","args":["users",{"id":"1"}]}]
+2015.01.07.03.52 : 1 : SELECT * FROM users WHERE id='1' 
+[{"file":"\/Users\/CMK\/Desktop\/Dev\/coachtracker\/backend\/includes\/connections.php","line":15,"function":"TableData","args":["connections",{"userid":"1","type":"student"}]},{"file":"\/Users\/CMK\/Desktop\/Dev\/coachtracker\/export\/_eventData.php","line":52,"function":"getConnections","args":["student","1"]}]
+2015.01.07.03.52 : 1 : SELECT * FROM connections WHERE userid='1'  and type='student' 
+[{"file":"\/Users\/CMK\/Desktop\/Dev\/coachtracker\/backend\/includes\/connections.php","line":38,"function":"TableData","args":["students",null]},{"file":"\/Users\/CMK\/Desktop\/Dev\/coachtracker\/export\/_eventData.php","line":52,"function":"getConnections","args":["student","1"]}]
+2015.01.07.03.52 : 1 : SELECT * FROM students
+[{"file":"\/Users\/CMK\/Desktop\/Dev\/coachtracker\/export\/_eventData.php","line":59,"function":"TableData","args":["events",[]]}]
+2015.01.07.03.52 : 1 : SELECT * FROM events
+[{"file":"\/Users\/CMK\/Desktop\/Dev\/coachtracker\/export\/_eventData.php","line":73,"function":"TableRow","args":["users",{"id":"1"}]}]
+2015.01.07.03.52 : 1 : SELECT * FROM users WHERE id='1' 
+[{"file":"\/Users\/CMK\/Desktop\/Dev\/coachtracker\/export\/_eventData.php","line":86,"function":"TableRow","args":["students",{"id":"2"}]}]
+2015.01.07.03.52 : 1 : SELECT * FROM students WHERE id='2' 
+[{"file":"\/Users\/CMK\/Desktop\/Dev\/coachtracker\/export\/_eventEdit.php","line":12,"function":"TableUpdate","args":["events",{"id":"608"},{"id":"608","inputted":"11-30--0001","interviewer":"Chris Kelley","coach":"No","dbId":"A1","first":"poop","last":"Smith","DOB":"null","CBO":"null","college":"SUNY IT","date":"12-08-2014","location":"cbo-office","reason":"Financial Aid;Money Issues","duration":"00:05","notes":"null"}]}]
+2015.01.07.03.52 : 1 : UPDATE events SET id = '608', inputted = '11-30--0001', interviewer = 'Chris Kelley', coach = 'No', dbId = 'A1', first = 'poop', last = 'Smith', DOB = 'null', CBO = 'null', college = 'SUNY IT', date = '12-08-2014', location = 'cbo-office', reason = 'Financial Aid;Money Issues', duration = '00:05', notes = 'null' WHERE id = '608';
+[{"file":"\/Users\/CMK\/Desktop\/Dev\/coachtracker\/export\/_eventEdit.php","line":15,"function":"TableRow","args":["events",{"id":"608"}]}]
+2015.01.07.03.52 : 1 : SELECT * FROM events WHERE id='608' 
+[{"file":"\/Users\/CMK\/Desktop\/Dev\/coachtracker\/export\/_eventData.php","line":10,"function":"TableRow","args":["users",{"id":"1"}]}]
+2015.01.07.03.53 : 1 : SELECT * FROM users WHERE id='1' 
+[{"file":"\/Users\/CMK\/Desktop\/Dev\/coachtracker\/backend\/includes\/connections.php","line":15,"function":"TableData","args":["connections",{"userid":"1","type":"student"}]},{"file":"\/Users\/CMK\/Desktop\/Dev\/coachtracker\/export\/_eventData.php","line":52,"function":"getConnections","args":["student","1"]}]
+2015.01.07.03.53 : 1 : SELECT * FROM connections WHERE userid='1'  and type='student' 
+[{"file":"\/Users\/CMK\/Desktop\/Dev\/coachtracker\/backend\/includes\/connections.php","line":38,"function":"TableData","args":["students",null]},{"file":"\/Users\/CMK\/Desktop\/Dev\/coachtracker\/export\/_eventData.php","line":52,"function":"getConnections","args":["student","1"]}]
+2015.01.07.03.53 : 1 : SELECT * FROM students
+[{"file":"\/Users\/CMK\/Desktop\/Dev\/coachtracker\/export\/_eventData.php","line":59,"function":"TableData","args":["events",[]]}]
+2015.01.07.03.53 : 1 : SELECT * FROM events
+[{"file":"\/Users\/CMK\/Desktop\/Dev\/coachtracker\/export\/_eventData.php","line":73,"function":"TableRow","args":["users",{"id":"1"}]}]
+2015.01.07.03.53 : 1 : SELECT * FROM users WHERE id='1' 
+[{"file":"\/Users\/CMK\/Desktop\/Dev\/coachtracker\/export\/_eventData.php","line":86,"function":"TableRow","args":["students",{"id":"2"}]}]
+2015.01.07.03.53 : 1 : SELECT * FROM students WHERE id='2' 
+[{"file":"\/Users\/CMK\/Desktop\/Dev\/coachtracker\/export\/_eventEdit.php","line":12,"function":"TableUpdate","args":["events",{"id":"608"},{"id":"608","inputted":"11-30--0001","interviewer":"bob","coach":"No","dbId":"A1","first":"poop","last":"Smith","DOB":"null","CBO":"null","college":"SUNY IT","date":"12-08-2014","location":"cbo-office","reason":"Financial Aid;Money Issues","duration":"00:05","notes":"null"}]}]
+2015.01.07.03.53 : 1 : UPDATE events SET id = '608', inputted = '11-30--0001', interviewer = 'bob', coach = 'No', dbId = 'A1', first = 'poop', last = 'Smith', DOB = 'null', CBO = 'null', college = 'SUNY IT', date = '12-08-2014', location = 'cbo-office', reason = 'Financial Aid;Money Issues', duration = '00:05', notes = 'null' WHERE id = '608';
+[{"file":"\/Users\/CMK\/Desktop\/Dev\/coachtracker\/export\/_eventEdit.php","line":15,"function":"TableRow","args":["events",{"id":"608"}]}]
+2015.01.07.03.53 : 1 : SELECT * FROM events WHERE id='608' 
+[{"file":"\/Users\/CMK\/Desktop\/Dev\/coachtracker\/export\/_eventData.php","line":10,"function":"TableRow","args":["users",{"id":"1"}]}]
+2015.01.07.03.58 : 1 : SELECT * FROM users WHERE id='1' 
+[{"file":"\/Users\/CMK\/Desktop\/Dev\/coachtracker\/backend\/includes\/connections.php","line":15,"function":"TableData","args":["connections",{"userid":"1","type":"student"}]},{"file":"\/Users\/CMK\/Desktop\/Dev\/coachtracker\/export\/_eventData.php","line":52,"function":"getConnections","args":["student","1"]}]
+2015.01.07.03.58 : 1 : SELECT * FROM connections WHERE userid='1'  and type='student' 
+[{"file":"\/Users\/CMK\/Desktop\/Dev\/coachtracker\/backend\/includes\/connections.php","line":38,"function":"TableData","args":["students",null]},{"file":"\/Users\/CMK\/Desktop\/Dev\/coachtracker\/export\/_eventData.php","line":52,"function":"getConnections","args":["student","1"]}]
+2015.01.07.03.58 : 1 : SELECT * FROM students
+[{"file":"\/Users\/CMK\/Desktop\/Dev\/coachtracker\/export\/_eventData.php","line":59,"function":"TableData","args":["events",[]]}]
+2015.01.07.03.58 : 1 : SELECT * FROM events
+[{"file":"\/Users\/CMK\/Desktop\/Dev\/coachtracker\/export\/_eventData.php","line":73,"function":"TableRow","args":["users",{"id":"1"}]}]
+2015.01.07.03.58 : 1 : SELECT * FROM users WHERE id='1' 
+[{"file":"\/Users\/CMK\/Desktop\/Dev\/coachtracker\/export\/_eventData.php","line":86,"function":"TableRow","args":["students",{"id":"2"}]}]
+2015.01.07.03.58 : 1 : SELECT * FROM students WHERE id='2' 
+[{"file":"\/Users\/CMK\/Desktop\/Dev\/coachtracker\/export\/_eventData.php","line":10,"function":"TableRow","args":["users",{"id":"1"}]}]
+2015.01.07.04.03 : 1 : SELECT * FROM users WHERE id='1' 
+[{"file":"\/Users\/CMK\/Desktop\/Dev\/coachtracker\/backend\/includes\/connections.php","line":15,"function":"TableData","args":["connections",{"userid":"1","type":"student"}]},{"file":"\/Users\/CMK\/Desktop\/Dev\/coachtracker\/export\/_eventData.php","line":52,"function":"getConnections","args":["student","1"]}]
+2015.01.07.04.03 : 1 : SELECT * FROM connections WHERE userid='1'  and type='student' 
+[{"file":"\/Users\/CMK\/Desktop\/Dev\/coachtracker\/backend\/includes\/connections.php","line":38,"function":"TableData","args":["students",null]},{"file":"\/Users\/CMK\/Desktop\/Dev\/coachtracker\/export\/_eventData.php","line":52,"function":"getConnections","args":["student","1"]}]
+2015.01.07.04.03 : 1 : SELECT * FROM students
+[{"file":"\/Users\/CMK\/Desktop\/Dev\/coachtracker\/export\/_eventData.php","line":59,"function":"TableData","args":["events",[]]}]
+2015.01.07.04.03 : 1 : SELECT * FROM events
+[{"file":"\/Users\/CMK\/Desktop\/Dev\/coachtracker\/export\/_eventData.php","line":73,"function":"TableRow","args":["users",{"id":"1"}]}]
+2015.01.07.04.03 : 1 : SELECT * FROM users WHERE id='1' 
+[{"file":"\/Users\/CMK\/Desktop\/Dev\/coachtracker\/export\/_eventData.php","line":86,"function":"TableRow","args":["students",{"id":"2"}]}]
+2015.01.07.04.03 : 1 : SELECT * FROM students WHERE id='2' 
+[{"file":"\/Users\/CMK\/Desktop\/Dev\/coachtracker\/backend\/db\/table_count.php","line":4,"function":"TableData","args":["users",{"email":"tekiek@gmail.com","password":"poop"}]},{"file":"\/Users\/CMK\/Desktop\/Dev\/coachtracker\/backend\/forms\/users_login.php","line":19,"function":"TableCount","args":["users",{"email":"tekiek@gmail.com","password":"poop"}]}]
+2015.01.08.02.32 : 1 : SELECT * FROM users WHERE email='tekiek@gmail.com'  and password='poop' 
+[{"file":"\/Users\/CMK\/Desktop\/Dev\/coachtracker\/backend\/forms\/users_login.php","line":22,"function":"TableRow","args":["users",{"email":"tekiek@gmail.com","password":"poop"}]}]
+2015.01.08.02.32 : 1 : SELECT * FROM users WHERE email='tekiek@gmail.com'  and password='poop' 
+[{"file":"\/Users\/CMK\/Desktop\/Dev\/coachtracker\/backend\/includes\/connections.php","line":15,"function":"TableData","args":["connections",{"userid":"1","type":"student"}]},{"file":"\/Users\/CMK\/Desktop\/Dev\/coachtracker\/backend\/forms\/users_login.php","line":28,"function":"getConnections","args":["student","1"]}]
+2015.01.08.02.32 : 1 : SELECT * FROM connections WHERE userid='1'  and type='student' 
+[{"file":"\/Users\/CMK\/Desktop\/Dev\/coachtracker\/backend\/includes\/connections.php","line":38,"function":"TableData","args":["students",null]},{"file":"\/Users\/CMK\/Desktop\/Dev\/coachtracker\/backend\/forms\/users_login.php","line":28,"function":"getConnections","args":["student","1"]}]
+2015.01.08.02.32 : 1 : SELECT * FROM students
+[{"file":"\/Users\/CMK\/Desktop\/Dev\/coachtracker\/backend\/includes\/connections.php","line":15,"function":"TableData","args":["connections",{"userid":"1","type":"user"}]},{"file":"\/Users\/CMK\/Desktop\/Dev\/coachtracker\/backend\/forms\/users_login.php","line":29,"function":"getConnections","args":["user","1"]}]
+2015.01.08.02.32 : 1 : SELECT * FROM connections WHERE userid='1'  and type='user' 
+[{"file":"\/Users\/CMK\/Desktop\/Dev\/coachtracker\/backend\/includes\/connections.php","line":27,"function":"TableData","args":["connections",{"connectionid":"1","type":"user"}]},{"file":"\/Users\/CMK\/Desktop\/Dev\/coachtracker\/backend\/forms\/users_login.php","line":29,"function":"getConnections","args":["user","1"]}]
+2015.01.08.02.32 : 1 : SELECT * FROM connections WHERE connectionid='1'  and type='user' 
+[{"file":"\/Users\/CMK\/Desktop\/Dev\/coachtracker\/backend\/includes\/connections.php","line":38,"function":"TableData","args":["users",null]},{"file":"\/Users\/CMK\/Desktop\/Dev\/coachtracker\/backend\/forms\/users_login.php","line":29,"function":"getConnections","args":["user","1"]}]
+2015.01.08.02.32 : 1 : SELECT * FROM users

@@ -456,6 +456,17 @@ body.noHeader #content {
 	margin: 0 0 20px 0;
 }
 
+/**************** Student Edit ****************/
+body.acl-can-coach #user-screen .input-group.fname .edit-user-btn,
+body.acl-can-coach #user-screen .input-group.lname .edit-user-btn,
+body.acl-can-coach #user-screen .input-group.cbo .edit-user-btn,
+body.acl-can-coach #user-screen .input-group.college .edit-user-btn,
+body.acl-can-coach #user-screen .input-group.school .edit-user-btn { visibility: hidden !important; }
+
+body.acl-can-counselor #user-screen .input-group.cbo .edit-user-btn,
+body.acl-can-counselor #user-screen .input-group.college .edit-user-btn,
+body.acl-can-counselor #user-screen .input-group.school .edit-user-btn { visibility: hidden !important; }
+
 /**************** Signature ****************/
 .signatureWrapper canvas { 
 	width: 100% !important; 
