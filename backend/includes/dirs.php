@@ -29,7 +29,11 @@ function data_dir() {
 }
 
 function students_image_dir() {
-	return root_dir() . "images/students/";
+	return file_root() . "images/students/";
+}
+
+function icons_image_dir() {
+	return file_root() . "images/icons/";
 }
 
 ?>

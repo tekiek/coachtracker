@@ -282,6 +282,10 @@ body.connection .ui-selected td {
  * Export 
  */
 
+body.export table .id {
+	display: none !important;
+}
+
 body.export #data-picker-wrapper,
 body.export #table-wrapper,
 body.export #table-type-wrapper {

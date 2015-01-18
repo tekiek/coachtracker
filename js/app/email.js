@@ -6,17 +6,17 @@ app['email'] = new function() {
 
 	this.init = function(params) {
 		_email.clearFrom();
-		if (!params) params = params = {};
-		if (params.message) _email.data.message = params.message;
-		if (params.subject) _email.data.subject = params.subject;
-
-		_email.getUsers();
+		_email.data = params;
+		
 		_email.buildUI();
+		if (_email.data.to) {
+			_email.getUsers();
+			_email.buildToUI();
+		}
 		_email.showDialog();
 	}
 	
 	this.clearFrom = function() {
-		_email.data = {};
 		_email.els = {};
 		_email.template_data = {
 			'followUpUsers' : {
@@ -34,6 +34,9 @@ app['email'] = new function() {
 		}
 	}
 	
+	/*
+	 * Get superiors from user data
+	 */
 	this.getUsers = function() {
 		var users = app.data.user.users;
 
@@ -47,15 +50,12 @@ app['email'] = new function() {
 		});
 		_email.data.users[app.data.user.id] = app.data.user.name;
 	}
-	
-	this.buildUI = function() {
-		var usersTemplate = $.extend({}, _email.template_data['followUpUsers']),
-			msgTemplate = $.extend({}, _email.template_data['followUpMsg']);
 
-		// Add users
-		$.each(_email.data.users, function(x, user) {
-			usersTemplate.options[x] = user;
-		});
+	/*
+	 * Build dialog w/message field
+	 */
+	this.buildUI = function() {
+		var msgTemplate = $.extend({}, _email.template_data['followUpMsg']);
 
 		// Add message
 		if (_email.data.message) {
@@ -63,8 +63,24 @@ app['email'] = new function() {
 		}
 
 		_email.els['dialog'] = $.tmpl(app.global.templates.div),
-		_email.els['userSelect'] = app.fieldController.createField(usersTemplate),
 		_email.els['message'] = app.fieldController.createField(msgTemplate);
+
+		_email.els['dialog']
+			.append(_email.els['message']);
+	}
+	
+	/*
+	 * Build TO fields
+	 */
+	this.buildToUI = function() {
+		var usersTemplate = $.extend({}, _email.template_data['followUpUsers']);
+		
+		// Add users
+		$.each(_email.data.users, function(x, user) {
+			usersTemplate.options[x] = user;
+		});
+		
+		_email.els['userSelect'] = app.fieldController.createField(usersTemplate),
 		_email.els['toWrapper'] = app.fieldController.createFieldWrapper({
 			'text': 'To',
 			'size': ' '
@@ -75,11 +91,12 @@ app['email'] = new function() {
 		
 		_email.els['toWrapper']
 			.append(_email.els['toField']);
+			
 		_email.els['dialog']
-			.append(_email.els['userSelect'])
-			.append(_email.els['toWrapper'])
-			.append(_email.els['message']);
-
+			.prepend(_email.els['toWrapper'])
+			.prepend(_email.els['userSelect']);
+			
+			
 		// Add Events
 		_email.els['userSelect'].change(function() {
 			var val = $(this).val(),
@@ -88,12 +105,12 @@ app['email'] = new function() {
 					'classes'	: 'pointer followup-user',
 					'text'		: userName
 				});
-
+		
 			// Add to DOM
 			_email.els['toField'].append(toUser);
 			toUser.attr('data-id', val);
 			$(this).val(0);
-
+		
 			// Add events
 			toUser.click(function() {
 				$(this).remove();
@@ -124,16 +141,19 @@ app['email'] = new function() {
 	}
 	
 	this.verifyForm = function() {
-		var followUpUsers = _email.els['toField'].find('.followup-user'),
-			followUpMsg = _email.els['message'].val(),
+		var followUpMsg = _email.els['message'].val(),
 			error = false;
 
-		// Check users
-		if (followUpUsers.length == 0) {
-			error = true;
-			_email.els['toField'].addClass('error');
-		} else {
-			_email.els['toField'].removeClass('error');
+		// Check to field
+		if (_email.data.to) {
+			var followUpUsers = _email.els['toField'].find('.followup-user');
+
+			if (followUpUsers.length == 0) {
+				error = true;
+				_email.els['toField'].addClass('error');
+			} else {
+				_email.els['toField'].removeClass('error');
+			}
 		}
 
 		// Check message
@@ -147,21 +167,22 @@ app['email'] = new function() {
 		return error;
 	}
 	
-	this.sendEmail = function() {
-		var data = new Object(),
-			followUpUsers = _email.els['toField'].find('.followup-user'),
-			followUpMsg = _email.els['message'].val();
-
+	this.getData = function() {
+		var data = new Object();
+		
 		// To
-		data['to'] = new Array();
-		$.each(followUpUsers, function(x, user) {
-			var userId = $(user).attr('data-id');
-			data['to'].push(userId);
-		});
-
+		if (_email.data.to) {
+			var followUpUsers = _email.els['toField'].find('.followup-user');
+			data['to'] = new Array();
+			$.each(followUpUsers, function(x, user) {
+				var userId = $(user).attr('data-id');
+				data['to'].push(userId);
+			});
+		}
+		
 		// Msg
-		data['msg'] = followUpMsg;
-
+		data['msg'] = _email.els['message'].val();
+		
 		// From
 		data['from'] = {
 			'name': app.data.user.name,
@@ -170,15 +191,22 @@ app['email'] = new function() {
 		
 		// Subject
 		data['subject'] = _email.data.subject;
-
+		
+		return data;
+	}
+	
+	this.sendEmail = function() {
+		var data = _email.getData();
+		
 		$.ajax({
 			type: "POST",
-			url: "backend/forms/event_followup.php",
+			url: _email.data.api,
 			data: data,
 			dataType: 'json',
 			offline: true
 		})
 		.always(function(response) {
+			console.log('response', response);
 			EventManager.fire('email:exit', {
 				email: data
 			});

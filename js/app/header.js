@@ -41,6 +41,14 @@ app['header'] = new function() {
 			'icon'			: 'fa-user text-shadow pointer',
 			'iconSize'		: 'fa-2x',
 			'gtAct'			: 'signout'
+		},
+		'helpWrapper': {
+			'classes'		: 'right text-shadow help-wrapper'
+		},
+		'help': {
+			'icon'			: 'fa-question-circle text-shadow pointer',
+			'iconSize'		: 'fa-2x',
+			'gtAct'			: 'help'
 		}
 	}
 
@@ -93,6 +101,26 @@ app['header'] = new function() {
 		logoWrapper.append(logoIcon);
 		_header['els']['parent'].append(logoWrapper);
 	}
+	
+	this.addHelp = function() {
+		var helpWrapper = $.tmpl(app.global.templates.div, _header.template_data['helpWrapper']),
+			helpIcon = $.tmpl(app.global.templates.icon, _header.template_data['help']),
+			userName = $.tmpl(_header.templates.userName, { name: 'Help!' });
+			
+		helpWrapper
+			.append(helpIcon)
+			.append(userName);
+		_header['els']['parent'].append(helpWrapper);
+		
+		helpWrapper.click(function() {
+			app.email.init({
+				'message': 'I had the following issue ...',
+				'subject': 'Error Email',
+				'to': false,
+				'api': 'backend/forms/help_email.php'
+			});
+		})
+	}
 
 	/************** LOGIN ***************/
 	this.addUserField = function() {
@@ -125,6 +153,7 @@ app['header'] = new function() {
 		} else {
 			_header.userLoggedOut();
 		}
+		
 	}
 	
 	this.toggleUser = function() {

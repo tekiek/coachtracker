@@ -1,8 +1,8 @@
 <?php require '_config.php';  ?>
 <html>
 	<head>
-		<link rel="stylesheet" type="text/css" href="../min/g=css-tools">  
-		<script type="text/javascript" src="../min/g=js-tools-libs"></script>
+		<?php head_includes(); ?>
+		<link rel="stylesheet" type="text/css" href="../min/g=css-tools&v=<?php echo $version ?>">  
 	</head>
 
 	<body class="connection">
@@ -77,7 +77,8 @@
 				?>
 			</div>
 		</div>
-		<script type="text/javascript" src="../min/g=js-tools-core"></script>
+		<script type="text/javascript" src="../min/g=js-tools-libs&v=<?php echo $version ?>"></script>
+		<script type="text/javascript" src="../min/g=js-tools-core&v=<?php echo $version ?>"></script>
 	</body>
 </html>
 

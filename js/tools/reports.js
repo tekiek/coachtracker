@@ -42,6 +42,7 @@ tools['reports'] = new function() {
 		})
 		.done(function(response) {
 			response = $.parseJSON(response);
+			console.log(response);
 		
 			tools.charts.create({
 				title: chartDetails.title,

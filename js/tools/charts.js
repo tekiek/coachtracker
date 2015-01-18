@@ -60,35 +60,38 @@ tools['charts'] = new function() {
 	 *  - data (obj)
 	 */
 	this.bar = function(params) {
-		var labels = [],
-			datasets = [{
-				data: [],
-				
-			}],
+		console.log('------')
+		var data = {
+				labels: [],
+				datasets: [{
+					data: []
+				}]
+			},
 			max = 0;
 
+		
 		$.each(params.data, function(x, d) {
 			max = Math.max(max, d.value);
 			
-			labels.push(d.label);
-			datasets[0]['data'].push(d.value);
+			data.labels.push(d.label);
+			data.datasets[0]['data'].push(d.value);
 		});
 		
-		datasets[0]['fillColor'] = "rgba(220,220,220,0.5)";
-		datasets[0]['strokeColor'] = "rgba(220,220,220,0.8)";
-		datasets[0]['highlightFill'] = "rgba(220,220,220,0.75)";
-		datasets[0]['highlightStroke'] = "rgba(220,220,220,1)";
+		// datasets[0]['fillColor'] = "rgba(220,220,220,0.5)";
+		// datasets[0]['strokeColor'] = "rgba(220,220,220,0.8)";
+		// datasets[0]['highlightFill'] = "rgba(220,220,220,0.75)";
+		// datasets[0]['highlightStroke'] = "rgba(220,220,220,1)";
 		
-		new Chart(params.ctx).Bar({
-			labels: labels,
-			datasets: datasets
-		}, {
-			scaleOverride: true,
-			scaleSteps: 10,
-			scaleStepWidth: Math.ceil(max/9),
-			scaleStartValue: 0,
-			scaleGridLineColor : "rgba(0,0,0,.05)",
-		 
+		console.log(data);
+
+		
+		new Chart(params.ctx).Bar(data, {
+			// scaleOverride: true,
+			// scaleSteps: 10,
+			// scaleStepWidth: Math.ceil(max/9),
+			// scaleStartValue: 0,
+			// scaleGridLineColor : "rgba(0,0,0,.05)",
+			// 		 
 		});
 	}
 

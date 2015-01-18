@@ -101,6 +101,11 @@ tools['dataExport'] = new function() {
 		})
 		.done(function(response) {
 			response = $.parseJSON(response);
+			var editModeToggle = false;
+			
+			if (response.acl && 'admin|counselor|coach'.match(response.acl)) {
+				editModeToggle = ['off', 'delete'];
+			} 
 			
 			_dataExport.els.tableWrapper.empty();
 			tools.table.createTable({
@@ -111,7 +116,8 @@ tools['dataExport'] = new function() {
 				'prependTo'		: _dataExport.els.tableWrapper,
 				'export'		: true,
 				'paging'		: true,
-				'dataObj'		: _dataExport.data
+				'dataObj'		: _dataExport.data,
+				'editModeToggle': editModeToggle
 			});
 		});
 	}
@@ -126,7 +132,6 @@ tools['dataExport'] = new function() {
 		if (confirm("Delete this user?") == true) {
 			response = true;
 		}
-
 		if (!response || !rowId) { return true; }
 		$.ajax({
 			url: _dataExport.apis.eventDelete,

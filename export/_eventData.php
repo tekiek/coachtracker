@@ -18,25 +18,25 @@
 	// user config
 	$config = array(
 		'admin' => array(
-			'headerLabels' => array('interviewer', 'coach', 'dbId', 'first', 'last', 'DOB', 'CBO', 'college', 'date', 'location', 'reason', 'duration', 'notes'),
-			'header'=> array('name', 'coach', 'dbId', 'fname', 'lname', 'dob', 'cbo', 'college', 'timestamp', 'location', 'reason', 'duration', 'notes'),
+			'headerLabels' => array('id', 'interviewer', 'coach', 'dbId', 'first', 'last', 'DOB', 'CBO', 'college', 'date', 'location', 'reason', 'duration', 'notes'),
+			'header'=> array('id', 'name', 'coach', 'dbId', 'fname', 'lname', 'dob', 'cbo', 'college', 'timestamp', 'location', 'reason', 'duration', 'notes'),
 			'users' => array('name', 'coach'),
 			'students' => array('dbId', 'fname', 'lname', 'dob', 'cbo', 'college'),
-			'event' => array('timestamp', 'location', 'reason', 'duration', 'notes')
+			'event' => array('id','timestamp', 'location', 'reason', 'duration', 'notes')
 		),
 		'captain' => array(
-			'headerLabels' => array('interviewer', 'coach', 'dbId', 'first', 'last', 'DOB', 'CBO', 'college', 'date', 'location', 'reason', 'duration', 'notes'),
-			'header'=> array('name', 'coach', 'dbId', 'fname', 'lname', 'dob', 'cbo', 'college', 'timestamp', 'location', 'reason', 'duration', 'notes'),
+			'headerLabels' => array('id', 'interviewer', 'coach', 'dbId', 'first', 'last', 'DOB', 'CBO', 'college', 'date', 'location', 'reason', 'duration', 'notes'),
+			'header'=> array('id', 'name', 'coach', 'dbId', 'fname', 'lname', 'dob', 'cbo', 'college', 'timestamp', 'location', 'reason', 'duration', 'notes'),
 			'users' => array('name', 'coach'),
 			'students' => array('dbId', 'fname', 'lname', 'dob', 'cbo', 'college'),
-			'event' => array('timestamp', 'location', 'reason', 'duration', 'notes')
+			'event' => array('id', 'timestamp', 'location', 'reason', 'duration', 'notes')
 		),
 		'counselor' => array(
-			'headerLabels' => array('interviewer', 'first', 'last', 'DOB', 'CBO', 'college', 'date', 'location', 'reason', 'duration', 'notes'),
-			'header'=> array('name', 'fname', 'lname', 'dob', 'cbo', 'college', 'timestamp', 'location', 'reason', 'duration', 'notes'),
+			'headerLabels' => array('id', 'interviewer', 'first', 'last', 'DOB', 'CBO', 'college', 'date', 'location', 'reason', 'duration', 'notes'),
+			'header'=> array('id', 'name', 'fname', 'lname', 'dob', 'cbo', 'college', 'timestamp', 'location', 'reason', 'duration', 'notes'),
 			'users' => array('name'),
 			'students' => array('fname', 'lname', 'dob', 'cbo', 'college'),
-			'event' => array('timestamp', 'location', 'reason', 'duration', 'notes')
+			'event' => array('id', 'timestamp', 'location', 'reason', 'duration', 'notes')
 		),
 		'coach' => array(
 			'headerLabels' => array('interviewer', 'first', 'last', 'phone', 'email', 'CBO', 'date', 'location', 'reason', 'duration', 'notes'),
@@ -105,7 +105,8 @@
 		'rows' => $rows,
 		'cols' => $config['header'],
 		'colLabels' => $config['headerLabels'],
-		'sort' => array_search('date', $config['headerLabels'])
+		'sort' => array_search('date', $config['headerLabels']),
+		'acl' => $acl
 	);
 	echo json_encode($response);
 ?>

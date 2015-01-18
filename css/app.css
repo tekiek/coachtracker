@@ -31,12 +31,14 @@ body {
 .acl-admin, 
 .acl-coach,
 .acl-captain,
-.acl-counselor { display: none !important; }
+.acl-counselor,
+.acl-connect { display: none !important; }
 body.acl-can-loggedin .acl-loggedin { display: block !important; }
 body.acl-can-admin .acl-admin { display: block !important; }
 body.acl-can-coach .acl-coach { display: block !important; }
 body.acl-can-counselor .acl-counselor { display: block !important; }
 body.acl-can-captain .acl-captain { display: block !important; }
+body.acl-can-connect .acl-connect { display: block !important; }
 
 /**************** GLOBALS ****************/
 .input-group.has-error {
@@ -341,6 +343,20 @@ header .search-wrapper .input-group {
 
 header .search-wrapper .input-group .input-group-addon {
 	width: 65px;
+}
+
+header .help-wrapper {
+	border-left: 1px solid rgba(255, 255, 255, .25);
+	padding: 0 10px;
+	margin: 5px;
+	text-align: center;
+}
+header .help-wrapper > * {
+	opacity: .6;
+}
+header .help-wrapper:hover > * {
+	opacity: 1.0;
+	cursor: pointer;
 }
 
 /**************** CONTENT ****************/

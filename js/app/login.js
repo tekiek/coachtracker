@@ -166,12 +166,14 @@ app['login'] = new function() {
 			if (app['data']['user']['coach'] == '1') app.acl.add('coach');
 			if (app['data']['user']['counselor'] == '1') app.acl.add('counselor');
 			if (app['data']['user']['captain'] == '1') app.acl.add('captain');
+			if (app['data']['user']['connect'] == '1') app.acl.add('connect');
 		} else {
 			app.acl.remove('loggedin');
 			app.acl.remove('admin');
 			app.acl.remove('coach');
 			app.acl.remove('counselor');
 			app.acl.remove('captain');
+			app.acl.remove('connect');
 		}
 	}
 	

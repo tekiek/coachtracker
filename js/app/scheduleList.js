@@ -24,6 +24,7 @@ app['scheduleList'] = new function() {
 	
 	this.setupHeader = function() {
 		app.header.addBackButton();
+		app.header.addHelp();
 		app.header.addUserField();
 	}
 

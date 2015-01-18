@@ -36,7 +36,7 @@ app['menu'] = new function() {
 			'color'			: 'btn-success',
 			'btnSize'		: 'btn-lg',
 			'classes'		: 'shadow marginBottom10',
-			'acls'			: 'acl-admin acl-captain',
+			'acls'			: 'acl-connect',
 			'text'			: 'ADD CONNECTION',
 			'href'			: 'connect/'
 		},
@@ -90,6 +90,7 @@ app['menu'] = new function() {
 	
 	this.setupHeader = function() {
 		app.header.addLogo();
+		app.header.addHelp();
 		app.header.addUserField();
 	}
 	

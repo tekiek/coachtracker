@@ -21,6 +21,7 @@
 			'admin'			=> 'BOOLEAN',
 			'password' 		=> 'varchar(255) DEFAULT "cuny"',
 			'pwReset' 		=> 'BOOLEAN DEFAULT 0',
+			'connect' 		=> 'BOOLEAN DEFAULT 0',
 		);
 		return $users;
 	}

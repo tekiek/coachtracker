@@ -37,6 +37,7 @@ app['eventAdd'] = new function() {
 
 	this.setupHeader = function() {
 		app.header.addBackButton();
+		app.header.addHelp();
 		app.header.addUserField();
 		app.studentSearch.addStudentSearch();
 	}
@@ -223,13 +224,15 @@ app['eventAdd'] = new function() {
 				EventManager.observe_once('email:exit', _eventAdd.saveExit);
 				app.email.init({
 					'message': message,
-					'subject': subject
+					'subject': subject,
+					'to': true,
+					'api': 'backend/forms/event_followup.php'
 				});
 			},
 			cancelCloseCallback: function() {
 				_eventAdd.saveExit();
 			}
-		})
+		});
 	}
 
 };

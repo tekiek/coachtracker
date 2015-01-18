@@ -65,7 +65,6 @@ return array(
 	
 	// TOOLS
 	'js-tools-libs' => array(
-		"//js/libs/b/charts.js",
 		"//js/libs/a/jquery.js",
 		"//js/libs/a/jquery.ui.js",
 		"//js/libs/a/jquery.blockui.js",
@@ -75,6 +74,7 @@ return array(
 		"//js/libs/b/jquery.upload.js",
 		"//js/libs/b/data.tables.js",
 		"//js/libs/b/table.tools.js",
+		"//js/libs/b/charts.js",
 	),
 	'js-tools-core' => array(
 		'//js/tools/tools.js',

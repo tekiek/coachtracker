@@ -11,6 +11,21 @@
 		echo "</tbody></table></div>";
 	}
 	
+	function head_includes() {
+		global $version;
+		echo '
+			<title>Coach Tracker</title>
+			<meta id="Viewport" name="viewport" width="initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no" content="initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=yes, width=320">
+			<meta name="apple-mobile-web-app-capable" content="yes">
+			<meta name="mobile-web-app-capable" content="yes">
+			<meta name="apple-mobile-web-app-title" content="Coach Tracker">
+			<link rel="icon" type="image/png" href="' . icons_image_dir() . 'favicon.png?v=' . $version .'">
+			<link rel="apple-touch-icon-precomposed" href="' . icons_image_dir() . 'apple-icon-152x152-precomposed.png?v=' . $version .'">
+			<link rel="apple-touch-icon-precomposed" sizes="57x57" href="' . icons_image_dir() . 'apple-icon-57x57-precomposed.png?v=' . $version .'" />
+			<link rel="apple-touch-icon-precomposed" sizes="144x144" href="' . icons_image_dir() . 'apple-icon-144x144-precomposed.png?v=' . $version .'" />
+		';
+	}
+	
 	function tools_header() {
 		echo '
 			<header class="shadow">

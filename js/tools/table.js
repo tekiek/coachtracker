@@ -221,6 +221,12 @@ tools['table'] = new function() {
 			toggleWrapper = $.tmpl(_table.templates.div, {
 				classes: 'table-mode-toggle'
 			}),
+			offToggle = $.tmpl(_table.templates.modeOption, {
+				text: 'Off',
+				id: tableId + 'offRadio',
+				name: toggleName,
+				checked: 'checked'
+			}),
 			addToggle = $.tmpl(_table.templates.modeOption, {
 				text: 'Add',
 				id: tableId + 'addRadio',
@@ -238,6 +244,7 @@ tools['table'] = new function() {
 				name: toggleName
 			});
 
+		if ($.inArray('off', editModeToggle) > -1) toggleWrapper.append(offToggle);
 		if ($.inArray('add', editModeToggle) > -1) toggleWrapper.append(addToggle);
 		if ($.inArray('edit', editModeToggle) > -1) toggleWrapper.append(editToggle);
 		if ($.inArray('delete', editModeToggle) > -1) toggleWrapper.append(deleteToggle);
@@ -248,6 +255,16 @@ tools['table'] = new function() {
 			.after(toggleWrapper);
 
 		// Add events
+		offToggle.click(function() {
+			_table.modeToggleSelect({
+				'table'			: table,
+				'mode'			: 'off',
+				'disableSelect'	: true,
+				'params'		: params,
+			});
+			return false;
+		});
+		
 		addToggle.click(function() {
 			_table.modeToggleSelect({
 				'table'			: table,

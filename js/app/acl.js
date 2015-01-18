@@ -1,6 +1,6 @@
 app['acl'] = new function() {
 	_acl = this;
-	this.acls = ['loggedin', 'admin', 'coach', 'counselor'];
+	this.acls = ['loggedin', 'admin', 'coach', 'counselor', 'connect'];
 	this.can = [];
 	this.els = {
 		body	: $('body')
