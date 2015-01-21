@@ -39,11 +39,11 @@
 			'event' => array('id', 'timestamp', 'location', 'reason', 'duration', 'notes')
 		),
 		'coach' => array(
-			'headerLabels' => array('interviewer', 'first', 'last', 'phone', 'email', 'CBO', 'date', 'location', 'reason', 'duration', 'notes'),
-			'header'=> array('name', 'fname', 'lname', 'phone', 'email', 'cbo', 'timestamp', 'location', 'reason', 'duration', 'notes'),
+			'headerLabels' => array('id', 'interviewer', 'first', 'last', 'phone', 'email', 'CBO', 'date', 'location', 'reason', 'duration', 'notes'),
+			'header'=> array('id', 'name', 'fname', 'lname', 'phone', 'email', 'cbo', 'timestamp', 'location', 'reason', 'duration', 'notes'),
 			'users' => array('name'),
 			'students' => array('fname', 'lname', 'phone', 'email', 'cbo'),
-			'event' => array('timestamp', 'location', 'reason', 'duration', 'notes')
+			'event' => array('id', 'timestamp', 'location', 'reason', 'duration', 'notes')
 		)
 	);
 	$config = $config[$acl];

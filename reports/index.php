@@ -3,7 +3,8 @@
 <html>
 	<head>
 		<link rel="stylesheet" type="text/css" href="../min/g=css-tools&v=<?php echo $version ?>">
-		<script type="text/javascript" src="../min/g=js-tools-libs"></script>
+		<script type="text/javascript" src="../min/g=js-tools-libs&v=<?php echo $version ?>"></script>
+		<script type="text/javascript" src="../js/libs/b/charts.js"></script>
 	</head>
 
 	<body class="reports">
@@ -12,7 +13,7 @@
 
 		<div id='content'>
 		</div>
-		<script type="text/javascript" src="../min/g=js-tools-core"></script>
+		<script type="text/javascript" src="../min/g=js-tools-core&v=<?php echo $version ?>"></script>
 	</body>
 </html>
 

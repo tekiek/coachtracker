@@ -57,6 +57,7 @@ tools['upload'] = new function() {
 		event.preventDefault();
 		var templateSrc =  _upload.apis.templateFile + "?table=" + _upload.getSelectedTable();
 
+		console.log(templateSrc)
 		_upload.els.csvIframe.attr('src', templateSrc);
 	}
 	

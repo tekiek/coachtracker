@@ -101,11 +101,11 @@ tools['dataExport'] = new function() {
 		})
 		.done(function(response) {
 			response = $.parseJSON(response);
-			var editModeToggle = false;
+			var editModeToggle = ['off', 'delete'];
 			
-			if (response.acl && 'admin|counselor|coach'.match(response.acl)) {
-				editModeToggle = ['off', 'delete'];
-			} 
+			// if (response.acl && 'admin|counselor|coach'.match(response.acl)) {
+			// 	editModeToggle = ['off', 'delete'];
+			// } 
 			
 			_dataExport.els.tableWrapper.empty();
 			tools.table.createTable({
@@ -115,11 +115,25 @@ tools['dataExport'] = new function() {
 				'colLabels'		: response.colLabels,
 				'prependTo'		: _dataExport.els.tableWrapper,
 				'export'		: true,
+				'exportName'	: _dataExport.generateFileName(),
 				'paging'		: true,
 				'dataObj'		: _dataExport.data,
 				'editModeToggle': editModeToggle
 			});
 		});
+	}
+	
+	this.generateFileName = function() {
+		var fromDate = _dataExport.els.fromDate.val(),
+			toDate = _dataExport.els.toDate.val(),
+			dataType = _dataExport.data.type,
+			fileName;
+			
+		fileName = dataType + "-";
+		fileName += fromDate.replace(/\//g,'.') + "-";
+		fileName += toDate.replace(/\//g,'.');
+		
+		return fileName;
 	}
 	
 	this.rowDelete = function(params) {
@@ -129,9 +143,11 @@ tools['dataExport'] = new function() {
 			rowId = rowEl.find('.id').text();
 
 		var response = false;
-		if (confirm("Delete this user?") == true) {
+		if (confirm("Delete this note?") == true) {
 			response = true;
 		}
+		console.log(rowId);
+		
 		if (!response || !rowId) { return true; }
 		$.ajax({
 			url: _dataExport.apis.eventDelete,

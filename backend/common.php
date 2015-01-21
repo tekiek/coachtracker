@@ -1,5 +1,5 @@
 <?php
-$version = '1.04';
+$version = '1.04b';
 require 'db/table_config.php';
 require 'db/db_connect.php';
 require 'db/table_insert.php';

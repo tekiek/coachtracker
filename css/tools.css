@@ -2,6 +2,12 @@
  * Global 
  */
 
+body.DTTT_Print .field_wrapper {
+	box-shadow: 0 0 0 0 rgba(0, 0, 0, 0) !important;
+	-moz-box-shadow: 0 0 0 0 rgba(0, 0, 0, 0) !important; 
+	-webkit-box-shadow: 0 0 0 0 rgba(0, 0, 0, 0) !important;
+}
+
 table td:hover { 
 	cursor: pointer;  
 }

@@ -3,7 +3,7 @@ require '../common.php';
 $params = get_params();
 $response = array();
 
-$to = 'tekiek@gmail.com';
+$to = 'tekiek@gmail.com,maggieb@cypresshills.org';
 $subject = 'Coach Track: Help Request!';
 $body = '';
 

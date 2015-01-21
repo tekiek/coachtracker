@@ -2,8 +2,9 @@ tools['table'] = new function() {
 	_table = this;
 	
 	this.templates = {
-		div			: '<div class="${classes}"></div>',
-		modeOption	: '<input type="radio" id="${id}" name="${name}" ${checked}><label for="${id}">${text}</label>'
+		div			: '<div class="${classes}">${text}</div>',
+		modeOption	: '<input type="radio" id="${id}" name="${name}" ${checked}><label for="${id}">${text}</label>',
+		anchor		: '<a href="${href}" target="_blank">${text}</a>' 
 	}
 	
 	/*
@@ -51,6 +52,7 @@ tools['table'] = new function() {
 			wrapper = $('<div></div>');
 		wrapper.append(table);
 
+		console.log(params['exportName'] + '.csv');
 		table.dataTable({
 			"order"				: params['sort'] ? params['sort'] : [],
 			'data'				: data,
@@ -65,18 +67,18 @@ tools['table'] = new function() {
 				'aButtons': [
 					{
 						'sExtends': 'csv', 
-						'sFileName': 'Events.csv'
+						'sFileName': params['exportName'] + '.csv'
 					},
 					{
 						'sExtends': 'xls', 
-						'sFileName': 'Events.xls'
+						'sFileName':  params['exportName'] + '.xls'
 					},
 					{
 						'sExtends': 'print'
 					},
 					{
 						'sExtends': 'pdf', 
-						'sFileName': 'Events.pdf'
+						'sFileName':  params['exportName'] + '.pdf'
 					},
 				]
 			} : ''),
@@ -94,6 +96,9 @@ tools['table'] = new function() {
 					params['dataObj']['columns'] = columns;
 				}
 				params['prependTo'].prepend(wrapper);
+				
+				// Flash detection
+				if (params['export']) _table.flashDetect();
 				
 				// Add column sorting events
 				_table.columnSort(params['dataObj']);
@@ -117,6 +122,46 @@ tools['table'] = new function() {
 				if (params['cb']) params['cb']();
 			}
 		});
+	}
+	
+	this.flashDetect = function() {
+		var hasFlash = false;
+		
+		try {
+			var fo = new ActiveXObject('ShockwaveFlash.ShockwaveFlash');
+			if (fo) hasFlash = true;
+		} catch(e) {
+			if (navigator.mimeTypes ["application/x-shockwave-flash"] != undefined) {
+			    hasFlash = true;
+			}
+		}
+		
+		if (!hasFlash) {
+			var flashDialog = $.tmpl(_table.templates.div, {
+					text: 'You need flash to download your data.'
+				}),
+				flashLink = $.tmpl(_table.templates.anchor, {
+					text: 'Click here to install flash',
+					href: 'http://get.adobe.com/flashplayer/?no_redirect'
+				});
+			
+			// Add dialog ui
+			flashDialog
+				.append('<br><br>')
+				.append(flashLink);
+			tools.els['body'].append(flashDialog);
+			
+			// Open dialog
+			flashDialog.dialog({
+				title: "Missing flash!",
+				modal: true,
+				buttons: {
+					Ok: function() {
+						$( this ).dialog( "close" );
+					}
+				}
+			});
+		}
 	}
 	
 	/*

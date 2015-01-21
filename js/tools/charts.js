@@ -60,7 +60,6 @@ tools['charts'] = new function() {
 	 *  - data (obj)
 	 */
 	this.bar = function(params) {
-		console.log('------')
 		var data = {
 				labels: [],
 				datasets: [{
@@ -77,21 +76,19 @@ tools['charts'] = new function() {
 			data.datasets[0]['data'].push(d.value);
 		});
 		
-		// datasets[0]['fillColor'] = "rgba(220,220,220,0.5)";
-		// datasets[0]['strokeColor'] = "rgba(220,220,220,0.8)";
-		// datasets[0]['highlightFill'] = "rgba(220,220,220,0.75)";
-		// datasets[0]['highlightStroke'] = "rgba(220,220,220,1)";
-		
-		console.log(data);
+		data.datasets[0]['fillColor'] = "rgba(220,220,220,0.5)";
+		data.datasets[0]['strokeColor'] = "rgba(220,220,220,0.8)";
+		data.datasets[0]['highlightFill'] = "rgba(220,220,220,0.75)";
+		data.datasets[0]['highlightStroke'] = "rgba(220,220,220,1)";
 
 		
 		new Chart(params.ctx).Bar(data, {
-			// scaleOverride: true,
-			// scaleSteps: 10,
-			// scaleStepWidth: Math.ceil(max/9),
-			// scaleStartValue: 0,
-			// scaleGridLineColor : "rgba(0,0,0,.05)",
-			// 		 
+			scaleOverride: true,
+			scaleSteps: 10,
+			scaleStepWidth: Math.ceil(max/9),
+			scaleStartValue: 0,
+			scaleGridLineColor : "rgba(0,0,0,.05)",
+					 
 		});
 	}
 
