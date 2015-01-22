@@ -3104,3 +3104,59 @@
 2015.01.20.12.50 : 1 : SELECT * FROM connections WHERE connectionid='1'  and type='user' 
 [{"file":"\/Users\/CMK\/Desktop\/Dev\/coachtracker\/backend\/includes\/connections.php","line":38,"function":"TableData","args":["users",null]},{"file":"\/Users\/CMK\/Desktop\/Dev\/coachtracker\/backend\/forms\/users_login.php","line":29,"function":"getConnections","args":["user","1"]}]
 2015.01.20.12.50 : 1 : SELECT * FROM users
+[{"file":"\/Users\/CMK\/Desktop\/Dev\/coachtracker\/backend\/db\/table_count.php","line":4,"function":"TableData","args":["users",{"email":"tekiek@gmail.com","password":"poop"}]},{"file":"\/Users\/CMK\/Desktop\/Dev\/coachtracker\/backend\/forms\/users_login.php","line":19,"function":"TableCount","args":["users",{"email":"tekiek@gmail.com","password":"poop"}]}]
+2015.01.21.03.37 :  : SELECT * FROM users WHERE email='tekiek@gmail.com'  and password='poop' 
+[{"file":"\/Users\/CMK\/Desktop\/Dev\/coachtracker\/backend\/forms\/users_login.php","line":22,"function":"TableRow","args":["users",{"email":"tekiek@gmail.com","password":"poop"}]}]
+2015.01.21.03.37 :  : SELECT * FROM users WHERE email='tekiek@gmail.com'  and password='poop' 
+[{"file":"\/Users\/CMK\/Desktop\/Dev\/coachtracker\/backend\/includes\/connections.php","line":15,"function":"TableData","args":["connections",{"userid":"1","type":"student"}]},{"file":"\/Users\/CMK\/Desktop\/Dev\/coachtracker\/backend\/forms\/users_login.php","line":28,"function":"getConnections","args":["student","1"]}]
+2015.01.21.03.37 : 1 : SELECT * FROM connections WHERE userid='1'  and type='student' 
+[{"file":"\/Users\/CMK\/Desktop\/Dev\/coachtracker\/backend\/includes\/connections.php","line":38,"function":"TableData","args":["students",null]},{"file":"\/Users\/CMK\/Desktop\/Dev\/coachtracker\/backend\/forms\/users_login.php","line":28,"function":"getConnections","args":["student","1"]}]
+2015.01.21.03.37 : 1 : SELECT * FROM students
+[{"file":"\/Users\/CMK\/Desktop\/Dev\/coachtracker\/backend\/includes\/connections.php","line":15,"function":"TableData","args":["connections",{"userid":"1","type":"user"}]},{"file":"\/Users\/CMK\/Desktop\/Dev\/coachtracker\/backend\/forms\/users_login.php","line":29,"function":"getConnections","args":["user","1"]}]
+2015.01.21.03.37 : 1 : SELECT * FROM connections WHERE userid='1'  and type='user' 
+[{"file":"\/Users\/CMK\/Desktop\/Dev\/coachtracker\/backend\/includes\/connections.php","line":27,"function":"TableData","args":["connections",{"connectionid":"1","type":"user"}]},{"file":"\/Users\/CMK\/Desktop\/Dev\/coachtracker\/backend\/forms\/users_login.php","line":29,"function":"getConnections","args":["user","1"]}]
+2015.01.21.03.37 : 1 : SELECT * FROM connections WHERE connectionid='1'  and type='user' 
+[{"file":"\/Users\/CMK\/Desktop\/Dev\/coachtracker\/backend\/includes\/connections.php","line":38,"function":"TableData","args":["users",null]},{"file":"\/Users\/CMK\/Desktop\/Dev\/coachtracker\/backend\/forms\/users_login.php","line":29,"function":"getConnections","args":["user","1"]}]
+2015.01.21.03.37 : 1 : SELECT * FROM users
+[{"file":"\/Users\/CMK\/Desktop\/Dev\/coachtracker\/backend\/db\/table_count.php","line":4,"function":"TableData","args":["users",{"email":"tekiek@gmail.com","password":"poop"}]},{"file":"\/Users\/CMK\/Desktop\/Dev\/coachtracker\/backend\/forms\/users_login.php","line":19,"function":"TableCount","args":["users",{"email":"tekiek@gmail.com","password":"poop"}]}]
+2015.01.21.03.49 : 1 : SELECT * FROM users WHERE email='tekiek@gmail.com'  and password='poop' 
+[{"file":"\/Users\/CMK\/Desktop\/Dev\/coachtracker\/backend\/forms\/users_login.php","line":22,"function":"TableRow","args":["users",{"email":"tekiek@gmail.com","password":"poop"}]}]
+2015.01.21.03.49 : 1 : SELECT * FROM users WHERE email='tekiek@gmail.com'  and password='poop' 
+[{"file":"\/Users\/CMK\/Desktop\/Dev\/coachtracker\/backend\/includes\/connections.php","line":15,"function":"TableData","args":["connections",{"userid":"1","type":"student"}]},{"file":"\/Users\/CMK\/Desktop\/Dev\/coachtracker\/backend\/forms\/users_login.php","line":28,"function":"getConnections","args":["student","1"]}]
+2015.01.21.03.49 : 1 : SELECT * FROM connections WHERE userid='1'  and type='student' 
+[{"file":"\/Users\/CMK\/Desktop\/Dev\/coachtracker\/backend\/includes\/connections.php","line":38,"function":"TableData","args":["students",null]},{"file":"\/Users\/CMK\/Desktop\/Dev\/coachtracker\/backend\/forms\/users_login.php","line":28,"function":"getConnections","args":["student","1"]}]
+2015.01.21.03.49 : 1 : SELECT * FROM students
+[{"file":"\/Users\/CMK\/Desktop\/Dev\/coachtracker\/backend\/includes\/connections.php","line":15,"function":"TableData","args":["connections",{"userid":"1","type":"user"}]},{"file":"\/Users\/CMK\/Desktop\/Dev\/coachtracker\/backend\/forms\/users_login.php","line":29,"function":"getConnections","args":["user","1"]}]
+2015.01.21.03.49 : 1 : SELECT * FROM connections WHERE userid='1'  and type='user' 
+[{"file":"\/Users\/CMK\/Desktop\/Dev\/coachtracker\/backend\/includes\/connections.php","line":27,"function":"TableData","args":["connections",{"connectionid":"1","type":"user"}]},{"file":"\/Users\/CMK\/Desktop\/Dev\/coachtracker\/backend\/forms\/users_login.php","line":29,"function":"getConnections","args":["user","1"]}]
+2015.01.21.03.49 : 1 : SELECT * FROM connections WHERE connectionid='1'  and type='user' 
+[{"file":"\/Users\/CMK\/Desktop\/Dev\/coachtracker\/backend\/includes\/connections.php","line":38,"function":"TableData","args":["users",null]},{"file":"\/Users\/CMK\/Desktop\/Dev\/coachtracker\/backend\/forms\/users_login.php","line":29,"function":"getConnections","args":["user","1"]}]
+2015.01.21.03.49 : 1 : SELECT * FROM users
+[{"file":"\/Users\/CMK\/Desktop\/Dev\/coachtracker\/backend\/db\/table_count.php","line":4,"function":"TableData","args":["users",{"email":"tekiek@gmail.com","password":"poop"}]},{"file":"\/Users\/CMK\/Desktop\/Dev\/coachtracker\/backend\/forms\/users_login.php","line":19,"function":"TableCount","args":["users",{"email":"tekiek@gmail.com","password":"poop"}]}]
+2015.01.21.04.15 :  : SELECT * FROM users WHERE email='tekiek@gmail.com'  and password='poop' 
+[{"file":"\/Users\/CMK\/Desktop\/Dev\/coachtracker\/backend\/forms\/users_login.php","line":22,"function":"TableRow","args":["users",{"email":"tekiek@gmail.com","password":"poop"}]}]
+2015.01.21.04.15 :  : SELECT * FROM users WHERE email='tekiek@gmail.com'  and password='poop' 
+[{"file":"\/Users\/CMK\/Desktop\/Dev\/coachtracker\/backend\/includes\/connections.php","line":15,"function":"TableData","args":["connections",{"userid":"1","type":"student"}]},{"file":"\/Users\/CMK\/Desktop\/Dev\/coachtracker\/backend\/forms\/users_login.php","line":28,"function":"getConnections","args":["student","1"]}]
+2015.01.21.04.15 : 1 : SELECT * FROM connections WHERE userid='1'  and type='student' 
+[{"file":"\/Users\/CMK\/Desktop\/Dev\/coachtracker\/backend\/includes\/connections.php","line":38,"function":"TableData","args":["students",null]},{"file":"\/Users\/CMK\/Desktop\/Dev\/coachtracker\/backend\/forms\/users_login.php","line":28,"function":"getConnections","args":["student","1"]}]
+2015.01.21.04.15 : 1 : SELECT * FROM students
+[{"file":"\/Users\/CMK\/Desktop\/Dev\/coachtracker\/backend\/includes\/connections.php","line":15,"function":"TableData","args":["connections",{"userid":"1","type":"user"}]},{"file":"\/Users\/CMK\/Desktop\/Dev\/coachtracker\/backend\/forms\/users_login.php","line":29,"function":"getConnections","args":["user","1"]}]
+2015.01.21.04.15 : 1 : SELECT * FROM connections WHERE userid='1'  and type='user' 
+[{"file":"\/Users\/CMK\/Desktop\/Dev\/coachtracker\/backend\/includes\/connections.php","line":27,"function":"TableData","args":["connections",{"connectionid":"1","type":"user"}]},{"file":"\/Users\/CMK\/Desktop\/Dev\/coachtracker\/backend\/forms\/users_login.php","line":29,"function":"getConnections","args":["user","1"]}]
+2015.01.21.04.15 : 1 : SELECT * FROM connections WHERE connectionid='1'  and type='user' 
+[{"file":"\/Users\/CMK\/Desktop\/Dev\/coachtracker\/backend\/includes\/connections.php","line":38,"function":"TableData","args":["users",null]},{"file":"\/Users\/CMK\/Desktop\/Dev\/coachtracker\/backend\/forms\/users_login.php","line":29,"function":"getConnections","args":["user","1"]}]
+2015.01.21.04.15 : 1 : SELECT * FROM users
+[{"file":"\/Users\/CMK\/Desktop\/Dev\/coachtracker\/backend\/db\/table_count.php","line":4,"function":"TableData","args":["users",{"email":"tekiek@gmail.com","password":"poop"}]},{"file":"\/Users\/CMK\/Desktop\/Dev\/coachtracker\/backend\/forms\/users_login.php","line":19,"function":"TableCount","args":["users",{"email":"tekiek@gmail.com","password":"poop"}]}]
+2015.01.21.04.19 : 1 : SELECT * FROM users WHERE email='tekiek@gmail.com'  and password='poop' 
+[{"file":"\/Users\/CMK\/Desktop\/Dev\/coachtracker\/backend\/forms\/users_login.php","line":22,"function":"TableRow","args":["users",{"email":"tekiek@gmail.com","password":"poop"}]}]
+2015.01.21.04.19 : 1 : SELECT * FROM users WHERE email='tekiek@gmail.com'  and password='poop' 
+[{"file":"\/Users\/CMK\/Desktop\/Dev\/coachtracker\/backend\/includes\/connections.php","line":15,"function":"TableData","args":["connections",{"userid":"1","type":"student"}]},{"file":"\/Users\/CMK\/Desktop\/Dev\/coachtracker\/backend\/forms\/users_login.php","line":28,"function":"getConnections","args":["student","1"]}]
+2015.01.21.04.19 : 1 : SELECT * FROM connections WHERE userid='1'  and type='student' 
+[{"file":"\/Users\/CMK\/Desktop\/Dev\/coachtracker\/backend\/includes\/connections.php","line":38,"function":"TableData","args":["students",null]},{"file":"\/Users\/CMK\/Desktop\/Dev\/coachtracker\/backend\/forms\/users_login.php","line":28,"function":"getConnections","args":["student","1"]}]
+2015.01.21.04.19 : 1 : SELECT * FROM students
+[{"file":"\/Users\/CMK\/Desktop\/Dev\/coachtracker\/backend\/includes\/connections.php","line":15,"function":"TableData","args":["connections",{"userid":"1","type":"user"}]},{"file":"\/Users\/CMK\/Desktop\/Dev\/coachtracker\/backend\/forms\/users_login.php","line":29,"function":"getConnections","args":["user","1"]}]
+2015.01.21.04.19 : 1 : SELECT * FROM connections WHERE userid='1'  and type='user' 
+[{"file":"\/Users\/CMK\/Desktop\/Dev\/coachtracker\/backend\/includes\/connections.php","line":27,"function":"TableData","args":["connections",{"connectionid":"1","type":"user"}]},{"file":"\/Users\/CMK\/Desktop\/Dev\/coachtracker\/backend\/forms\/users_login.php","line":29,"function":"getConnections","args":["user","1"]}]
+2015.01.21.04.19 : 1 : SELECT * FROM connections WHERE connectionid='1'  and type='user' 
+[{"file":"\/Users\/CMK\/Desktop\/Dev\/coachtracker\/backend\/includes\/connections.php","line":38,"function":"TableData","args":["users",null]},{"file":"\/Users\/CMK\/Desktop\/Dev\/coachtracker\/backend\/forms\/users_login.php","line":29,"function":"getConnections","args":["user","1"]}]
+2015.01.21.04.19 : 1 : SELECT * FROM users

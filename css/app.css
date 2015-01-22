@@ -326,6 +326,9 @@ header .userField {
 	margin: 5px 10px;
 	min-width: 80px;
 	opacity: .6;
+	width: 100px;
+	overflow: hidden;
+	height: 50px;
 }
 header .userField:hover {
 	opacity: 1.0;
