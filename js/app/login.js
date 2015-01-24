@@ -33,7 +33,21 @@ app['login'] = new function() {
 				'validLength'	: 3,
 				'gtAct'			: 'password'
 			},
+			'resetPassword': {
+				'type'			:'input',
+				'inputType'		: 'password',
+				'placeholder'	:'password',
+				'mask'			: null,
+				'dbId'			: 'password',
+				'validLength'	: 3,
+				'gtAct'			: 'password',
+				'regex'			: '^(?=.*[0-9]).{5}'
+			},
 			'password_wrapper': {
+				'icon'			:'fa-lock',
+				'classes' 		: 'marginBottom10'
+			},
+			'resetPassword_wrapper': {
 				'icon'			:'fa-lock',
 				'classes' 		: 'marginBottom10'
 			}
@@ -72,6 +86,10 @@ app['login'] = new function() {
 			msg: {
 				'text'			: 'Update Password',
 				'classes'		: 'center marginBottom10'
+			},
+			details: {
+				'text'			: 'We require a password that is 5 characters long and includes 1 number.',
+				'classes'		: 'details'
 			},
 			btns: {
 				reset: {
@@ -215,12 +233,19 @@ app['login'] = new function() {
 			wrapper = $.tmpl(app.global.templates.div, templates['dialog']),
 			alert = $.tmpl(app.global.templates.alert, type_templates['alert']),
 			msg = $.tmpl(app.global.templates.h2, type_templates['msg']),
-			hr = $.tmpl(app.global.templates.hr);
-		
+			hr = $.tmpl(app.global.templates.hr),
+			details = $.tmpl(app.global.templates.span, type_templates['details']);
+
 		// Add Msg
 		$(wrapper)
 			.append(msg)
 			.append(hr.clone());
+			
+		if (type_templates['details']) {
+			$(wrapper)
+				.append(details)
+				.append(hr.clone());
+		}
 			
 		// Add Alert
 		$(wrapper).append(alert);
@@ -310,7 +335,7 @@ app['login'] = new function() {
 	this.pwUpdateDialog = function() {
 		_login.dialogBuilder({
 			type: 'pwUpdate',
-			fields: ['password'],
+			fields: ['resetPassword'],
 			submit: 'reset'
 		});
 	}

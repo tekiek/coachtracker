@@ -2,7 +2,7 @@ app['fieldController'] = new function() {
 	_fieldController = this;
 	
 	this.templates = {
-		'input'			: '<input data-action="${gtAct}" name="${name}" value="${value}" data-field="${dbId}" data-valid="${validLength}" type="${inputType}" class="form-control" placeholder="${placeholder}" data-mask="${mask}">',
+		'input'			: '<input data-regex="${regex}" data-action="${gtAct}" name="${name}" value="${value}" data-field="${dbId}" data-valid="${validLength}" type="${inputType}" class="form-control" placeholder="${placeholder}" data-mask="${mask}">',
 		'textarea' 		: '<textarea data-action="${gtAct}" data-field="${dbId}" data-valid="${validLength}" class="form-control" placeholder="${placeholder}">${value}</textarea>',
 		'select'		: '<select data-action="${gtAct}" data-field="${dbId}" class="form-control ${classes}" data-valid="true"></select>',
 		'option'		: '<option data-action="${gtAct}" value="${key}" data-field="${dbId}" ${disabled} ${selected}>${value}</option>',
@@ -100,9 +100,8 @@ app['fieldController'] = new function() {
 		$(fields).each(function(x, field) {
 			var val = $(this).val(),
 				fieldType = ($(this).attr('data-type') ? $(this).attr('data-type') : $(this).prop('tagName')),
-				validLength = $(this).attr('data-valid');
-				
-				
+				validLength = $(this).attr('data-valid'),
+				regex = $(this).attr('data-regex');
 
 			if (fieldType == 'SELECT') {
 				var error = (val == null || val == '0' || val == 0 ? true : false);
@@ -116,8 +115,10 @@ app['fieldController'] = new function() {
 
 				var error = (selectedCount < Number(validLength) ? true : false);
 			}
-
-
+			if (regex) {
+				var validRegex = new RegExp(regex),
+					error = !(validRegex.test(val));
+			}
 			if (error) {
 				if (isValid) $(this).focus();
 				isValid = false;

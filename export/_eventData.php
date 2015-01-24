@@ -18,18 +18,18 @@
 	// user config
 	$config = array(
 		'admin' => array(
-			'headerLabels' => array('id', 'interviewer', 'coach', 'dbId', 'first', 'last', 'DOB', 'CBO', 'college', 'date', 'location', 'reason', 'duration', 'notes'),
-			'header'=> array('id', 'name', 'coach', 'dbId', 'fname', 'lname', 'dob', 'cbo', 'college', 'timestamp', 'location', 'reason', 'duration', 'notes'),
+			'headerLabels' => array('entered', 'id', 'interviewer', 'coach', 'dbId', 'first', 'last', 'DOB', 'CBO', 'college', 'date', 'location', 'reason', 'duration', 'notes'),
+			'header'=> array('dateInserted', 'id', 'name', 'coach', 'dbId', 'fname', 'lname', 'dob', 'cbo', 'college', 'timestamp', 'location', 'reason', 'duration', 'notes'),
 			'users' => array('name', 'coach'),
 			'students' => array('dbId', 'fname', 'lname', 'dob', 'cbo', 'college'),
-			'event' => array('id','timestamp', 'location', 'reason', 'duration', 'notes')
+			'event' => array('dateInserted', 'id','timestamp', 'location', 'reason', 'duration', 'notes')
 		),
 		'captain' => array(
-			'headerLabels' => array('id', 'interviewer', 'coach', 'dbId', 'first', 'last', 'DOB', 'CBO', 'college', 'date', 'location', 'reason', 'duration', 'notes'),
-			'header'=> array('id', 'name', 'coach', 'dbId', 'fname', 'lname', 'dob', 'cbo', 'college', 'timestamp', 'location', 'reason', 'duration', 'notes'),
+			'headerLabels' => array('entered', 'id', 'interviewer', 'coach', 'dbId', 'first', 'last', 'DOB', 'CBO', 'college', 'date', 'location', 'reason', 'duration', 'notes'),
+			'header'=> array('dateInserted', 'id', 'name', 'coach', 'dbId', 'fname', 'lname', 'dob', 'cbo', 'college', 'timestamp', 'location', 'reason', 'duration', 'notes'),
 			'users' => array('name', 'coach'),
 			'students' => array('dbId', 'fname', 'lname', 'dob', 'cbo', 'college'),
-			'event' => array('id', 'timestamp', 'location', 'reason', 'duration', 'notes')
+			'event' => array('dateInserted', 'id', 'timestamp', 'location', 'reason', 'duration', 'notes')
 		),
 		'counselor' => array(
 			'headerLabels' => array('id', 'interviewer', 'first', 'last', 'DOB', 'CBO', 'college', 'date', 'location', 'reason', 'duration', 'notes'),
@@ -91,7 +91,11 @@
 		// Event Data
 		foreach($config['event'] as $col) {
 			if ($col == 'timestamp' || $col == 'dateInserted') {
-				$row[$col] = date("m-d-Y", strtotime($event[$col]));
+				if (strtotime($event[$col]) > date_date_set(date_create(), 2000, 1, 1)) {
+					$row[$col] = date("m-d-Y", strtotime($event[$col]));
+				} else {
+					$row[$col] = 'NA';
+				}
 			} else {
 				$row[$col] = $event[$col];
 			}

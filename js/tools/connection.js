@@ -121,6 +121,7 @@ tools['connection'] = new function() {
 	 */
 	this.getTableData = function() {
 		var ajaxTime= new Date().getTime();
+
 		$.ajax({
 			url: _connection.apis.connectionList,
 			data: {
@@ -131,6 +132,8 @@ tools['connection'] = new function() {
 		})
 		.done(function(response) {
 			response = $.parseJSON(response);
+			var totalTime = new Date().getTime()-ajaxTime;
+			console.log('totalTime', totalTime);
 			
 			if (response.success == 'true') {
 				// Available table
@@ -256,6 +259,8 @@ tools['connection'] = new function() {
 		if (!params['ids'] || params['ids'].length == 0) return false;
 		
 		console.log('AddSelected', params);
+		console.log(_connection['data']['activeTab']['available']['selectedIds']);
+		//params['ids'] = _connection['data']['activeTab']['available']['selectedIds'];
 
 		$.ajax({
 			url: _connection.apis.connectUpdate,
@@ -287,6 +292,7 @@ tools['connection'] = new function() {
 		if (!params) return false;
 		if (!params['ids'] || params['ids'].length == 0) return false;
 
+		console.log('REMOVE STUDENT');
 		$.ajax({
 			url: _connection.apis.connectUpdate,
 			type: "POST",

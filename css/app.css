@@ -144,11 +144,6 @@ textarea {
 }
 
 
-
-
-
-
-
 /**************** ????? ****************/
 .input-group .form-control.expand {
 	height: auto;
@@ -160,12 +155,10 @@ textarea {
 }
 
 
-/*.login_dialog h2 {
-	text-align: center;
-	padding: 0 0 10px 0;
-	border-bottom: 1px solid #cccccc;
-	margin: 0 0 10px 0;
-}*/
+.login_dialog span.details {
+	color: #333;
+	font-size: 12px;
+}
 
 
 /**************** JQUERY UI ****************/

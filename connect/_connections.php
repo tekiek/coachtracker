@@ -43,7 +43,8 @@
 				"success" => "true",
 				"available" => $available,
 				"selected" => $selected,
-				"columns" => $students_table_cols
+				"columns" => $students_table_cols,
+				"params" => $params
 			);
 		}
 		if ($params['type'] == 'user') {
@@ -67,7 +68,8 @@
 				"success" => "true",
 				"available" => $available,
 				"selected" => $selected,
-				"columns" => $users_table_cols
+				"columns" => $users_table_cols,
+				"params" => $params
 			);
 		}
 	}

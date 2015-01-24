@@ -52,7 +52,6 @@ tools['table'] = new function() {
 			wrapper = $('<div></div>');
 		wrapper.append(table);
 
-		console.log(params['exportName'] + '.csv');
 		table.dataTable({
 			"order"				: params['sort'] ? params['sort'] : [],
 			'data'				: data,
@@ -86,7 +85,8 @@ tools['table'] = new function() {
 				//$(window).overlay({ show: true });
 			},
 			'fnDrawCallback'	: function() {
-				//$(window).overlay({show: false, delay: 250 });
+				// Add row count attribute
+				_table.emptyTable(params['dataObj']);
 			},
 			'fnInitComplete'	: function() {
 				// Add to ui
@@ -96,6 +96,9 @@ tools['table'] = new function() {
 					params['dataObj']['columns'] = columns;
 				}
 				params['prependTo'].prepend(wrapper);
+				
+				// Add row count attribute
+				_table.emptyTable(params['dataObj']);
 				
 				// Flash detection
 				if (params['export']) _table.flashDetect();
@@ -122,6 +125,14 @@ tools['table'] = new function() {
 				if (params['cb']) params['cb']();
 			}
 		});
+	}
+	
+	this.emptyTable = function(params) {
+		if (!params.table) return false;
+		var table = params.table,
+			emptyTable = (table.find('.dataTables_empty').length > 0 ? 1 : 0);
+			
+		table.attr('empty-table', emptyTable);
 	}
 	
 	this.flashDetect = function() {
