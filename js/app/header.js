@@ -1,6 +1,8 @@
 app['header'] = new function() {
 	var _header = this;
 
+	this.data = {};
+
 	this.templates = {
 		'backText'		: '<span class="text-shadow">Back</span>',
 		'backWrapper'	: '<div class="back-btn-wrapper left pointer"></div>',
@@ -23,7 +25,7 @@ app['header'] = new function() {
 			'gtAct'		: 'logo'
 		},
 		'backBtnIcon': {
-			'icon'			: 'fa-chevron-circle-left text-shadow',
+			'icon'			: 'fa-chevron-left text-shadow',
 			'iconSize'		: '',
 			'gtAct'			: 'back'
 		},
@@ -54,6 +56,27 @@ app['header'] = new function() {
 
 	this.els = {
 		parent: $('#header-fields')
+	}
+	
+	this.init = function() {
+		_header.scrollShadow();
+	}
+	
+	this.scrollShadow = function() {
+		_header.data['hasShadow'] = false;
+		
+		$(window).scroll(function() {
+			var scrollTop = $(this).scrollTop();
+
+			if (scrollTop > 10 && !_header.data.hasShadow) {
+				$('header').addClass('shadow');
+				_header.data.hasShadow = true;
+			} 
+			else if (scrollTop <= 10 && _header.data.hasShadow) {
+				$('header').removeClass('shadow');
+				_header.data.hasShadow = false;
+			}
+		})
 	}
 
 	this.destroy = function() {

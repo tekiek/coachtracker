@@ -38,7 +38,7 @@ app['email'] = new function() {
 	 * Get superiors from user data
 	 */
 	this.getUsers = function() {
-		var users = app.data.user.users;
+		var users = _email.data.to;
 
 		// Add users
 		_email.data['users'] = {};
@@ -48,6 +48,8 @@ app['email'] = new function() {
 				_email.data.users[user['id']] = user['name'];
 			}
 		});
+		
+		// Add current user
 		_email.data.users[app.data.user.id] = app.data.user.name;
 	}
 

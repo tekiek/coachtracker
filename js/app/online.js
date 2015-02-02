@@ -1,7 +1,7 @@
 app['online'] = new function() {
 	_online = this;
 	this.delay = 3000; // 30seconds
-	this.status = null;
+	this.status = true;
 	
 	this.init = function() {
 		setInterval(function() {
@@ -22,6 +22,8 @@ app['online'] = new function() {
 	}
 	
 	this.checkStatus = function() {
+		return true;
+		
 		// Handle IE and more capable browsers
 		var xhr = new ( window.ActiveXObject || XMLHttpRequest )( "Microsoft.XMLHTTP" );
 		var status;

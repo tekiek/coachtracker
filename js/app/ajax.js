@@ -25,6 +25,7 @@ app['ajax'] = new function() {
 	this.ajaxBeforeSend = function(x, s) {
 		if (app.online.checkStatus()) {
 			$(window).overlay({ show: true });
+			if (s && s.url) app.startTimer(s.url);
 		} else {
 			if (s['offline']) {
 				_ajax.addToQueue(s);
@@ -45,6 +46,7 @@ app['ajax'] = new function() {
 		if (app.online.status) {
 			_ajax.ajaxResponseLog(e);
 			_ajax.trackRequest(x, this.url);
+			app.endTimer(this.url);
 			$(window).overlay({
 				show: false, 
 				delay: 0 

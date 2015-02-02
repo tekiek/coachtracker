@@ -12,6 +12,11 @@ app['studentSearch'] = new function() {
 	};
 
 	this.template_data = {
+		'dirIcon': {
+			'icon'			: 'fa-angle-right',
+			'iconSize'		: 'fa-3x',
+			'classes'		: 'right dirIcon'
+		},
 		'iconSearch': {
 			'icon'			: 'fa-search',
 			'iconSize'		: 'fa-lg'
@@ -94,7 +99,9 @@ app['studentSearch'] = new function() {
 	 * Create Student List
 	 */
 	this.buildStudentList = function() {
-		var studentListEL = $.tmpl(app.global.templates.listGroup),
+		var studentListEL = $.tmpl(app.global.templates.listGroup, {
+				'classes': 'studentList'
+			}),
 			students = _studentSearch.getStudentsSorted();
 
 		_studentSearch.els['studentListEL'] = studentListEL;
@@ -105,12 +112,15 @@ app['studentSearch'] = new function() {
 					studentDetails = ['email', 'phone'],
 					name = $.tmpl(app.global.templates.h3, {
 						'text': student.fname + ' ' + student.lname
-					});
+					}),
+					dirIcon = $.tmpl(app.global.templates.icon, _studentSearch.template_data['dirIcon']);
 
 				// Add UI
 				studentEl
 					.attr('data-id', student.id)
+					.append(dirIcon)
 					.append(name);
+
 				$.each(studentDetails, function(x, detail) {
 					if (student[detail]) {
 						var detailEl = $.tmpl(app.global.templates.div, {

@@ -22,7 +22,9 @@ app['menu'] = new function() {
 			'classes'		: 'shadow marginBottom10',
 			'acls'			: '',
 			'text'			: 'MEETING NOTES',
-			'href'			: '/export'
+			'href'			: '/export',
+			'iconR'			: 'fa-angle-right',
+			'iconSize'		: 'fa-lg'
 		},
 		'upload': {
 			'color'			: 'btn-success',
@@ -30,7 +32,9 @@ app['menu'] = new function() {
 			'classes'		: 'shadow marginBottom10',
 			'acls'			: 'acl-admin',
 			'text'			: 'UPLOAD USERS',
-			'href'			: '/upload'
+			'href'			: '/upload',
+			'iconR'			: 'fa-angle-right',
+			'iconSize'		: 'fa-lg'
 		},
 		'connect': {
 			'color'			: 'btn-success',
@@ -38,35 +42,45 @@ app['menu'] = new function() {
 			'classes'		: 'shadow marginBottom10',
 			'acls'			: 'acl-connect',
 			'text'			: 'ADD CONNECTION',
-			'href'			: 'connect/'
+			'href'			: 'connect/',
+			'iconR'			: 'fa-angle-right',
+			'iconSize'		: 'fa-lg'
 		},
 		'studentEdit': {
 			'color'			: 'btn-primary',
 			'btnSize'		: 'btn-lg',
 			'classes'		: 'shadow marginBottom10',
 			'acls'			: '',
-			'text'			: 'MY STUDENTS'
+			'text'			: 'MY STUDENTS',
+			'iconR'			: 'fa-angle-right',
+			'iconSize'		: 'fa-lg'
 		},
 		'eventAdd': {
 			'color'			: 'btn-primary',
 			'btnSize'		: 'btn-lg',
 			'classes'		: 'shadow marginBottom10',
 			'acls'			: '',
-			'text'			: 'I MET WITH A STUDENT'
+			'text'			: 'I MET WITH A STUDENT',
+			'iconR'			: 'fa-angle-right',
+			'iconSize'		: 'fa-lg'
 		},
 		'scheduleAdd': {
 			'color'			: 'btn-primary',
 			'btnSize'		: 'btn-lg',
 			'classes'		: 'shadow marginBottom10',
 			'acls'			: 'hidden',
-			'text'			: 'SCHEDULE FOLLOW UP'
+			'text'			: 'SCHEDULE FOLLOW UP',
+			'iconR'			: 'fa-angle-right',
+			'iconSize'		: 'fa-lg'
 		},
 		'scheduleList': {
 			'color'			: 'btn-primary',
 			'btnSize'		: 'btn-lg',
 			'classes'		: 'shadow marginBottom10',
 			'acls'			: 'hidden',
-			'text'			: 'UPCOMING MEETINGS'
+			'text'			: 'UPCOMING MEETINGS',
+			'iconR'			: 'fa-angle-right',
+			'iconSize'		: 'fa-lg'
 		},
 		'offlineInfoBtn'	: {
 			'text'			: 'Learn More',

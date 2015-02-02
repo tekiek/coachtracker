@@ -14,6 +14,7 @@ app['global'] = new function() {
 			<button data-action="${text}" class="btn ${color} ${btnSize} ${classes} ${acls} shadow">\
 				<i class="fa ${icon} ${iconSize}"></i>\
 				<span class="button-text">${text}</span>\
+				<i class="fa ${iconR} ${iconSize} right"></i>\
 			</button>',
 		'icon'		: '<i data-action="${gtAct}" class="fa ${icon} ${iconSize} ${classes}"></i>',
 		'hr'		: '<hr>',
@@ -24,7 +25,7 @@ app['global'] = new function() {
 		'anchor'	: '<a href="${a}" target="_blank">${content}</a>',
 		'alert'		: '<div class="alert alert-danger" role="alert"><i class="fa fa-info-circle"></i> ${text}</div>',
 		'badge'		: '<span class="badge ${classes}">${text}</span>',
-		'listGroup'	: '<div class="list-group"></div>',
+		'listGroup'	: '<div class="list-group ${classes}"></div>',
 		'listItem'	: '<a href="#" class="list-group-item"></a>',
 		'js' 		: '<script type="text/javascript" src="${src}"></script>',
 		'css'		: '<link rel="stylesheet" type="text/css" href="${src}" />',

@@ -395,6 +395,7 @@ app['login'] = new function() {
 	/***************** LOGOUT *****************/
 	this.showLogout = function() {
 		app.global.dialogConfirm({
+			animate: true,
 			msg: 'Would you like to log out?',
 			'yesBtn': 'Log Out',
 			'noBtn': 'Cancel',

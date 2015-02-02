@@ -95,11 +95,15 @@ tools['dataExport'] = new function() {
 			toDate: _dataExport.els.toDate.val()
 		}
 
+		var start = new Date().getTime();
 		$.ajax({
 			url: _dataExport.apis[_dataExport.data.type],
 			data: params
 		})
 		.done(function(response) {
+			var end = new Date().getTime();
+			var time = end - start;
+			console.log('time', time)
 			response = $.parseJSON(response);
 			var editModeToggle = ['off', 'delete'];
 			

@@ -1,5 +1,5 @@
 <?php
-$version = '1.05b';
+$version = '1.07f';
 require 'db/table_config.php';
 require 'db/db_connect.php';
 require 'db/table_insert.php';
@@ -16,4 +16,9 @@ require 'includes/helpers.php';
 require 'includes/elements.php';
 require 'includes/users.php';
 require 'includes/connections.php';
+require 'includes/studentConnections.php';
+require 'includes/userConnections.php';
+require 'includes/eventConnections.php';
+require 'db/queryTable.php';
+require 'db/queryColumn.php';
 ?>

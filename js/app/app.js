@@ -12,9 +12,10 @@ var app = new function() {
 
 	this.init = function() {
 		app.startTimer('load-time');
-		app.online.init();
+		//app.online.init();
 		app.gtrack.init();
 		app.ajax.init();
+		app.header.init();
 		if (app.config.isIOS) addToHomescreen();
 
 		// Must be logged in
@@ -27,26 +28,27 @@ var app = new function() {
 		app.endTimer('load-time');
 	}
 	
-	this.exit = function() {
-		// $(window).bind('beforeunload', function() {
-		//         alert('test');
-		//     });
-	}
+	this.exit = function() {}
 
 	/* --- Timers ---- */
 
 	this.timers = {}
 
 	this.startTimer = function(id) {
+		console.log('START ID', id);
 		app.timers[id] = {};
 		app.timers[id]['start'] = new Date().getTime();
 	}
 
 	this.endTimer = function(id) {
+		console.log('END ID', id);
 		if (app.timers[id]) {
 			app.timers[id]['end'] = new Date().getTime();
 			app.timers[id]['time'] = app.timers[id]['end'] - app.timers[id]['start'];
-			app.gtrack.track_event('app', id, app.timers[id]['time']);
+			
+			// Track timer
+			timeTrack = Math.round(app.timers[id]['time'] / 10) * 10
+			app.gtrack.track_event('timer', id, timeTrack);
 		}
 	}
 }();

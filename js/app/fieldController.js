@@ -134,7 +134,7 @@ app['fieldController'] = new function() {
 	this.inputMask = function(opts) {
 		if (!opts['el']) return false;
 		if (!opts['mask']) return false;
-
+		console.log('*********');
 		$(opts['el']).mask(opts['mask']);
 	}
 	

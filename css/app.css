@@ -10,6 +10,7 @@ body {
 	color: #333 !important;
 	background-color: #f7f7f7 !important;
 }
+	
 
 /**************** ANIMATION ****************/
 .animated_0_2 {
@@ -41,6 +42,17 @@ body.acl-can-captain .acl-captain { display: block !important; }
 body.acl-can-connect .acl-connect { display: block !important; }
 
 /**************** GLOBALS ****************/
+@media(max-width: 800px) {
+	.input-group-addon {
+		padding: 10px !important;
+	}
+	.input-group-lg > .form-control, 
+	.input-group-lg > .input-group-addon, 
+	.input-group-lg > .input-group-btn > .btn {
+		font-size: 16px !important;
+	}
+}
+
 .input-group.has-error {
 	box-shadow: 0 15px 10px -10px rgba(34,25,25,0.4); 
 	-moz-box-shadow: 0 15px 10px -10px rgba(34,25,25,0.4); 
@@ -143,6 +155,12 @@ textarea {
 	padding: 5px 10px !important;
 }
 
+
+/**************** STUDENT LIST ****************/
+.studentList .list-group-item i.dirIcon {
+	line-height: 90px;
+	color: #aaa;
+}
 
 /**************** ????? ****************/
 .input-group .form-control.expand {
@@ -254,13 +272,53 @@ header .logo-wrapper {
 	padding: 0 0 0 10px;
 }
 @media(max-width: 800px) {
+	header {
+		height: 50px;
+		font-size: 14px;
+	}
 	header i.logo-icon:after {
-		content: " c t";
+		content: " CT";
+	}
+	header i.fa-3x {
+		font-size: 2.5em !important;
+	}
+	header i.fa-2x {
+		font-size: 1.5em !important;
+	}
+	header .back-btn-wrapper {
+		font-size: 2em;
+		padding: 5px 10px;
+	}
+	header .search-wrapper {
+		top: 50px;
+	}
+	header .search-wrapper .input-group .input-group-addon {
+		width: 55px;
 	}
 }
 @media(min-width: 800px) {
+	header {
+		height: 60px;
+		font-size: 14px;
+	}
 	header i.logo-icon:after {
 		content: " coach tracker";
+	}
+	header i.fa-3x {
+		font-size: 3em !important;
+	}
+	header i.fa-2x {
+		font-size: 2em !important;
+	}
+	header .back-btn-wrapper {
+		font-size: 2.5em;
+		padding: 5px 10px;
+	}
+	header .search-wrapper {
+		top: 60px;
+	}
+	header .search-wrapper .input-group .input-group-addon {
+		width: 65px;
 	}
 }
 
@@ -269,20 +327,15 @@ header {
 	top: 0px;
 	padding: 0px;
 	z-index: 99;
-	width: 100%; 
-	height: 60px;
+	width: 100%;
 	color: #ffffff;
-	xbackground: linear-gradient(#79a6e3, #4e77ad);
-	xbackground: -webkit-linear-gradient(#79a6e3, #4e77ad);
-	xbackground: -o-linear-gradient(#79a6e3, #4e77ad);
-	xbackground: -moz-linear-gradient(#79a6e3, #4e77ad);
 	background: #4285f4;
+}
+
+header.shadow {
 	box-shadow: 0 0 4px rgba(0,0,0,.14), 0 4px 8px rgba(0,0,0,.28);
 	-moz-box-shadow: 0 0 4px rgba(0,0,0,.14), 0 4px 8px rgba(0,0,0,.28);
 	-webkit-box-shadow: 0 0 4px rgba(0,0,0,.14), 0 4px 8px rgba(0,0,0,.28);
-/*	border-bottom: 1px solid #C7C7C7;
-	background: white;
-	color: #868485;*/
 }
 
 body.offline header {
@@ -306,10 +359,7 @@ header #header-fields {
 	position: relative; 
 	margin: 0 auto;
 }
-header .back-btn-wrapper {
-	font-size: 2.5em;
-	padding: 5px 10px;
-}
+
 header .back-btn-wrapper i {
 	margin: 0 10px 0 0;
 }
@@ -328,17 +378,12 @@ header .userField:hover {
 }
 header .search-wrapper {
 	width: 100%;
-	top: 60px;
 	padding: 0px;
 	margin: 5px 0 0 0;
 	position: absolute;
 }
 header .search-wrapper .input-group {
 	width: 100%;
-}
-
-header .search-wrapper .input-group .input-group-addon {
-	width: 65px;
 }
 
 header .help-wrapper {
@@ -356,16 +401,31 @@ header .help-wrapper:hover > * {
 }
 
 /**************** CONTENT ****************/
+@media(min-width: 800px) {
+	#content {
+		margin: 80px auto;
+	}
+	
+	body.hasSearchField #content {
+		margin-top: 120px !important;
+	}
+}
+
+@media(max-width: 800px) {
+	#content {
+		margin: 60px auto;
+	}
+	
+	body.hasSearchField #content {
+		margin-top: 110px !important;
+	}
+}
+
 #content {
-	margin: 80px auto;
 	margin-bottom: 40px;
 	left: 0px; 
 	width: 100%;
 	max-width: 960px;
-}
-
-body.hasSearchField #content {
-	margin-top: 120px !important;
 }
 
 body.noHeader #content {
@@ -389,6 +449,19 @@ body.noHeader #content {
 
 /**************** MENU ****************/
 @media(min-width: 800px) {
+	#home-screen {
+		margin: 0 10px;
+	}
+	#home-screen .panel .panel-heading {
+		border-radius: 10px 10px 0 0;
+	}
+	#home-screen .panel,
+	#home-screen .jumbotron {
+		border-radius: 10px 10px 0 0;
+		box-shadow: 0 15px 10px -10px rgba(0, 0, 0, 0.2);
+		-moz-box-shadow: 0 15px 10px -10px rgba(34,25,25,0.4); 
+		-webkit-box-shadow: 0 15px 10px -10px rgba(34,25,25,0.4);
+	}
 	#home-screen .panel:nth-child(odd) {
 		float: left;
 		width: 49%;
@@ -397,27 +470,30 @@ body.noHeader #content {
 		float: right;
 		width: 49%;
 	}
+	#home-screen .panel .btn i {
+		display: none;
+	}
+}
+@media(max-width: 800px) {
+	#home-screen .panel {
+		margin: 0px;
+		background: transparent;
+		border: 0px;
+		webkit-box-shadow: 0 0px 0px;
+		box-shadow: 0 0px 0px ;
+	}
+	#home-screen .panel-heading {
+		display: none;
+	}
+	#home-screen .panel .panel-body {
+		padding: 10px 0 0 0;
+	}
+	#home-screen .btn i {
+		line-height: 22px;
+	}
 }
 
-#home-screen {
-	margin: 0 10px;
-}
 
-#home-screen .panel,
-#home-screen .jumbotron {
-	border-radius: 10px 10px 0 0;
-	box-shadow: 0 15px 10px -10px rgba(0, 0, 0, 0.2);
-	-moz-box-shadow: 0 15px 10px -10px rgba(34,25,25,0.4); 
-	-webkit-box-shadow: 0 15px 10px -10px rgba(34,25,25,0.4);
-}
-
-#home-screen .jumbotron {
-	padding: 20px;
-}
-
-#home-screen .panel .panel-heading {
-	border-radius: 10px 10px 0 0;
-}
 
 /**************** Event List ****************/
 .navWrapper {

@@ -1,6 +1,7 @@
 app['eventAdd'] = new function() {
 	_eventAdd = this;
 	this.schools;
+	this.data = {};
 	
 	this.els = {
 		parent: $('div#event-add')
@@ -207,30 +208,58 @@ app['eventAdd'] = new function() {
 			msg: "Does this student need follow up?",
 			animate: true,
 			saveCloseCallback: function() {
-				var eventData = _eventAdd.getFieldData(),
-					message = "",
-					subject = "Student Followup",
-					studentName = (app.studentSearch.selectedStudent.fname + " " + app.studentSearch.selectedStudent.lname);
-
-				message += "This student requires followup:\n"
-				message += "Student: " + studentName + "\n";
-				if (eventData.timestamp) message += "Date: " + eventData.timestamp + "\n";
-				if (eventData.duration) message += "Duration: " + eventData.duration + "\n";
-				if (eventData.reason) message += "Reason: " + eventData.reason + "\n";
-				if (eventData.notes) message += "Notes: " + eventData.notes + "\n";
-				if (studentName) subject += ": " + studentName;
-
-				EventManager.observe_once('email:exit', _eventAdd.saveExit);
-				app.email.init({
-					'message': message,
-					'subject': subject,
-					'to': true,
-					'api': 'backend/forms/event_followup.php'
-				});
+				_eventAdd.getFollowUpEmails();
 			},
 			cancelCloseCallback: function() {
 				_eventAdd.saveExit();
 			}
+		});
+	}
+	
+	/*
+	 * Get connected users to student
+	 */
+	this.getFollowUpEmails = function() {
+
+		$.ajax({
+			type: "POST",
+			url: 'backend/forms/event_followup_connections.php',
+			data: {
+				'id': app.studentSearch.selectedStudent.id
+			},
+			dataType: 'json',
+			offline: true
+		})
+		.always(function(response) {
+			if (response && response.users) {
+				_eventAdd.data['connectedUsers'] = response.users;
+			} else {
+				_eventAdd.data['connectedUsers'] = new Array();
+			}
+			_eventAdd.followUpDialog();
+		});
+	}
+	
+	this.followUpDialog = function() {
+		var eventData = _eventAdd.getFieldData(),
+			message = "",
+			subject = "Student Followup",
+			studentName = (app.studentSearch.selectedStudent.fname + " " + app.studentSearch.selectedStudent.lname);
+
+		message += "This student requires followup:\n"
+		message += "Student: " + studentName + "\n";
+		if (eventData.timestamp) message += "Date: " + eventData.timestamp + "\n";
+		if (eventData.duration) message += "Duration: " + eventData.duration + "\n";
+		if (eventData.reason) message += "Reason: " + eventData.reason + "\n";
+		if (eventData.notes) message += "Notes: " + eventData.notes + "\n";
+		if (studentName) subject += ": " + studentName;
+
+		EventManager.observe_once('email:exit', _eventAdd.saveExit);
+		app.email.init({
+			'message': message,
+			'subject': subject,
+			'to': _eventAdd.data['connectedUsers'],
+			'api': 'backend/forms/event_followup.php'
 		});
 	}
 

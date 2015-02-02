@@ -1,5 +1,22 @@
 <?php
 
+/*
+ * Gets users acl
+ */
+function getAcl($userid) {
+	$acl;
+
+	if ($userid) {
+		$user_cred = array('id' => $userid);
+		$user = TableRow('users', $user_cred);
+		if ($user['admin'] == '1') $acl = 'admin';
+		else if ($user['captain'] == '1') $acl = 'captain';
+		else if ($user['coach'] == '1') $acl = 'coach';
+		else if ($user['counselor'] == '1') $acl = 'counselor';
+	}
+	return $acl;
+}
+
 function logTableChange($sql, $caller) {
 	$tableLogFile = logs_dir() . date('Y-m', time()) . ".txt";
 	$newData = $caller . "\n";
@@ -137,6 +154,35 @@ function uploadCsv($table, $file) {
 		
 		TableInsert($table, $table_data);
 	}
+}
+
+/*
+ * Creates list of columns - If null returns *
+ */
+function colsToSql($cols) {
+
+	if (gettype($cols) == 'array') {
+		$sqlCols = implode(", ", $cols);
+	} else {
+		$sqlCols = "*";
+	}
+	return $sqlCols;
+}
+
+/*
+ * Creates an array of any number of ids
+ */
+function idsToArray($ids) {
+	$idsArray = array();
+	
+	// Clean up data
+	if (gettype($ids) != 'array') {
+		array_push($idsArray, $ids);
+	}
+	else if (gettype($ids) == 'array') {
+		$idsArray = $ids;
+	}
+	return $idsArray;
 }
 
 ?>

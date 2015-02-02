@@ -2,7 +2,7 @@ app['imageAdd'] = new function() {
 	_imageAdd = this;
 	
 	this.templates = {
-		'imgFile'		: '<input name="myfile" data-field="${dbId}" type="file" accept="image/*" capture="camera">',
+		'imgFile'		: '<input name="myfile" data-field="${dbId}" type="file" accept="image" capture="camera">',
 		'userImage'		: '<img class="user-image" src="' + app.config.studentImagePath + '${userImg}?z=${rndNum}">',
 	}
 	

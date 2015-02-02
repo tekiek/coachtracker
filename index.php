@@ -3,7 +3,9 @@
 <html>
 	<head>
 		<?php head_includes(); ?>
-		<link rel="stylesheet" type="text/css" href="/min/g=css-app&v=<?php echo $version ?>">                          
+		<?php ga_lib(); ?>
+		<link rel="stylesheet" type="text/css" href="/min/g=css-app&v=<?php echo $version ?>">
+		<script type="text/javascript" src="/min/g=js-app-libs&v=<?php echo $version ?>"></script>                      
 	</head>                                   
 	<body>
 		
@@ -32,8 +34,6 @@
 		<div id="alert"></div>
 		<div id="spinner"></div>
 		<div id="dialog"></div>
-		<script type="text/javascript" src="/min/g=js-app-libs&v=<?php echo $version ?>"></script>
 		<script type="text/javascript" src="/min/g=js-app-core&v=<?php echo $version ?>"></script>
-		<?php ga_lib(); ?>
 	</body>                                                                 
 </html>

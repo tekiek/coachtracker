@@ -120,20 +120,23 @@ tools['connection'] = new function() {
 	 * Ajax call to get table data
 	 */
 	this.getTableData = function() {
-		var ajaxTime= new Date().getTime();
-
-		$.ajax({
-			url: _connection.apis.connectionList,
-			data: {
+		var ajaxTime = new Date().getTime(),
+			params = {
 				'type'		: _connection['data']['activeTab']['type'],
 				'filter'	: _connection['data']['activeTab']['filter'],
 				'userid'	: _connection.data['userid']
 			}
+
+		console.log('params', params)
+		$.ajax({
+			url: _connection.apis.connectionList,
+			data: params
 		})
 		.done(function(response) {
 			response = $.parseJSON(response);
 			var totalTime = new Date().getTime()-ajaxTime;
 			console.log('totalTime', totalTime);
+			console.log('response', response);
 			
 			if (response.success == 'true') {
 				// Available table
