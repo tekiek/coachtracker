@@ -10,11 +10,8 @@ if ($params['user'] && $params['type']) {
 	
 	// Update Table
 	TableUpdate($table, $match, $user);
-	
-	// Return Row Data
-	$row = TableRow($table, $match);
 }
 
-echo json_encode($row);
+echo json_encode($params);
 
 ?>

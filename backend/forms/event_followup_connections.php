@@ -1,7 +1,5 @@
 <?php
-require '../common.php';
 
-$params = get_params();
 $cols = array('id','name','email', 'admin', 'captain');
 $users = array();
 
@@ -12,7 +10,11 @@ if ($params['id']) {
 	
 	// Remove
 	foreach($connectedUsers as $connectedUser) {
-		if ($connectedUser['admin'] == '1' || $connectedUser['captain'] == '1' || $connectedUser['admin'] == 1 || $connectedUser['captain'] == 1) {
+		if ($connectedUser['admin'] == '1' || 
+			$connectedUser['captain'] == '1' || 
+			$connectedUser['admin'] == 1 || 
+			$connectedUser['captain'] == 1
+		){
 			continue;
 		} else {
 			array_push($users, $connectedUser);
@@ -21,8 +23,8 @@ if ($params['id']) {
 }
 
 $response = array(
+	"success" => "true",
 	"users" => $users
 );
 
-echo json_encode($response);
 ?>

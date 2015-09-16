@@ -13,21 +13,20 @@ app['studentSearch'] = new function() {
 
 	this.template_data = {
 		'dirIcon': {
-			'icon'			: 'fa-angle-right',
-			'iconSize'		: 'fa-3x',
-			'classes'		: 'right dirIcon'
+			'icon'			: 'angle-right',
+			'classes'		: 'fa-2x right dirIcon'
 		},
 		'iconSearch': {
-			'icon'			: 'fa-search',
-			'iconSize'		: 'fa-lg'
+			'icon'			: 'search',
+			'classes'		: 'fa-2x'
 		},
 		'iconCancel': {
-			'icon'			: 'fa-times-circle',
-			'iconSize'		: 'fa-lg'
+			'icon'			: 'times-circle',
+			'classes'		: 'fa-2x'
 		},
 		'iconUser': {
-			'icon'			: 'fa-user',
-			'iconSize'		: 'fa-lg'
+			'icon'			: 'user',
+			'classes'		: 'fa-2x'
 		},
 		'inputSearch': {
 			'type'			:'input',
@@ -38,6 +37,24 @@ app['studentSearch'] = new function() {
 		},
 	};
 	
+	this.init = function() {
+		app.libs.waitForLib({
+			lib: 'jqueryui',
+			cb: _studentSearch.waitForStudents
+		});
+	}
+	
+	this.waitForStudents = function() {
+		if (_login.hasConnectedStudents()) {
+			_studentSearch.getEls();
+			_studentSearch.addStudentSearch();
+		} else {
+			setTimeout(function() {
+				_studentSearch.init();
+			}, 250)
+		}
+	}
+	
 	/*
 	 * init
 	 */
@@ -45,6 +62,10 @@ app['studentSearch'] = new function() {
 		_studentSearch.buildSearchUI();
 		_studentSearch.buildStudentList();
 		_studentSearch.searchUser();
+	}
+	
+	this.getEls = function() {
+		_studentSearch.els['parent'] = $('#student-search');
 	}
 
 	/*
@@ -54,9 +75,9 @@ app['studentSearch'] = new function() {
 		var searchWrapper = $.tmpl(_studentSearch.templates.searchWrapper, {})
 			searchField = $.tmpl(_studentSearch.templates.searchField, {})
 			iconWrapper = $.tmpl(_studentSearch.templates.iconWrapper, {})
-			iconSearch = $.tmpl(app.global.templates.icon, _studentSearch.template_data['iconSearch']),
-			iconCancel = $.tmpl(app.global.templates.icon, _studentSearch.template_data['iconCancel']),
-			iconUser = $.tmpl(app.global.templates.icon, _studentSearch.template_data['iconUser']),
+			iconSearch = $.tmpl(app.templates.svg, _studentSearch.template_data['iconSearch']),
+			iconCancel = $.tmpl(app.templates.svg, _studentSearch.template_data['iconCancel']),
+			iconUser = $.tmpl(app.templates.svg, _studentSearch.template_data['iconUser']),
 			inputSearch = app.fieldController.createField(_studentSearch.template_data['inputSearch']);
 
 		$(iconWrapper)
@@ -99,7 +120,7 @@ app['studentSearch'] = new function() {
 	 * Create Student List
 	 */
 	this.buildStudentList = function() {
-		var studentListEL = $.tmpl(app.global.templates.listGroup, {
+		var studentListEL = $.tmpl(app.templates.listGroup, {
 				'classes': 'studentList'
 			}),
 			students = _studentSearch.getStudentsSorted();
@@ -108,12 +129,12 @@ app['studentSearch'] = new function() {
 
 		$.each(students, function(i, student) {
 			if (student.id && student.fname && student.lname) {
-				var studentEl = $.tmpl(app.global.templates.listItem),
+				var studentEl = $.tmpl(app.templates.listItem),
 					studentDetails = ['email', 'phone'],
-					name = $.tmpl(app.global.templates.h3, {
+					name = $.tmpl(app.templates.h3, {
 						'text': student.fname + ' ' + student.lname
 					}),
-					dirIcon = $.tmpl(app.global.templates.icon, _studentSearch.template_data['dirIcon']);
+					dirIcon = $.tmpl(app.templates.svg, _studentSearch.template_data['dirIcon']);
 
 				// Add UI
 				studentEl
@@ -123,8 +144,9 @@ app['studentSearch'] = new function() {
 
 				$.each(studentDetails, function(x, detail) {
 					if (student[detail]) {
-						var detailEl = $.tmpl(app.global.templates.div, {
-							'input': student[detail]
+						var detailEl = $.tmpl(app.templates.div, {
+							'input': student[detail],
+							'classes': 'student-info'
 						});
 						studentEl.append(detailEl)
 					}
@@ -139,6 +161,10 @@ app['studentSearch'] = new function() {
 			}
 			
 		});
+		// _studentSearch.els.parent
+		// 	.append(studentListEL)
+		// 	.show();
+		_studentSearch.els['studentListEL'] = studentListEL;
 		_controller.currSlide().els.parent.append(studentListEL);
 	}
 
@@ -158,20 +184,24 @@ app['studentSearch'] = new function() {
 		_studentSearch.toggleSearchResults({
 			'visibleIds':  [student.id]
 		});
-
+		
 		setTimeout(function() {
 			// Textbox animation
-			app.global.animate(_studentSearch.els['inputSearch'], 'pulse', 'default', function() {
-				_studentSearch.els['inputSearch'].val(student.fname + ' ' + student.lname);
-				_studentSearch.searchIcon('user');
-			});
-
+			_studentSearch.els['inputSearch'].val(student.fname + ' ' + student.lname);
+			_studentSearch.searchIcon('user');
+			app.global.animate(_studentSearch.els['inputSearch'], 'pulse', 'default');
+		
 			// Student Animation
-			app.global.animate(studentEl, 'bounceOutUp', 'default', function() {
-				studentEl.hide();
-				_studentSearch.getUserData({
-					'id': student.id
-				});
+			// app.global.animate(studentEl, 'bounceOutUp', 'default', function() {
+				// studentEl.hide();
+				// _studentSearch.getUserData({
+				// 	'id': student.id
+				// });
+			// });
+			
+			studentEl.hide();
+			_studentSearch.getUserData({
+				'id': student.id
 			});
 		}, 250);
 		
@@ -309,18 +339,17 @@ app['studentSearch'] = new function() {
 	/*
 	 * return selected user
 	 * params:
+	 * - el (el) student element
 	 * - id (int) student id
 	 */
 	this.getUserData = function(params) {
 		var students = app.data.user.students,
 			studentId = params['id'];
 
-		app.global.spinner({ show: true });
 		$.each(students, function(x, student) {
 			if (studentId == student['id']) {
 				_studentSearch.destroy();
 				_studentSearch.selectedStudent = student;
-				app.global.spinner({ show: false, delay: 500 });
 				if (_controller.currSlide()['userSelected']) _controller.currSlide()['userSelected']();
 				return false;
 			}
@@ -331,6 +360,7 @@ app['studentSearch'] = new function() {
 		_studentSearch.els['inputSearch']
 			.autocomplete('destroy')
 			.attr("disabled", "disabled");
+		//_studentSearch.els.parent.hide();
 		_studentSearch.els['studentListEL'].remove();
 	}
 };

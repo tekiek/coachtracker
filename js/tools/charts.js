@@ -1,4 +1,4 @@
-tools['charts'] = new function() {
+app['charts'] = new function() {
 	_charts = this;
 	
 	this.templates = {

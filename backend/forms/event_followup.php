@@ -1,6 +1,4 @@
 <?php
-require '../common.php';
-$params = get_params();
 $response = array();
 
 if ($params['to'] && $params['msg']) {
@@ -24,7 +22,10 @@ if ($params['to'] && $params['msg']) {
 		}
 		array_push($response, $user);
 	}
+	
+	$response = array(
+		"success" => "true",
+	);
 }
 
-echo json_encode($params);
 ?>

@@ -1,13 +1,52 @@
 <?php
 
 /*
+ * Returns all student ids
+ */
+function getAllStudentIds() {
+	//SELECT id FROM students
+	$sql = "SELECT id FROM students";
+	$studentIds = queryColumn($sql);
+
+	return $studentIds;
+}
+
+/*
+ * Get all users
+ */
+function getAllStudents($cols) {
+	$cols = colsToSql($cols);
+	
+	// Get all users data
+	$sql = "SELECT $cols FROM students ORDER BY fname ASC";
+	$studentData = queryTable($sql);
+	
+	// Get Ids
+	$studentIds = array();
+	foreach($studentData as $student) {
+		if ($student['id']) {
+			array_push($studentIds, $student['id']);
+		}
+	}
+	
+	return array(
+		'ids' => $studentIds,
+		'data' => $studentData
+	);
+}
+
+/*
  * Get all connected students of user(s) - returns student table data
  */
 function getConnectedStudentsOfUsers($ids, $cols) {
 	$userids = idsToArray($ids);
 	$connectedStudentIds = getConnectedStudentIdsOfUsers($userids);
 	$studentsData = getStudentsData($connectedStudentIds, $cols);
-	return $studentsData;
+
+	return array(
+		'ids' => $connectedStudentIds,
+		'data' => $studentsData
+	);
 }
 
 /*
@@ -16,8 +55,9 @@ function getConnectedStudentsOfUsers($ids, $cols) {
 function getConnectedUsersOfStudents($ids, $cols) {
 	$userids = idsToArray($ids);
 	$connectedUserIds = getConnectedUserIdsOfStudents($userids);
-	$usersData = getUsersData($connectedUserIds, $cols);
+	$usersData = getUsersData(array_unique($connectedUserIds), $cols);
 	return $usersData;
+	return $connectedUserIds;
 }
 
 /*

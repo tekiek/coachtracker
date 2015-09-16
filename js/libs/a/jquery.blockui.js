@@ -6,56 +6,56 @@
  * })
  */
 
-var overlayQueue = [];
-
-function hasActiveOverlay(el) {
-	var elData = el.data();
-	return (elData['blockUI.isBlocked'] && elData['blockUI.isBlocked'] == 1 ? true : false);
-}
+window.overlays = [];
 
 (function($) {
     $.fn.overlay = function(params) {
 		if (typeof params != "object") params = new Object();
 		if (!params['show']) params['show'] = false;
-		if (!params['msg']) params['msg'] = '<i class="fa fa-spinner fa-spin fa-4x"></i>';
-		if (!params['delay']) params['delay'] = 500;
-		if (!params['cb']) params['cb'] = function(){ return true; };
+		if (!params['msg']) params['msg'] = '<div class="loader"></div>';
 
 		if (params['show']) {
 			
-			// If has overlay add to queue
-			if (hasActiveOverlay($(this))) {
-				overlayQueue.push(params);
+			// If has overlay
+			if (window.overlays.length > 0) {
+				window.overlays.push(params);
 				return false;
+			} else {
+				window.overlays.push(params);
 			}
 			
 			$.blockUI({ 
 				message: '<h3>' + params['msg']  + '</h3>',
 				css: {
 					background: 'transparent',
-					color: 'white',
+					color: '#999',
 					border: '0px',
-					width: $(window).width(),
-					left: 0
 				},
 				onBlock: function() {
-					$.when(params['cb']()).done(function() {
+					// Callback function
+					if (params['cb']) params['cb']();
+					
+					// Timer to hide
+					if (params['delay']) {
 						setTimeout(function() {
-							if (overlayQueue.length) {
-								params = overlayQueue.pop();
-								$.unblockUI();
-								$(this).overlay(params);
-							} else {
-								$.unblockUI();
-							}
-						}, params['delay']);
-					})
+							$(document).overlay({ show: false });
+						}, params['delay'])
+					}
 				}
 			});
 		} else {
-			setTimeout(function() {
+			// Remove overlay
+			window.overlays.pop();
+
+			// If other overlays in queue
+			if (window.overlays.length > 0) {
+				var params = window.overlays.pop();
 				$.unblockUI();
-			}, params['delay'])
+				$(document).overlay(params);
+				return false;
+			}
+
+			$.unblockUI();
 		}
 	}
 })(jQuery);

@@ -3,8 +3,8 @@
 	lock();
 	
 	$params = get_params();
-	$users = getUserList();
-	$user = ($params['user'] ? $params['user'] : $users[0]);
+	
+	// Tab Config
 	$tabs = array(
 		'Students' => array(
 			'type' => 'student',
@@ -20,62 +20,16 @@
 		)
 	);
 	
-	/*
-	 * Get list of users
-	 */
-	function getUserList() {
-		$users_table = TableData('users', array(), 'name');
-		$users = table_to_array($users_table);
-		return $users;
-	}
+	// Logged in user
+	$loggedInUser = loggedInUser();
+	$loggedInId = $loggedInUser['id'];
 	
-	/*
-	 * Returns all student ids
-	 */
-	function getAllStudentIds() {
-		//SELECT id FROM students
-		$sql = "SELECT id FROM students";
-		$studentIds = queryColumn($sql);
-
-		return $studentIds;
-	}
+	// Get user list
+	$users = getConnectedUsersOfLoggedinUser(false)['data'];
+	array_unshift($users, $loggedInUser);
 	
-	/*
-	 * Returns all user ids
-	 */
-	function getAllUserIds($filter) {
-		//SELECT id FROM students
-		$sql = "SELECT id FROM users WHERE $filter = '1'";
-		$userIds = queryColumn($sql);
-
-		return $userIds;
-	}
-
-	/*
-	 * Splits currently connections by universe
-	 */
-	function splitByConnection($universe, $connectionIds) {
-		$selected = array();
-		$available = array();
-		$duplicateCheck = array();
-		
-		foreach($universe as $person) {
-			if (!in_array($person['id'], $duplicateCheck)) {
-				if (in_array($person['id'], $connectionIds)) {
-					array_push($selected, $person); 
-				} else {
-					array_push($available, $person); 
-				}
-				array_push($duplicateCheck, $person['id']);
-			}
-		}
-		
-		return array(
-			'selected' => $selected,
-			'available' => $available
-		);
-	}
-	
-	
-
+	// Selected user
+	$selectedUserId = ($params['user'] ? $params['user'] : $users[0]['id']);
+	$selectedUser = findInUniverse($users, $selectedUserId);
+	$selectedUserAcl = usersAcl($selectedUser);
 ?>

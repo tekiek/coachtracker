@@ -1,18 +1,20 @@
 app['fieldsEvent'] = {
 	'timestamp': {
 		'type'			:'input',
-		'inputType'		:'date',
+		'inputType'		:'pickadate',
+		'classes'		:'pickadate',
 		'dbId'			:'timestamp',
-		'icon'			:'fa-calendar',
+		'icon'			:'calendar',
 		'gtAct'			:'date'
 	},
 	'location': {
-		'type'			:'select',
+		'type'			:'multi',
 		'dbId'			: 'location',
-		'icon'			:'fa-fax',
+		'icon'			:'fax',
 		'gtAct'			:'location',
+		'validLength'	: 1,
+		'maxLength'		: 1,
 		'options'		: {
-			'0'				: 'Location',
 			'call'			: 'Call',
 			'cbo-office'	: 'CBO Office',
 			'college-campus': 'College Campus',
@@ -25,11 +27,14 @@ app['fieldsEvent'] = {
 		}
 	},
 	'duration': {
-		'type'			:'select',
+		'type'			:'multi',
 		'dbId'			: 'duration',
-		'icon'			:'fa-clock-o',
+		'icon'			:'clock-o',
 		'gtAct'			:'duration',
+		'validLength'	: 1,
+		'maxLength'		: 1,
 		'options'		: {
+			'00:00'	: '0M',
 			'00:05'	: '5M',
 			'00:10'	: '10M',
 			'00:15'	: '15M',
@@ -48,7 +53,7 @@ app['fieldsEvent'] = {
 		'type'			:'multi',
 		'validLength'	: 1,
 		'dbId'			:'reason',
-		'icon'			:'fa-bullseye',
+		'icon'			:'bullseye',
 		'gtAct'			:'reason',
 		'options'	: {
 			'Financial Aid'				: 'Financial Aid',
@@ -67,7 +72,7 @@ app['fieldsEvent'] = {
 		'mask'			: null,
 		'dbId'			: 'notes',
 		'validLength'	: 0,
-		'icon'			:'fa-comment-o',
+		'icon'			:'comment-o',
 		'gtAct'			:'notes'
 	}
 };

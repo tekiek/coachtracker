@@ -18,7 +18,6 @@ app['online'] = new function() {
 		app.global.els.body[online ? 'removeClass' : 'addClass']('offline');
 		_online.status = online;
 		EventManager.fire(online ? 'online' : 'offline');
-		console.log('Is Online:', online);
 	}
 	
 	this.checkStatus = function() {

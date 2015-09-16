@@ -2,30 +2,38 @@
 <html>
 	<head>
 		<?php head_includes(); ?>
-		<link rel="stylesheet" type="text/css" href="../min/g=css-tools&v=<?php echo $version ?>">  
+		<?php load_css(); ?>
+		<?php load_basket_js(); ?>
 	</head>
 
-	<body class="connection">
-
+	<body data-firstScreen="connection" class="connection <?php echo $selectedUserAcl; ?>">
+		<?php echo svgDegs(); ?>
 		<?php tools_header(); ?>
 
-		<div id='content'>
+		<div id='content' style="display:none;">
 
-			<div id="user_select_field" class="c field_wrapper">
-				<div class="input-group input-group-lg ">    
-					<span class="input-group-addon">
-						<i class="fa fa-users fa-lg"></i>
-					</span>   
-					<select id="user_select" class="form-control">
-						<?php foreach($users as $u) {
-							$default = ($u['id'] == $user ? 'selected="selected"' : '');
-							echo '<option ' . $default . ' value="' . $u['id'] . '">' . $u['name'] . '</option>';
-						} ?>
-					</select>
+			<div class="filter-tabs" style="xdisplay:none;">
+				<div id="user_select_field">
+					<div class="input-group">    
+						<span class="input-group-addon">
+							<?php svg('users', 15, null); ?>
+						</span>   
+						<select id="user_select" class="form-control">
+							<?php 
+								foreach(array('coach', 'counselor', 'captain') as $aclSelect) {
+									echo '<option disabled></option>';
+									echo '<option disabled>' . strtoupper($aclSelect) . '</option>';
+									foreach($users as $u) {
+										if ($u[$aclSelect] != 1) continue;
+										$default = ($u['id'] == $selectedUserId ? 'selected="selected"' : '');
+										echo '<option ' . $default . ' value="' . $u['id'] . '">' . $u['name'] . '</option>';
+									}
+								}
+							?>
+						</select>
+					</div>
 				</div>
-			</div>
-
-			<div class="filter-tabs">
+				
 				<ul>
 					<?php
 					foreach($tabs as $index => $tab) {
@@ -58,16 +66,15 @@
 								</li>
 							</ul>
 							<div id="' . $index . '-tab-available" class="available-panel">
-								<button class="btn btn-success btn-lg shadow btn-add">    
-									<i class="fa fa-plus-circle fa-lg"></i>    
-									<span class="button-text">Add ' . $index . '</span> 
+								<button class="btn-selected-action btn btn-success btn-lg shadow btn-add round"> 
+									<span class="button-text">Add</span> 
 									<span class="badge selected-add-count">0</span>
 								</button>
 							</div>
 							<div id="' . $index . '-tab-selected"  class="selected-panel">
-								<button class="btn btn-danger btn-lg shadow btn-remove">    
+								<button class="btn-selected-action btn btn-danger btn-lg shadow btn-remove round">    
 									<i class="fa fa-minus-circle fa-lg"></i>    
-									<span class="button-text">Remove ' . $index . '</span> 
+									<span class="button-text">Remove</span> 
 									<span class="badge selected-remove-count">0</span>  
 								</button>
 							</div>
@@ -77,8 +84,9 @@
 				?>
 			</div>
 		</div>
-		<script type="text/javascript" src="../min/g=js-tools-libs&v=<?php echo $version ?>"></script>
-		<script type="text/javascript" src="../min/g=js-tools-core&v=<?php echo $version ?>"></script>
+		<div id="dialog"></div>
 	</body>
+	<?php load_js(); ?>
+	<?php ga_lib(); ?>
 </html>
 

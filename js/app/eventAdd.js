@@ -2,50 +2,53 @@ app['eventAdd'] = new function() {
 	_eventAdd = this;
 	this.schools;
 	this.data = {};
-	
-	this.els = {
-		parent: $('div#event-add')
-	}
-	
-	this.templates = {
-		'input_field'	: '\
-			<div class="input-group input-group-lg ">\
-				<span class="input-group-addon"><i class="fa ${icon} fa-fw"></i></span>\
-			</div>',
+	this.els = {};
+	this.apis = {
+		'saveEvent': 'backend/_services.php?service=eventAdd',
+		'followConnections': 'backend/_services.php?service=eventFollowupConnections',
+		'followup': 'backend/_services.php?service=followup'
 	}
 	
 	this.template_data = {
 		'signatureBtn': {
-			'color'			: 'btn-default',
+			'color'			: 'btn-primary',
 			'btnSize'		: 'btn-lg',
-			'icon'			: 'fa-pencil',
-			'iconSize'		: 'fa-lg',
-			'text'			: 'ADD SIGNATURE'
+			'icon'			: 'pencil',
+			'xiconSize'		: 'fa-lg',
+			'text'			: 'ADD SIGNATURE',
+			'classes'		: 'marginBottom marginTop'
 		},
 		'saveEvent': {
 			'color'			: 'btn-success',
 			'btnSize'		: 'btn-lg',
-			'icon'			: 'fa-check-circle',
+			'icon'			: 'check-circle',
 			'iconSize'		: 'fa-lg',
 			'text'			: 'SAVE!',
-			'classes'		: 'marginBottom10'
+			'classes'		: 'marginBottom10 marginTop saveBtn'
 		}
 	}
 	
 	this.init = function() {
+		_eventAdd.getEls();
 		_eventAdd.setupHeader();
+	}
+	
+	this.getEls = function() {
+		_eventAdd.els = {
+			parent: $('div#event-add')
+		}
 	}
 
 	this.setupHeader = function() {
 		app.header.addBackButton();
 		app.header.addUserField();
-		app.studentSearch.addStudentSearch();
+		app.studentSearch.init();
 	}
 	
 	this.userSelected = function() {
-		_eventAdd.addStudentImage();
+		//_eventAdd.addStudentImage();
 		_eventAdd.addFields();
-		_eventAdd.addSignatureBtn();
+		_eventAdd.getSignatureBtn();
 		_eventAdd.addSaveBtn();
 	}
 	
@@ -60,7 +63,7 @@ app['eventAdd'] = new function() {
 		var eventFieldData = app['fieldController'].getFields(app['fieldsEvent']);
 		
 		$.each(eventFieldData, function(key, field) {
-			var fieldWrapper = $.tmpl(_eventAdd.templates.input_field, field),
+			var fieldWrapper = $.tmpl(app.templates.field_wrapper, field),
 				fieldEl = app.fieldController.createField(field);
 				_eventAdd.els[key] = new Object();
 
@@ -88,7 +91,7 @@ app['eventAdd'] = new function() {
 	 * - option (string)
 	 */
 	this.addLocationOption = function(params) {
-		var optionEl = $.tmpl(app['fieldController']['templates']['option'], {
+		var optionEl = $.tmpl(app.templates['option'], {
 			'key'	: params['option'],
 			'value'	: params['option']
 		});
@@ -97,33 +100,37 @@ app['eventAdd'] = new function() {
 		app.global.dialogClose();
 	}
 	
-	this.addSignatureBtn = function() {
-		var signatureBtn = $.tmpl(app.global.templates['button'], _eventAdd.template_data['signatureBtn']);
+	this.getSignatureBtn = function() {
+		var signatureBtn = $.tmpl(app.templates['button'], _eventAdd.template_data['signatureBtn']);
 		
 		// Add to DOM
 		_eventAdd.els['parent']
-			.append(signatureBtn)
-			.append($.tmpl(app.global.templates.hr));
+			.append(signatureBtn);
 		_eventAdd.els['signatureBtn'] = signatureBtn;
 
 		// Add Events
 		$(signatureBtn).click(function() {
 			app.signature.init();
 		});
-
 		EventManager.observe('signature.complete', _eventAdd.returnSignature);
 	}
 	
 	this.returnSignature = function(imgSignature) {
+		if (_eventAdd.els['imgSignature']) {
+			$(_eventAdd.els['imgSignature']).replaceWith(imgSignature);
+		} else {
+			$(_eventAdd.els['signatureBtn']).before(imgSignature);
+		}
 		_eventAdd.els['imgSignature'] = imgSignature;
-		_eventAdd.els['signatureBtn'].replaceWith(imgSignature);
 	}
 	
 	this.addSaveBtn = function() {
-		var saveEvent = $.tmpl(app.global.templates['button'], _eventAdd.template_data['saveEvent']);
+		var saveEvent = $.tmpl(app.templates['button'], _eventAdd.template_data['saveEvent']);
 		
 		// Add to DOM
-		_eventAdd.els['parent'].append(saveEvent);
+		_eventAdd.els['parent']
+			.append($.tmpl(app.templates.hr))
+			.append(saveEvent);
 		_eventAdd.els['saveEvent'] = saveEvent;
 		
 		// Add Events
@@ -146,13 +153,18 @@ app['eventAdd'] = new function() {
 			if (key && val) data[key] = val;
 		});
 		
-		// Reason
+		// Multi
 		// NEEDS TO BE FIXED!!!!
-		data['reason'] = [];
-		$.each($("[data-type='MULTI'] input:checked + label"), function(x, el) {
-			data['reason'].push($(el).text());
+		$.each($("[data-type='MULTI']"), function(x, multi) {
+			var key = $(this).attr('data-field'),
+				selected = $(this).find("input:checked + label");
+			
+			data[key] = [];
+			$.each(selected, function(x, el) {
+				data[key].push($(el).text());
+			});
+			data[key] = data[key].join(';');
 		});
-		data['reason'] = data['reason'].join(';');
 
 		//Signature
 		if (_eventAdd.els['imgSignature']) {
@@ -174,7 +186,7 @@ app['eventAdd'] = new function() {
 		
 		$.ajax({
 			type: "POST",
-			url: "backend/forms/event_add.php",
+			url: _eventAdd.apis.saveEvent,
 			data: data,
 			dataType: 'json',
 			offline: true
@@ -182,7 +194,7 @@ app['eventAdd'] = new function() {
 		.always(function(response) {
 			app.global.alert({
 				msg	:'Saved', 
-				icon: 'fa-check-circle',
+				icon: 'check-circle',
 				cb	: app.controller.prevSlide
 			});
 		});
@@ -223,7 +235,7 @@ app['eventAdd'] = new function() {
 
 		$.ajax({
 			type: "POST",
-			url: 'backend/forms/event_followup_connections.php',
+			url: _eventAdd.apis.followConnections,
 			data: {
 				'id': app.studentSearch.selectedStudent.id
 			},
@@ -259,7 +271,7 @@ app['eventAdd'] = new function() {
 			'message': message,
 			'subject': subject,
 			'to': _eventAdd.data['connectedUsers'],
-			'api': 'backend/forms/event_followup.php'
+			'api': _eventAdd.apis.followup,
 		});
 	}
 

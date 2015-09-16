@@ -1,8 +1,31 @@
-
-
 <?php
 
-#require '../common.php';
+/*
+ * Splits currently connections by universe
+ */
+function splitByConnection($universe, $connectionIds) {
+	$selected = array();
+	$available = array();
+	$duplicateCheck = array();
+	
+	foreach($universe as $person) {
+		$personId = $person['id'];
+
+		if (!isset($duplicateCheck[$personId])) {
+			if (in_array($personId, $connectionIds)) {
+				array_push($selected, $person);
+			} else {
+				array_push($available, $person);
+			}
+			$duplicateCheck[$personId] = 1;
+		}
+	}
+	
+	return array(
+		'selected' => $selected,
+		'available' => $available
+	);
+}
 
 /*
  * Get users or students connected to user

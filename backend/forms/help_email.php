@@ -1,7 +1,4 @@
 <?php
-require '../common.php';
-$params = get_params();
-$response = array();
 
 $to = 'tekiek@gmail.com,maggieb@cypresshills.org';
 $subject = 'Coach Track: Help Request!';
@@ -15,14 +12,13 @@ if ($params['msg']) {
 		if ($params['from']['email']) $body .= $params['from']['email'];
 	}
 	SendMail($to, $subject, $body);
+
+	$response = array(
+		"success" => "true",
+		'to' => $to,
+		'subject' => $subject,
+		'body' => $body
+	);
 }
 
-$response = array(
-	'params' => $params,
-	'to' => $to,
-	'subject' => $subject,
-	'body' => $body
-);
-
-echo json_encode($response);
 ?>

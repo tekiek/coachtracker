@@ -1,8 +1,14 @@
 app['login'] = new function() {
 	_login = this;
-	
 	this.els = {};
-	this.loginCallBacks = [];
+	
+	this.apis = {
+		'userLogin': "backend/_services.php?service=userLogin",
+		'pwUpdate': "backend/_services.php?service=pwUpdate",
+		'resetPassword': "backend/_services.php?service=resetPassword",
+		'userLogout': "backend/_services.php?service=userLogout",
+		'students': "backend/_services.php?service=connectedStudents",
+	};
 	
 	this.template_data = {
 		dialog: {
@@ -18,10 +24,10 @@ app['login'] = new function() {
 				'mask'			: null,
 				'dbId'			: 'email',
 				'validLength'	: 5,
-				'gtAct'			: 'email-address'
+				'gtAct'			: 'email-address',
 			},
 			'email_wrapper': {
-				'icon'			:'fa-envelope-o',
+				'icon'			: 'envelope-o',
 				'classes' 		: 'marginBottom10'
 			},
 			'password': {
@@ -30,7 +36,7 @@ app['login'] = new function() {
 				'placeholder'	:'password',
 				'mask'			: null,
 				'dbId'			: 'password',
-				'validLength'	: 3,
+				'validLength'	: 4,
 				'gtAct'			: 'password'
 			},
 			'resetPassword': {
@@ -39,16 +45,16 @@ app['login'] = new function() {
 				'placeholder'	:'password',
 				'mask'			: null,
 				'dbId'			: 'password',
-				'validLength'	: 3,
+				'validLength'	: 4,
 				'gtAct'			: 'password',
 				'regex'			: '^(?=.*[0-9]).{5}'
 			},
 			'password_wrapper': {
-				'icon'			:'fa-lock',
+				'icon'			: 'lock',
 				'classes' 		: 'marginBottom10'
 			},
 			'resetPassword_wrapper': {
-				'icon'			:'fa-lock',
+				'icon'			: 'lock',
 				'classes' 		: 'marginBottom10'
 			}
 		},
@@ -56,24 +62,15 @@ app['login'] = new function() {
 			alert: {
 				'text'		: 'Invalid Login!'
 			},
-			msg: {
-				'text'			: 'Sign In Here',
-				'classes'		: 'center marginBottom10'
-			},
 			btns: {
 				login: {
 					'color'			: 'btn-success',
 					'btnSize'		: 'btn-lg',
-					'classes'		: 'marginBottom10',
-					'iconSize'		: 'fa-lg',
 					'text'			: 'Sign In',
 					'cb'			: function() { _login.signIn(); }
 				},
 				forgot: {
-					'color'			: 'btn-success',
-					'btnSize'		: 'btn-lg',
-					'classes'		: 'marginBottom10',
-					'iconSize'		: 'fa-lg',
+					'color'			: 'btn-link',
 					'text'			: 'Forgot Password',
 					'cb'			: function() { _login.pwResetDialog(); }
 				}
@@ -89,7 +86,7 @@ app['login'] = new function() {
 			},
 			details: {
 				'text'			: 'We require a password that is 5 characters long and includes 1 number.',
-				'classes'		: 'details'
+				'classes'		: 'alert alert-danger shadow'
 			},
 			btns: {
 				reset: {
@@ -118,27 +115,121 @@ app['login'] = new function() {
 					'iconSize'		: 'fa-lg',
 					'text'			: 'Reset Password',
 					'cb'			: function() { _login.pwReset(); }
+				},
+				forgot: {
+					'color'			: 'btn-link',
+					'text'			: 'Cancel',
+					'cb'			: function() { _login.loginDialog(); }
 				}
 			}
 		}
 	}
 	
 	this.init = function() {
-		if (!_login.getLoggedInStatus()) _login.loginDialog();
+		_login.getEls();
 		_login.setAcls();
+		
+		if (_login.getLoggedInStatus()) {
+			_login.exit();
+		} else {
+			_login.getLastUser();
+			//_login.setupHeader();
+			//_login.loginDialog();
+			if (app.config.isMobile) {
+				_login.loginDialog();
+			} else {
+				app.login.els.loginBtn.click(_login.loginDialog);
+			}
+		}
 	}
 	
-	this.logoutUserIfTheyLeave = function() {
-		$(window).bind('beforeunload', function() {
-			
+	this.getEls = function() {
+		_login.els = {
+			parent: $('#user-login'),
+			loginBtn: $('.header__sign-up-btn')
+		};
+	}
+	
+	this.setupHeader = function() {
+		app.header.destroy();
+		app.header.addLogo();
+		app.header.addSignUpButton();
+	}
+	
+	/*
+	 * Set the email value to last logged in user
+	 */
+	this.getLastUser = function() {
+		try {
+			var lastUser = app.ls.getItem('lastUser');
+
+			if (lastUser) {
+				_login.template_data.fields.email['value'] = lastUser;
+			}
+		} catch (err) { }
+	}
+	
+	/*
+	 * Exit the login screen to next screen
+	 */
+	this.exit = function() {
+		if (!_login.hasConnectedStudents()) {
+			_login.getConnectedStudents();
+		}
+		_login.setAcls();
+		app.global.dialogClose();
+		app.controller.nextSlide(app['menu']);
+	}
+	
+	/*
+	 * Checks to see if logged in user has connected students
+	 */
+	this.hasConnectedStudents = function() {
+		if (_login.getLoggedInStatus()) {
+			if (app.data.user.students) {
+				return true;
+			} else {
+				return false;
+			}
+		} else {
+			return false;
+		}
+	}
+	
+	/*
+	 * Get connected students to logged in user
+	 */
+	this.getConnectedStudents = function() {
+		$.ajax({
+			type: "POST",
+			url: _login.apis.students
+		})
+		.done(function(r) {
+			var response =  $.parseJSON(r);
+			if (response.students) {
+				app.data.user['students'] = response.students;
+				_login.saveUserData();
+			}
 		});
 	}
 	
+	/*
+	 * Call back from login out
+	 */
+	this.logOut = function() {
+		_login.clearUserData();
+		location.reload();
+		//app.controller.loadFirstScreen();
+		EventManager.fire('logout');
+	}
+	
+	/*
+	 * Call back from login to update user data
+	 */
 	this.loggedIn = function(user) {
 		app['data']['user'] = user;
+		app['data']['lastUser'] = user.email;
 		_login.saveUserData();
-		_login.setAcls();
-		app.controller.loadFirstScreen();
 	}
 	
 	/*
@@ -146,6 +237,7 @@ app['login'] = new function() {
 	 */
 	this.saveUserData = function() {
 		app.ss.setItem('user', app.data.user);
+		app.ls.setItem('lastUser', app.data.lastUser);
 	}
 	
 	/*
@@ -161,8 +253,12 @@ app['login'] = new function() {
 	this.clearUserData = function() {
 		app.ss.removeItem('user');
 		delete app.data.user;
+		_login.setAcls();
 	}
 	
+	/*
+	 * Checks if user data exist
+	 */
 	this.getLoggedInStatus = function() {
 		if (app['data']['user']) {
 			return true;
@@ -177,42 +273,51 @@ app['login'] = new function() {
 		}
 	}
 	
+	/*
+	 * Reads user data and sets acls
+	 */
 	this.setAcls = function() {
 		if (_login.getLoggedInStatus()) {
-			app.acl.add('loggedin');
 			if (app['data']['user']['admin'] == '1') app.acl.add('admin');
 			if (app['data']['user']['coach'] == '1') app.acl.add('coach');
 			if (app['data']['user']['counselor'] == '1') app.acl.add('counselor');
 			if (app['data']['user']['captain'] == '1') app.acl.add('captain');
 			if (app['data']['user']['connect'] == '1') app.acl.add('connect');
+			if (app['data']['user']['upload'] == '1') app.acl.add('upload');
+			app.acl.add('loggedIn');
+			app.acl.remove('loggedOut');
 		} else {
-			app.acl.remove('loggedin');
 			app.acl.remove('admin');
 			app.acl.remove('coach');
 			app.acl.remove('counselor');
 			app.acl.remove('captain');
 			app.acl.remove('connect');
+			app.acl.remove('upload');
+			app.acl.remove('loggedIn');
+			app.acl.add('loggedOut');
 		}
 	}
-	
+
+	/*
+	 * Toggle alerts
+	 */
 	this.toggleAlert = function(show) {
 		if (!show) show = false;
 		_login.els['alert'][show ? 'show' : 'hide']();
-		if (show) app.global.animate(_login['els']['dialog'], 'tada');
+		if (show) app.global.animate(_login.els.parent, 'tada');
 	}
-	
-	this.hideLogin = function() {
-		app.global.animate(_login['els']['dialog'], 'zoomOut', null, function() {
-			app['global']['dialogClose']();
-			delete _login['els']['dialog'];
-		});
-	}
-	
+
+	/*
+	 * Validate dialog
+	 */
 	this.validateFields = function() {
-		var fields = _login['els']['dialog'].find('[data-valid]');
+		var fields = _login.els.parent.find('[data-valid]');
 		return app.fieldController.validateFields(fields);
 	}
 	
+	/*
+	 * Get data from dialog
+	 */
 	this.getFieldData = function() {
 		var data = {};
 		
@@ -230,17 +335,21 @@ app['login'] = new function() {
 		var type = params['type'],
 			templates = _login.template_data,
 			type_templates = templates[type],
-			wrapper = $.tmpl(app.global.templates.div, templates['dialog']),
-			alert = $.tmpl(app.global.templates.alert, type_templates['alert']),
-			msg = $.tmpl(app.global.templates.h2, type_templates['msg']),
-			hr = $.tmpl(app.global.templates.hr),
-			details = $.tmpl(app.global.templates.span, type_templates['details']);
+			wrapper = $.tmpl(app.templates.div, templates['dialog']),
+			alert = $.tmpl(app.templates.alert, type_templates['alert']),
+			hr = $.tmpl(app.templates.hr),
+			details = $.tmpl(app.templates.h2, type_templates['details']),
+			focused = false,
+			firstView = (_login.els.parent.children().length == 0 ? true : false);
 
-		// Add Msg
-		$(wrapper)
-			.append(msg)
-			.append(hr.clone());
-			
+		// Add message
+		if (type_templates['msg']) {
+			var msg = $.tmpl(app.templates.h2, type_templates['msg']);
+			$(wrapper).append(msg);
+			$(wrapper).append(hr.clone());
+		}
+
+		// Add detail message
 		if (type_templates['details']) {
 			$(wrapper)
 				.append(details)
@@ -255,32 +364,64 @@ app['login'] = new function() {
 		// Fields
 		var fields = params['fields'],
 			field_templates = templates['fields'];
+
 		$.each(fields, function(i, field) {
 			var field_el =  app.fieldController.createField(field_templates[field]),
+				field_valid_length = field_templates[field].validLength,
 				field_el_wrapper = app.fieldController.createFieldWrapper(field_templates[field + '_wrapper']);
-			
+
 			// Build Field
-			$(field_el_wrapper).append(field_el);
+			$(field_el_wrapper).prepend(field_el);
 			$(wrapper).append(field_el_wrapper);
+			
+			if (field_valid_length) {
+				$(field_el).keyup(function(e) {
+					_login.validField({
+						field: $(this),
+						wrapper: $(field_el_wrapper),
+						minLength: field_valid_length
+					});
+				});
+				$(field_el).trigger('keyup');
+			}
 		});
-		$(wrapper).append(hr.clone());
+		if (app.config.isMobile) { $(wrapper).append(hr.clone()); }
 		
 		// Add Btns
 		var btns = type_templates['btns'];
 		$.each(btns, function(i, btn) {
-			var btn_el = $.tmpl(app.global.templates.button, btn);
-			if (btn['cb']) $(btn_el).click(btn['cb']);
-			$(wrapper).append(btn_el);
-			_login.els[i] = btn_el;
+			_login.els[i] = $.tmpl(app.templates.button, btn);
+
+			if (btn['cb']) $(_login.els[i]).click(btn['cb']);
+			$(wrapper).append(_login.els[i]);
 		});
 		
 		// Show Dialog
-		_login.els['loginWrapper'] = $(wrapper);	
-		_login['els']['dialog'] = app['global']['dialog']({
-			hideTitle: true,
-			msg: $(wrapper),
-			animate: true
-		});
+		_login.els['loginWrapper'] = $(wrapper);
+		_login.els.parent
+			.empty()
+			.append(_login.els['loginWrapper']);
+			
+		if (app.config.isMobile) {
+			if (!firstView) {
+				app.global.animate(_login.els['loginWrapper'], 'slideInLeft');
+			}
+		} else {
+			app.global.dialog({
+				msg: _login.els.loginWrapper,
+				animate: true,
+				title: ' ',
+				width: 400,
+				transition: 'slideInDown'
+			});
+			
+		}
+
+		// Focus
+		setTimeout(function() {
+			var first_input = _login.els.loginWrapper.find('input[value=""]')[0];
+			$(first_input).focus();
+		}, 100);
 		
 		if (params['submit']) {
 			_login.els['loginWrapper'].keyup(function(e) {
@@ -290,6 +431,33 @@ app['login'] = new function() {
 			});
 		}
 		
+	}
+	
+	/*
+	 * params:
+	 * - field (element)
+	 * - wrapper (element)
+	 * - minLength (int)
+	 */
+	this.validField = function(params) {
+		var fieldLength = $(params.field).val().length,
+			emailValid = /^\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}$/;
+		
+		$(params.wrapper)
+			.removeClass('valid-field')
+			.removeClass('invalid-field');
+		
+		if (fieldLength >= params.minLength) {
+			$(params.wrapper).addClass('valid-field');
+		}
+		else if ($(params.field).attr('data-field') == 'email') {
+			if (emailValid.test($(params.field).val())) {
+				$(params.wrapper).addClass('invalid-field');
+			}
+		}
+		else if (fieldLength > 0) {
+			$(params.wrapper).addClass('invalid-field');
+		}
 	}
 	
 	/***************** SIGNIN *****************/
@@ -308,9 +476,8 @@ app['login'] = new function() {
 		
 		$.ajax({
 			type: "POST",
-			url: "backend/forms/users_login.php",
-			data: params,
-			offline: false
+			url: _login.apis.userLogin,
+			data: params
 		})
 		.done(function(r) {
 			var response =  $.parseJSON(r);
@@ -323,7 +490,7 @@ app['login'] = new function() {
 				if (user.pwReset == '0') {
 					_login.pwUpdateDialog();
 				} else {
-					app.login.hideLogin();
+					_login.exit();
 				}
 			} else {
 				_login.toggleAlert(true);
@@ -347,14 +514,16 @@ app['login'] = new function() {
 
 		$.ajax({
 			type: "POST",
-			url: "backend/forms/users_update_password.php",
+			url: _login.apis.pwUpdate,
 			data: params,
 			offline: false
 		})
 		.done(function(r) {
 			var response =  $.parseJSON(r);
 			if (response.success == 'true') {
-				app.login.hideLogin();
+				_login.exit();
+			} else {
+				_login.toggleAlert(true);
 			}
 		});
 	}
@@ -374,7 +543,7 @@ app['login'] = new function() {
 
 		$.ajax({
 			type: "POST",
-			url: "backend/forms/users_reset_password.php",
+			url: _login.apis.resetPassword,
 			data: params,
 			offline: false
 		})
@@ -383,7 +552,7 @@ app['login'] = new function() {
 			if (response.success == 'true') {
 				app.global.alert({
 					msg	:'Emailed New Password', 
-					icon: 'fa-check-circle',
+					icon: 'check-circle',
 					cb	: _login.loginDialog
 				});
 			} else {
@@ -401,18 +570,11 @@ app['login'] = new function() {
 			'noBtn': 'Cancel',
 			saveCallback: function() {
 				$.ajax({
-					url: "backend/forms/users_logout.php",
-					offline: true
+					url: _login.apis.userLogout,
 				})
 				.always(function() {
-					app.header.destroy();
-					_login.clearUserData();
-					_login.setAcls();
+					_login.logOut();
 				});
-			},
-			saveCloseCallback: function() {
-				_login.loginDialog();
-				EventManager.fire('logout');
 			}
 		})
 	}

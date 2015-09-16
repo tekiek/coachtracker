@@ -1,4 +1,9 @@
 <?php
+
+function reset_password($params) {
+	
+}
+
 	require '../common.php';
 	lock();
 	$table = 'users';

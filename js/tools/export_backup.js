@@ -1,4 +1,4 @@
-tools['dataExport'] = new function() {
+app['dataExport'] = new function() {
 	_dataExport = this;
 	this.table_col_values_src = "data_export_table_search.php";
 	this.fetch_data_src = "data_export_get_data.php";
@@ -58,7 +58,6 @@ tools['dataExport'] = new function() {
 	
 	this.getDataBtn = function() {
 		_dataExport.els['get_data_btn'].click(function() {
-			console.log('click')
 			_dataExport.fetchData();
 		})
 	}
@@ -111,14 +110,12 @@ tools['dataExport'] = new function() {
 	this.fetchData = function() {
 		// Validate Data Fetch
 		if (dataExport.data.cols.length == 0) {
-			_dataExport.lock_screen({ 
+			$(document).overlay({
 				show: true,
-				msg: 'No Data Found',
-				delay: 1000 
+				delay: 1000,
+				msg: "No data found"
 			});
 			return false;
-		} else {
-			_dataExport.lock_screen({show: true});
 		}
 		
 		// Get column data
@@ -143,18 +140,6 @@ tools['dataExport'] = new function() {
 
 				// Scroll to bottom of page
 				window.scrollTo(0,document.body.scrollHeight);
-
-				// Unlock Screen	
-				_dataExport.lock_screen({
-					show: false,
-					delay: 250
-				});
-			} else {
-				_dataExport.lock_screen({ 
-					show: true,
-					msg: 'No Data Found',
-					delay: 1000 
-				});
 			}
 		});
 	}
@@ -198,29 +183,6 @@ tools['dataExport'] = new function() {
 			.append(tbody);
 
 		return table;
-	}
-	
-	this.lock_screen = function(params) {
-		if (typeof params != "object") params = new Object();
-		if (!params['show']) params['show'] = false;
-		if (!params['msg']) params['msg'] = '<i class="fa fa-spinner fa-spin fa-2x"></i>';
-		if (!params['delay']) params['delay'] = 0;
-		
-		if (params['show']) {
-			$.blockUI({ 
-				message: '<h3>' + params['msg']  + '</h3>'
-			});
-			if (params['delay']) {
-				_dataExport.lock_screen({
-					show: false,
-					delay: params['delay']
-				})
-			}
-		} else {
-			setTimeout(function() {
-				$.unblockUI();
-			}, params['delay'])
-		}
 	}
 	
 	/*
@@ -335,7 +297,6 @@ tools['dataExport'] = new function() {
 	 */
 	this.filterDialog = function(params) {
 			// Lock screen and return list element
-			_dataExport.lock_screen({show: true});
 			if (params['sender']) _dataExport.returnColToSender(params);
 			
 			// Get column data
@@ -347,12 +308,10 @@ tools['dataExport'] = new function() {
 				}
 			})
 			.done(function(response) {
-				_dataExport.lock_screen({ show: false });
 				response = $.parseJSON(response);
 				
 				// Append response to params
 				params = $.extend({}, params, response);
-				console.log('PARAMS', params);
 
 				if (response.values.length > 0) {
 					// Build Filter UI
@@ -390,10 +349,10 @@ tools['dataExport'] = new function() {
 						}
 					});
 				} else {
-					_dataExport.lock_screen({ 
+					$(document).overlay({
 						show: true,
-						msg: 'No data to filter',
-						delay: 1000 
+						delay: 1000,
+						msg: "No data found"
 					});
 				}
 			});

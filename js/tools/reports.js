@@ -1,4 +1,4 @@
-tools['reports'] = new function() {
+app['reports'] = new function() {
 	_reports = this;
 	this.data = {};
 
@@ -42,7 +42,6 @@ tools['reports'] = new function() {
 		})
 		.done(function(response) {
 			response = $.parseJSON(response);
-			console.log(response);
 		
 			tools.charts.create({
 				title: chartDetails.title,

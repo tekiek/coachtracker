@@ -1,8 +1,6 @@
 app['signature'] = new function() {
 	var _eventSignature = this;
-	this.els = {
-		parent: $("div#event-signature")
-	}
+	this.els = {};
 	this.data = {};
 
 	this.templates = {
@@ -15,7 +13,6 @@ app['signature'] = new function() {
 			'color'			: 'btn-success',
 			'btnSize'		: 'btn-lg',
 			'classes'		: 'width_50 left',
-			'icon'			: 'fa-thumbs-up',
 			'iconSize'		: 'fa-lg',
 			'text'			: 'SAVE'
 		},
@@ -23,16 +20,22 @@ app['signature'] = new function() {
 			'color'			: 'btn-danger width_50',
 			'btnSize'		: 'btn-lg',
 			'classes'		: 'width_50 right',
-			'icon'			: 'fa-thumbs-down',
 			'iconSize'		: 'fa-lg',
 			'text'			: 'Cancel'
 		}
 	}
 
 	this.init = function() {
+		_eventSignature.getEls();
 		_eventSignature.els.parent.empty();
 		_eventSignature.addSignature();
 		_eventSignature.open();
+	}
+	
+	this.getEls = function() {
+		_eventSignature.els = {
+			parent: $("div#event-signature")
+		}
 	}
 	
 	this.open = function() {
@@ -41,10 +44,12 @@ app['signature'] = new function() {
 
 		app.global.dialogConfirm({
 			msg: _eventSignature.els.signatureWrapper,
-			width: $(window).width(),
-			height: $(window).height(),
+			width: ($(window).width() > 600 ? 600 : $(window).width()),
+			height: ($(window).height() / 2),
 			modal: true,
 			animate: true,
+			transition: 'slideInUp',
+			transitionSpeed: 'fast',
 			position: { my: "top", at: "top", of: window },
 			yesBtn: 'Save',
 			noBtn: 'Cancel',

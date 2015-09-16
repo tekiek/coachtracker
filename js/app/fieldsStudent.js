@@ -6,7 +6,7 @@ app['fieldsStudent'] = {
 		'mask'			: null,
 		'dbId'			: 'fname',
 		'validLength'	: 3,
-		'icon'			:'fa-user',
+		'icon'			:'user',
 		'gtAct'			: 'fname'
 	},
 	'lname': {
@@ -16,7 +16,7 @@ app['fieldsStudent'] = {
 		'mask'			: null,
 		'dbId'			: 'lname',
 		'validLength'	: 3,
-		'icon'			:'fa-user',
+		'icon'			:'user',
 		'gtAct'			: 'lname'
 	},
 	'cbo': {
@@ -26,7 +26,7 @@ app['fieldsStudent'] = {
 		'mask'			: null,
 		'dbId'			: 'cbo',
 		'validLength'	: 3,
-		'icon'			:'fa-plug',
+		'icon'			:'plug',
 		'gtAct'			: 'cbo'
 	},
 	'email': {
@@ -36,7 +36,7 @@ app['fieldsStudent'] = {
 		'mask'			: null,
 		'dbId'			: 'email',
 		'validLength'	: 5,
-		'icon'			:'fa-envelope-o',
+		'icon'			:'envelope-o',
 		'gtAct'			: 'email'
 	},
 	'phone': {
@@ -46,13 +46,13 @@ app['fieldsStudent'] = {
 		'mask'			: '(999) 999-9999',
 		'dbId'			: 'phone',
 		'validLength'	: 14,
-		'icon'			:'fa-phone',
+		'icon'			:'phone',
 		'gtAct'			: 'phone'
 	},
 	'contact': {
 		'type'			:'select',
 		'dbId'			: 'contact',
-		'icon'			:'fa-comments-o',
+		'icon'			:'comments-o',
 		'gtAct'			: 'contact',
 		'options'		: {
 			0			: 'Preferred Contact',
@@ -67,7 +67,7 @@ app['fieldsStudent'] = {
 		'mask'			: null,
 		'dbId'			: 'school',
 		'validLength'	: 0,
-		'icon'			:'fa-graduation-cap',
+		'icon'			:'graduation-cap',
 		'autocomplete'	: 'backend/forms/school_search.php',
 		'gtAct'			: 'school'
 	},
@@ -78,7 +78,7 @@ app['fieldsStudent'] = {
 		'mask'			: null,
 		'dbId'			: 'college',
 		'validLength'	: 0,
-		'icon'			:'fa-university',
+		'icon'			:'university',
 		'autocomplete'	: 'backend/forms/college_search.php',
 		'gtAct'			: 'college'
 	},
@@ -88,7 +88,7 @@ app['fieldsStudent'] = {
 		'mask'			: null,
 		'dbId'			: 'notes',
 		'validLength'	: 0,
-		'icon'			:'fa-file-o',
+		'icon'			:'file-o',
 		'gtAct'			: 'notes'
 	}
 };

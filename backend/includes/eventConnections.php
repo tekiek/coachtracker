@@ -11,10 +11,10 @@ function getEventDataByUsers($ids, $cols) {
 	// SELECT * FROM events WHERE (userid = 1 OR userid = 2)
 	$sql = "SELECT $cols FROM events WHERE (";
 	foreach($userids as $userid) {
-		$sql .= "userid = " . $userid;
+		$sql .= "studentid = " . $userid;
 		if (end($userids) != $userid) { $sql .= " OR "; }
 	}
-	$sql .= ");";
+	$sql .= ") ORDER BY id DESC;";
 	$events = queryTable($sql);
 	
 	return $events;

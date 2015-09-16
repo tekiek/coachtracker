@@ -1,10 +1,9 @@
 <?php
-require '../common.php';
 
 $table = 'events';
 $table_cols = tableEventsCols();
-$params = get_params();
 $table_values = array();
+$students = explode(";", $params['studentid']);
 
 // Create array out of params
 foreach($_POST as $name => $value) {
@@ -21,24 +20,20 @@ if ($jsDateTS !== false) {
 
 
 // Create table data array
-foreach($table_cols as $col => $structure) {
-	if ($params[$col]) $table_values[$col] = $params[$col];
+foreach($students as $studentid) {
+	foreach($table_cols as $col => $structure) {
+		if ($params[$col]) $table_values[$col] = $params[$col];
+	}
+	$table_values['studentid'] = $studentid;
+	TableInsert($table, $table_values);
 }
+
 
 // Add data to table
-if (TableInsert($table, $table_values)) {
-	$response = array(
-		"success" => "true",
-		"status" => "1",
-		"params" => $params
-	);
-} else {
-	$response = array(
-		"success" => "false",
-		"status" => "0",
-		"params" => $params
-	);
-}
+$response = array(
+	"success" => "true",
+	"students" => $students,
+	'tv' => $table_values
+);
 
-echo json_encode($response);
 ?>

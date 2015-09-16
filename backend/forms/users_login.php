@@ -22,13 +22,11 @@ if ($params['email'] && $params['password']) {
 		$user = TableRow($table, $user_creds);
 		
 		// Save user to session data
-		session_start();
-		$_SESSION["loggedin-user"] = $user;
+		userLoggedIn($user);
 
-		// Get connections
-		//$user['students'] = getConnections('student', $user['id']);
-		//$user['users'] = getConnections('user', $user['id']);
-		$user['students'] = getConnectedStudentsOfUsers($user['id']);
+		// Get student connections
+		//$user['students'] = getConnectedStudentsOfUsers($user['id']);
+		//$user['students'] = getConnectedStudentsOfLoggedinUser()['data'];
 
 		// Add data
 		$response = array(

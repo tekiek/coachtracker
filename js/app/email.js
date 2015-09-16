@@ -29,7 +29,7 @@ app['email'] = new function() {
 			'followUpMsg'	: {
 				'type'			: 'textarea',
 				'placeholder'	: 'Message',
-				'classes'		: 'marginBottom10'
+				'classes'		: 'marginBottom10 emailMsg'
 			}
 		}
 	}
@@ -63,8 +63,11 @@ app['email'] = new function() {
 		if (_email.data.message) {
 			msgTemplate['value'] = _email.data.message;
 		}
+		if (_email.data.placeholder) {
+			msgTemplate['placeholder'] = _email.data.placeholder;
+		}
 
-		_email.els['dialog'] = $.tmpl(app.global.templates.div),
+		_email.els['dialog'] = $.tmpl(app.templates.div),
 		_email.els['message'] = app.fieldController.createField(msgTemplate);
 
 		_email.els['dialog']
@@ -85,9 +88,11 @@ app['email'] = new function() {
 		_email.els['userSelect'] = app.fieldController.createField(usersTemplate),
 		_email.els['toWrapper'] = app.fieldController.createFieldWrapper({
 			'text': 'To',
-			'size': ' '
+			'size': ' ',
+			'icon': 'users',
+			'type': 'text'
 		}),
-		_email.els['toField'] = $.tmpl(app.global.templates.div, {
+		_email.els['toField'] = $.tmpl(app.templates.div, {
 			'classes': 'form-control expand'
 		});
 		
@@ -103,7 +108,7 @@ app['email'] = new function() {
 		_email.els['userSelect'].change(function() {
 			var val = $(this).val(),
 				userName = $(this).find("option:selected").text();
-				toUser = $.tmpl(app.global.templates.badge, {
+				toUser = $.tmpl(app.templates.badge, {
 					'classes'	: 'pointer followup-user',
 					'text'		: userName
 				});
@@ -208,7 +213,6 @@ app['email'] = new function() {
 			offline: true
 		})
 		.always(function(response) {
-			console.log('response', response);
 			EventManager.fire('email:exit', {
 				email: data
 			});

@@ -1,32 +1,45 @@
 app['studentEdit'] = new function() {
 	var _studentEdit = this;
 	this.user = null;
-	this.els = {
-		parent: $('div#user-screen')
+	this.els = {};
+	
+	this.template_data = {
+		'editBtn': {
+			'icon'			: 'pencil',
+			'classes'		: ''
+		},
+		'cancelBtn': {
+			'icon'			: 'times',
+			'classes'		: ''
+		},
+		'saveBtn': {
+			'icon'			: 'floppy-o',
+			'classes'		: ''
+		}
 	}
-	this.templates = {
-		'userField'	: '<div class="input-group input-group-lg ${dbId}"></div>',
-		'editBtn'	: '<span class="input-group-addon edit-user-btn"><i data-action="edit" class="fa fa-pencil fa-lg"></i></span>',
-		'cancelBtn'	: '<span class="input-group-addon edit-user-btn"><i data-action="cancel" class="fa fa-times fa-lg"></i></span>',
-		'saveBtn'	: '<span class="input-group-addon edit-user-btn"><i data-action="save" class="fa fa-floppy-o fa-lg"></i></span>',
-		'eventsBtnWrapper': '<div class="c"></div>'
-	};
 
 	this.init = function() {
+		_studentEdit.getEls();
 		_studentEdit.setupHeader();
+	}
+	
+	this.getEls = function() {
+		_studentEdit.els = {
+			parent: $('div#user-screen')
+		}
 	}
 	
 	this.setupHeader = function() {
 		app.header.addBackButton();
 		app.header.addUserField();
-		app.studentSearch.addStudentSearch()
+		app.studentSearch.init()
 	}
 	
 	this.userSelected = function() {
 		_studentEdit.user = app.studentSearch.selectedStudent;
 
 		_studentEdit.els['parent'].empty();
-		_studentEdit.addUserImage();
+		//_studentEdit.addUserImage();
 		_studentEdit.addFields();
 	}
 
@@ -44,10 +57,10 @@ app['studentEdit'] = new function() {
 	
 		$.each(userFields, function(key, fieldData) {
 			fieldData['value'] = _studentEdit.user[key];
-			var userField = $.tmpl(_studentEdit.templates.userField, fieldData),
-				editBtn = $.tmpl(_studentEdit.templates.editBtn, {}),
-				cancelBtn = $.tmpl(_studentEdit.templates.cancelBtn, {}),
-				saveBtn = $.tmpl(_studentEdit.templates.saveBtn, {}),
+			var userField = $.tmpl(app.templates.field, { classes: fieldData.dbId }),
+				editBtn = $.tmpl(app.templates.field_addon, _studentEdit.template_data.editBtn),
+				cancelBtn = $.tmpl(app.templates.field_addon, _studentEdit.template_data.cancelBtn),
+				saveBtn = $.tmpl(app.templates.field_addon, _studentEdit.template_data.saveBtn),
 				field = app.fieldController.createField(fieldData);
 
 			// Add elements
@@ -113,7 +126,7 @@ app['studentEdit'] = new function() {
 			saveCallback: function() {
 				$.ajax({
 					type: "POST",
-					url: "backend/forms/student_field_update.php",
+					url: "backend/_services.php?service=studentEdit",
 					data: updateData,
 					dataType: 'json',
 					offline: true
@@ -121,7 +134,7 @@ app['studentEdit'] = new function() {
 				.always(function(response) {
 					app.global.alert({
 						msg	:'Saved', 
-						icon: 'fa-check-circle'
+						icon: 'check-circle'
 					});
 					userField['value'] = newVal;
 					_studentEdit.user[userField['key']] = newVal;

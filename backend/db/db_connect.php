@@ -1,11 +1,20 @@
 <?php
-function DBConnect() {
-	if (env() == 'prod') {
+function DBConnect($env) {
+	if (!$env) $env = env();
+	
+	if ($env == 'prod') {
 		$host = "localhost";
 		$db_name = "jerkface";
 		$username = "jerkface";
 		$password = "Banned123!";
-	} else {
+	} 
+	else if ($env == 'stage') {
+		$host = "localhost";
+		$db_name = "stage_jerkface";
+		$username = "jerkface";
+		$password = "Banned123!";
+	}
+	else {
 		$host = "localhost";
 		$db_name = "jerkface";
 		$username = "root";

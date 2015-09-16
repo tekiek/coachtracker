@@ -3,7 +3,11 @@
 function env() {
 	if ($_SERVER['HTTP_HOST'] == 'coachtracker.org' || $_SERVER['HTTP_HOST'] == 'www.coachtracker.org') {
 		return 'prod';
-	} else {
+	} 
+	else if ($_SERVER['HTTP_HOST'] == 'stage.coachtracker.org' || $_SERVER['HTTP_HOST'] == 'www.stage.coachtracker.org') {
+		return 'stage';
+	}
+	else {
 		return 'dev';
 	}
 }
@@ -15,7 +19,11 @@ function root_dir() {
 function file_root() {
 	if (env() == 'prod') {
 		return 'http://' . $_SERVER['HTTP_HOST'] . '/';
-	} else {
+	} 
+	else if (env() == 'stage') {
+		return 'http://' . $_SERVER['HTTP_HOST'] . '/';
+	}
+	else {
 		return 'http://localhost:8888/';
 	}
 }

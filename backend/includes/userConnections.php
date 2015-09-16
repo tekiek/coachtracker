@@ -1,13 +1,52 @@
 <?php
 
 /*
+ * Returns all user ids
+ */
+function getAllUserIds($filter) {
+	//SELECT id FROM students
+	$sql = "SELECT id FROM users WHERE $filter = 1";
+	$userIds = queryColumn($sql);
+
+	return $userIds;
+}
+
+/*
+ * Get all users
+ */
+function getAllUsers($cols) {
+	$cols = colsToSql($cols);
+	
+	// Get all users data
+	$sql = "SELECT $cols FROM users ORDER BY name ASC";
+	$userData = queryTable($sql);
+	
+	// Get Ids
+	$userIds = array();
+	foreach($userData as $user) {
+		if ($user['id']) {
+			array_push($userIds, $user['id']);
+		}
+	}
+	
+	return array(
+		'ids' => $userIds,
+		'data' => $userData
+	);
+}
+
+/*
  * Get all connected students of user(s) - returns student table data
  */
 function getConnectedUsersOfUsers($ids, $cols) {
 	$userids = idsToArray($ids);
 	$connectedUserIds = getConnectedUserIdsOfUsers($userids);
 	$usersData = getUsersData($connectedUserIds, $cols);
-	return $usersData;
+	
+	return array(
+		'ids' => $connectedUserIds,
+		'data' => $usersData
+	);
 }
 
 /*
@@ -23,7 +62,7 @@ function getConnectedUserIdsOfUsers($ids) {
 		$sql .= 'userid = ' . $userid;
 		if (end($userids) != $userid) { $sql .= " OR "; }
 	}
-	$sql .= ");";
+	$sql .= ")";
 	$connectionIds = queryColumn($sql);
 
 	return $connectionIds;
@@ -51,7 +90,7 @@ function getConnectedUserIdsToUsers($ids) {
 /*
  * Get all student data from a list of ids
  */
-function getUsersData($ids, $cols) {
+function getUsersData($ids, $cols, $acl) {
 	$userids = idsToArray($ids);
 	$cols = colsToSql($cols);
 	
@@ -61,8 +100,12 @@ function getUsersData($ids, $cols) {
 	foreach($userids as $userid) {
 		$sql .= "id = " . $userid;
 		if (end($userids) != $userid) { $sql .= " OR "; }
+		else { $sql .= ") "; }
 	}
-	$sql .= ");";
+	if (gettype($acl) != 'NULL') {
+		$sql .= " AND $acl = 1";
+	}
+	$sql .= " ORDER BY name ASC";
 	$users = queryTable($sql);
 	
 	return $users;

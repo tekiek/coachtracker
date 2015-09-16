@@ -4,13 +4,12 @@
 
 	if ($params['table']) {
 
-		// Get Table Cols
+		//Get Table Cols
 		$table_cols = uploadTableCols($params['table']);
 
-		header("Content-type: text/csv");
-		header("Content-Disposition: attachment; filename=cols_" . date("Y.m.d.h.i") . ".csv");
-		header("Pragma: no-cache");
-		header("Expires: 0");
+		header('Content-Type: application/csv; charset=UTF-8');
+		header("Content-Disposition: attachment; filename=" . $params['table'] . "-cols-" . date("m.d.Y") . ".csv");
+
 		echo implode(",", $table_cols);
 		echo "\n";
 	}

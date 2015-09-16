@@ -1,4 +1,4 @@
-tools['table'] = new function() {
+app['table'] = new function() {
 	_table = this;
 	
 	this.templates = {
@@ -27,6 +27,7 @@ tools['table'] = new function() {
 		if (!params['export']) params['export'] = false;
 		if (!params['export']) params['export'] = false;
 		if (!params['colLabels']) params['colLabels'] = params['columns'];
+		if (!params['expandRows']) params['expandRows'] = false;
 
 		// Clean columns
 		var columns = new Array();
@@ -42,17 +43,20 @@ tools['table'] = new function() {
 		$.each(params['data'], function(x, row) {
 			var row_data = new Array();
 			$.each(params['columns'], function(x, col) {
-				row_data.push(row[col]);
+				var cellValue = row[col] ? row[col] : '';
+				row_data.push('<div class="cell-wrapper">' + cellValue + '</div>');
 			});
 			data.push(row_data);
 		});
 		
 		// Create table
-		var table = $('<table class="table table-striped table-bordered order-column"></table>'),
+		var table = $('<table class="table table-striped table-bordered order-column table-responsive"></table>'),
 			wrapper = $('<div></div>');
 		wrapper.append(table);
 
 		table.dataTable({
+			'scrollY': '400px',
+			//bAutoWidth: false,
 			"order"				: params['sort'] ? params['sort'] : [],
 			'data'				: data,
 			'columns'			: columns,
@@ -63,26 +67,9 @@ tools['table'] = new function() {
 			'dom'				: (params['export'] ? 'T<"clear">lfrtip' : '<"clear">lfrtip'),
 			'tableTools'		: (params['export'] ? {
 				'sSwfPath':'copy_csv_xls_pdf.swf', 
-				'aButtons': [
-					{
-						'sExtends': 'csv', 
-						'sFileName': params['exportName'] + '.csv'
-					},
-					{
-						'sExtends': 'xls', 
-						'sFileName':  params['exportName'] + '.xls'
-					},
-					{
-						'sExtends': 'print'
-					},
-					{
-						'sExtends': 'pdf', 
-						'sFileName':  params['exportName'] + '.pdf'
-					},
-				]
+				'aButtons': params['exportBtns']
 			} : ''),
 			fnPreDrawCallback	: function() {
-				//$(window).overlay({ show: true });
 			},
 			'fnDrawCallback'	: function() {
 				// Add row count attribute
@@ -96,6 +83,9 @@ tools['table'] = new function() {
 					params['dataObj']['columns'] = columns;
 				}
 				params['prependTo'].prepend(wrapper);
+				
+				// Expand rows with click
+				if (params['expandRows']) _table.expandRows(params['dataObj']);
 				
 				// Add row count attribute
 				_table.emptyTable(params['dataObj']);
@@ -123,6 +113,27 @@ tools['table'] = new function() {
 				
 				// Callback
 				if (params['cb']) params['cb']();
+				
+				//wrapper.hide();
+				setTimeout(function() {
+					table.fnAdjustColumnSizing();
+				}, 100);
+				
+			}
+		});
+	}
+	
+	this.expandRows = function(params) {
+		var rows = params['table'].find('tbody tr');
+		
+		rows.click(function() {
+			var isExpanded = ($(this).hasClass('expand') ? true : false);
+
+			rows.removeClass('expand');
+			if (!isExpanded) {
+				$(this)
+					.addClass('expand')
+					.scrollIntoView();
 			}
 		});
 	}
@@ -183,9 +194,9 @@ tools['table'] = new function() {
 	 */
 	this.columnSort = function(params) {
 		var cols = params['table'].find('thead th');
-		
+
 		cols.click(function() {
-			$(window).overlay({
+			$(document).overlay({
 				show: true, 
 				delay: 250 
 			});
@@ -208,7 +219,7 @@ tools['table'] = new function() {
 			selected: function(event, ui) {
 				var rowIndex = ui.selected._DT_RowIndex,
 					rowData = params['table'].fnGetData(rowIndex),
-					tableId = rowData[0];
+					tableId = app.global.removeHTML(rowData[0]);
 	
 				_table.toggleSelectedIds({
 					storage: params['selectedIds'],
@@ -219,7 +230,7 @@ tools['table'] = new function() {
 			unselected: function(event, ui) {
 				var rowIndex = ui.unselected._DT_RowIndex,
 					rowData = params['table'].fnGetData(rowIndex),
-					tableId = rowData[0];
+					tableId = app.global.removeHTML(rowData[0]);
 	
 				_table.toggleSelectedIds({
 					storage: params['selectedIds'],
@@ -380,8 +391,9 @@ tools['table'] = new function() {
 		// Selected current mode
 		if (newMode == currMode) { return false; }
 
-		$(window).overlay({ 
+		$(document).overlay({ 
 			show: true,
+			delay: 500,
 			cb: function() {
 				// Need to wrap in try/catch to avoid errors 
 				try {
@@ -427,7 +439,7 @@ tools['table'] = new function() {
 		var visibleRows = params['table'].find('tbody tr:visible');
 		$.each(visibleRows, function(x, row) {
 			var rowData = params['table'].fnGetData(this),
-				tableId = rowData[0];
+				tableId = app.global.removeHTML(rowData[0]);
 			_table.toggleSelectedIds({
 				storage: params['selectedIds'],
 				ids: [tableId],
@@ -441,7 +453,7 @@ tools['table'] = new function() {
 		var visibleRows = params['table'].find('tbody tr.ui-selected:visible');
 		$.each(visibleRows, function(x, row) {
 			var rowData = params['table'].fnGetData(this),
-				tableId = rowData[0];
+				tableId = app.global.removeHTML(rowData[0]);
 			_table.toggleSelectedIds({
 				storage: params['selectedIds'],
 				ids: [tableId],

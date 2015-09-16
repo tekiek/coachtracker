@@ -1,5 +1,6 @@
 app['menu'] = new function() {
 	_menu = this;
+	this.els = {};
 	
 	this.template_data = {
 		'panel' : {
@@ -19,7 +20,7 @@ app['menu'] = new function() {
 		'export': {
 			'color'			: 'btn-success',
 			'btnSize'		: 'btn-lg',
-			'classes'		: 'shadow marginBottom10',
+			'classes'		: 'marginBottom10',
 			'acls'			: '',
 			'text'			: 'MEETING NOTES',
 			'href'			: '/export',
@@ -29,8 +30,8 @@ app['menu'] = new function() {
 		'upload': {
 			'color'			: 'btn-success',
 			'btnSize'		: 'btn-lg',
-			'classes'		: 'shadow marginBottom10',
-			'acls'			: 'acl-admin',
+			'classes'		: 'marginBottom10',
+			'acls'			: 'acl-upload',
 			'text'			: 'UPLOAD USERS',
 			'href'			: '/upload',
 			'iconR'			: 'fa-angle-right',
@@ -39,7 +40,7 @@ app['menu'] = new function() {
 		'connect': {
 			'color'			: 'btn-success',
 			'btnSize'		: 'btn-lg',
-			'classes'		: 'shadow marginBottom10',
+			'classes'		: 'marginBottom10',
 			'acls'			: 'acl-connect',
 			'text'			: 'ADD CONNECTION',
 			'href'			: 'connect/',
@@ -49,7 +50,7 @@ app['menu'] = new function() {
 		'studentEdit': {
 			'color'			: 'btn-primary',
 			'btnSize'		: 'btn-lg',
-			'classes'		: 'shadow marginBottom10',
+			'classes'		: 'marginBottom10',
 			'acls'			: '',
 			'text'			: 'MY STUDENTS',
 			'iconR'			: 'fa-angle-right',
@@ -58,16 +59,25 @@ app['menu'] = new function() {
 		'eventAdd': {
 			'color'			: 'btn-primary',
 			'btnSize'		: 'btn-lg',
-			'classes'		: 'shadow marginBottom10',
+			'classes'		: 'marginBottom10',
 			'acls'			: '',
 			'text'			: 'I MET WITH A STUDENT',
+			'iconR'			: 'fa-angle-right',
+			'iconSize'		: 'fa-lg'
+		},
+		'emailBlast': {
+			'color'			: 'btn-primary',
+			'btnSize'		: 'btn-lg',
+			'classes'		: 'marginBottom10',
+			'acls'			: '',
+			'text'			: 'EMAIL BLAST',
 			'iconR'			: 'fa-angle-right',
 			'iconSize'		: 'fa-lg'
 		},
 		'scheduleAdd': {
 			'color'			: 'btn-primary',
 			'btnSize'		: 'btn-lg',
-			'classes'		: 'shadow marginBottom10',
+			'classes'		: 'marginBottom10',
 			'acls'			: 'hidden',
 			'text'			: 'SCHEDULE FOLLOW UP',
 			'iconR'			: 'fa-angle-right',
@@ -76,7 +86,7 @@ app['menu'] = new function() {
 		'scheduleList': {
 			'color'			: 'btn-primary',
 			'btnSize'		: 'btn-lg',
-			'classes'		: 'shadow marginBottom10',
+			'classes'		: 'marginBottom10',
 			'acls'			: 'hidden',
 			'text'			: 'UPCOMING MEETINGS',
 			'iconR'			: 'fa-angle-right',
@@ -92,27 +102,30 @@ app['menu'] = new function() {
 		}
 	}
 	
-	this.els = {
-		parent: $('div#home-screen')
-	}
-	
 	this.init = function() {
+		_menu.getEls();
 		_menu.setupHeader();
 		_menu.addButtons();
-		_menu.addAdminButtons();
+		if (!app.config.isMobile) _menu.addAdminButtons();
+	}
+	
+	this.getEls = function() {
+		_menu.els = {
+			parent: $('div#home-screen')
+		}
 	}
 	
 	this.setupHeader = function() {
 		app.header.addLogo();
-		app.header.addHelp();
 		app.header.addUserField();
+		app.header.addHelp();
 	}
 	
 	this.addButtons = function() {
-		var buttons = ['studentEdit', 'eventAdd'],
-			panel = $.tmpl(app.global.templates.div, _menu.template_data['panel']),
-			panelHead = $.tmpl(app.global.templates.div, _menu.template_data['actionsPanelHead']),
-			panelBody = $.tmpl(app.global.templates.div, _menu.template_data['panelBody']);
+		var buttons = ['studentEdit', 'eventAdd', 'emailBlast'],
+			panel = $.tmpl(app.templates.div, _menu.template_data['panel']),
+			panelHead = $.tmpl(app.templates.div, _menu.template_data['actionsPanelHead']),
+			panelBody = $.tmpl(app.templates.div, _menu.template_data['panelBody']);
 			
 		// Add menu
 		panel
@@ -121,7 +134,7 @@ app['menu'] = new function() {
 		_menu.els['parent'].append(panel);
 
 		$.each(buttons, function(x, buttonId) {
-			var button = $.tmpl(app.global.templates.button, _menu.template_data[buttonId]);
+			var button = $.tmpl(app.templates.button, _menu.template_data[buttonId]);
 			
 			// Add UI
 			panelBody.append(button);
@@ -135,9 +148,9 @@ app['menu'] = new function() {
 	
 	this.addAdminButtons = function() {
 		var buttons = ['export', 'upload', 'connect'],
-			panel = $.tmpl(app.global.templates.div, _menu.template_data['panel']),
-			panelHead = $.tmpl(app.global.templates.div, _menu.template_data['toolsPanelHead']),
-			panelBody = $.tmpl(app.global.templates.div, _menu.template_data['panelBody']);
+			panel = $.tmpl(app.templates.div, _menu.template_data['panel']),
+			panelHead = $.tmpl(app.templates.div, _menu.template_data['toolsPanelHead']),
+			panelBody = $.tmpl(app.templates.div, _menu.template_data['panelBody']);
 			
 		// Add menu
 		panel
@@ -147,7 +160,7 @@ app['menu'] = new function() {
 
 		$.each(buttons, function(x, buttonId) {
 			var template = _menu.template_data[buttonId],
-				button = $.tmpl(app.global.templates.button, template);
+				button = $.tmpl(app.templates.button, template);
 			
 			// Add UI
 			panelBody.append(button);

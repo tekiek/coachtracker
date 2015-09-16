@@ -1,59 +1,65 @@
-tools['dataExport'] = new function() {
+app['dataExport'] = new function() {
 	_dataExport = this;
+	this.els = {};
 	this.data = {
 		type: null,
-		table: null
-	};
-
-	this.els = {
-		'fromDate': $('#date-picker-from'),
-		'toDate': $('#date-picker-to'),
-		'tableWrapper': $('#table-wrapper'),
-		'userId': $('#userId'),
-		'tableType': $('#table-type')
+		table: null,
+		editModeToggle: ['off', 'delete'],
+		dates: {
+			from: null,
+			to: null
+		}
 	};
 
 	this.apis = {
-		'events'		: '_eventData.php',
-		'signatures'	: '_signatureData.php',
+		'events'		: '_getData.php',
+		'signatures'	: '_getData.php',
+		'emailBlast'	: '_getData.php',
 		'eventDelete'	: '_eventDelete.php'
 	}
 
 	this.init = function() {
-		_dataExport.getUserId();
-		_dataExport.datePicker();
-		_dataExport.tableTypeSelect();
-		_dataExport.getTableData();
-		$(window).overlay({show: false, delay: 250 });
+		_dataExport.getEls();
 		
 		// Listen for row selection in Delete Mode
 		EventManager.observe('RowSelect:delete', _dataExport.rowDelete);
 		
 		// Listen for row selection in Edit Mode
 		EventManager.observe('RowSelect:edit', _dataExport.rowEdit);
-	}
-	
-	this.tableTypeSelect = function() {
-		_dataExport.els.tableType
-			.buttonset()
-			.show();
-		_dataExport.data.type = _dataExport.tableTypeValue();
-
-		// Add Events
-		_dataExport.els.tableType.find('input[type=radio]').click(function() {
-			var selected = $(this).attr('value')
-			_dataExport.data.type = selected;
-			_dataExport.getTableData();
-			_dataExport.data.table.addClass(selected)
+		
+		// Setup
+		app.libs.waitForLib({
+			lib: 'jqueryui',
+			cb: function() {
+				_dataExport.setupTabs();
+				_dataExport.datePicker();
+				_dataExport.els.content.show();
+			}
 		});
 	}
 	
-	this.tableTypeValue = function() {
-		return _dataExport.els.tableType.find(':checked').attr('value');
+	this.getEls = function() {
+		_dataExport.els = {
+			'content': $('#content'),
+			'fromDate': $('#date-picker-from'),
+			'toDate': $('#date-picker-to'),
+			'tableWrapper': $('#table-wrapper'),
+			'tableType': $('#table-type'),
+			'tableTabs': $('#tableTabs')
+		}
 	}
 	
-	this.getUserId = function() {
-		_dataExport.data['userId'] = _dataExport.els.userId.val();
+	this.setupTabs = function() {
+		_dataExport.els.tableTabs.tabs({
+			activate: function(event, ui) {
+				_dataExport.data.type = $(ui.newTab).data('table');
+				_dataExport.getTableData();
+			},
+			create: function(event, ui) {
+				_dataExport.data.type = $(ui.tab).data('table');
+				_dataExport.getTableData();
+			}
+		});
 	}
 
 	this.datePicker = function() {
@@ -69,11 +75,16 @@ tools['dataExport'] = new function() {
 				changeMonth: true,
 				maxDate: 0,
 				onClose: function(selectedDate) {
-					_dataExport.els.toDate.datepicker('option', 'minDate', selectedDate);
-					_dataExport.getTableData();
+					if (!selectedDate) selectedDate = 0;
+					if (selectedDate != _dataExport.data.dates.from) {
+						_dataExport.data.dates.from = selectedDate;
+						_dataExport.els.toDate.datepicker('option', 'minDate', selectedDate);
+						_dataExport.getTableData();
+					}
 				}
 			})
 			.datepicker('setDate', lastMonth());
+		_dataExport.data.dates.from = _dataExport.els.fromDate.val();
 
 		_dataExport.els.toDate
 			.datepicker({
@@ -81,50 +92,79 @@ tools['dataExport'] = new function() {
 				maxDate: 0,
 				onClose: function(selectedDate) {
 					if (!selectedDate) selectedDate = 0;
-					_dataExport.els.fromDate.datepicker('option', 'maxDate', selectedDate);
-					_dataExport.getTableData();
+					if (selectedDate != _dataExport.data.dates.to) {
+						_dataExport.data.dates.to = selectedDate;
+						_dataExport.els.fromDate.datepicker('option', 'maxDate', selectedDate);
+						_dataExport.getTableData();
+					}
 				}
 			})
 			.datepicker('setDate', today);
+		_dataExport.data.dates.to = _dataExport.els.toDate.val();
 	}
 	
 	this.getTableData = function() {
-		params = {
-			user: _dataExport.data.userId,
-			fromDate: _dataExport.els.fromDate.val(),
-			toDate: _dataExport.els.toDate.val()
-		}
+		var tableType = _dataExport.data.type,
+			tableWrapperEl = $('#table-wrapper-' + tableType),
+			params = {
+				user: _dataExport.data.userId,
+				fromDate: _dataExport.els.fromDate.val(),
+				toDate: _dataExport.els.toDate.val(),
+				table: tableType
+			}
 
-		var start = new Date().getTime();
 		$.ajax({
-			url: _dataExport.apis[_dataExport.data.type],
+			url: _dataExport.apis[tableType],
 			data: params
 		})
 		.done(function(response) {
-			var end = new Date().getTime();
-			var time = end - start;
-			console.log('time', time)
 			response = $.parseJSON(response);
-			var editModeToggle = ['off', 'delete'];
-			
-			// if (response.acl && 'admin|counselor|coach'.match(response.acl)) {
-			// 	editModeToggle = ['off', 'delete'];
-			// } 
-			
-			_dataExport.els.tableWrapper.empty();
-			tools.table.createTable({
+			var exportBtns = _dataExport.getExportButtons();
+
+			tableWrapperEl.empty();
+			app.table.createTable({
 				'sort'			: (response.sort ? [[response.sort, 'desc']] : null),
 				'data'			: response.rows,
 				'columns'		: response.cols,
 				'colLabels'		: response.colLabels,
-				'prependTo'		: _dataExport.els.tableWrapper,
+				'prependTo'		: tableWrapperEl,
 				'export'		: true,
-				'exportName'	: _dataExport.generateFileName(),
-				'paging'		: true,
+				'exportBtns'	: exportBtns,
+				'paging'		: false,
 				'dataObj'		: _dataExport.data,
-				'editModeToggle': editModeToggle
+				'editModeToggle': _dataExport.data.editModeToggle,
+				'expandRows'	: true
 			});
 		});
+	}
+	
+	/*
+	 * Builds list of export buttons with names
+	 */
+	this.getExportButtons = function() {
+		var type = app.dataExport.data.type,
+			buttons = [],
+			exportName = _dataExport.generateFileName();
+		
+		if (type == 'events' || type == 'emailBlast') {
+			buttons.push({
+				'sExtends': 'csv', 
+				'sFileName': exportName + '.csv'
+			},
+			{
+				'sExtends': 'xls', 
+				'sFileName':  exportName + '.xls'
+			},
+			{
+				'sExtends': 'print'
+			});
+		} else {
+			buttons.push({
+				'sExtends': 'print'
+			});
+		}
+		
+		return buttons;
 	}
 	
 	this.generateFileName = function() {
@@ -150,7 +190,6 @@ tools['dataExport'] = new function() {
 		if (confirm("Delete this note?") == true) {
 			response = true;
 		}
-		console.log(rowId);
 		
 		if (!response || !rowId) { return true; }
 		$.ajax({
@@ -163,7 +202,7 @@ tools['dataExport'] = new function() {
 			response = $.parseJSON(response);
 		
 			if (response.status) {
-				rowEl.effect('pulsate', {}, 500, function() {
+				app.global.animate(rowEl, 'flash', null, function() {
 					table.fnDeleteRow(rowEl);
 				});
 			}

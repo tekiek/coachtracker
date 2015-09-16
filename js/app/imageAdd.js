@@ -1,10 +1,11 @@
 app['imageAdd'] = new function() {
 	_imageAdd = this;
-	
+	this.els = {};
 	this.templates = {
 		'imgFile'		: '<input name="myfile" data-field="${dbId}" type="file" accept="image" capture="camera">',
-		'userImage'		: '<img class="user-image" src="' + app.config.studentImagePath + '${userImg}?z=${rndNum}">',
-	}
+		'userImage'		: '<img class="user-image" src="' + app.config.studentImagePath + '${userImg}${cacheBuster}">',
+		'cacheBuster'	: '?z=${rndNum}'
+	};
 	
 	this.template_data = {
 		'uploadBtn': {
@@ -15,10 +16,18 @@ app['imageAdd'] = new function() {
 			'text'			: 'Add Photo',
 			
 		},
-	}
+		'defaultImg': {
+			'icon'			: 'user',
+			'classes'		: 'fa-3x user-image'
+		}
+	};
 	
-	this.cacheBuster = function() {
-		return Math.floor((Math.random()*100));
+	this.cacheBuster = function(img) {
+		if (img.match(/default/)) {
+			return "";
+		} else {
+			return "?z=" + Math.floor((Math.random()*100));
+		}
 	}
 
 	/*
@@ -28,10 +37,14 @@ app['imageAdd'] = new function() {
 	 * - appendTo (el)
 	 */
 	this.addUserImage = function(params) {
-		var image = $.tmpl(_imageAdd.templates.userImage, $.extend({}, params.user, { rndNum: _imageAdd.cacheBuster() }) ),
-			uploadBtn = $.tmpl(app.global.templates.button, _imageAdd.template_data.uploadBtn);
+		var hasImg = (params.user.userImg.indexOf('default') > -1 ? false : true);
+			defaultImg = $.tmpl(app.templates.svg, _imageAdd.template_data.defaultImg),
+			curImage = $.tmpl(_imageAdd.templates.userImage, $.extend({}, params.user, { cacheBuster: _imageAdd.cacheBuster(params.user.userImg) }) ),
+			uploadBtn = $.tmpl(app.templates.button, _imageAdd.template_data.uploadBtn),
+			image = (hasImg ? curImage : defaultImg);
 
 		// Add to DOM
+		_imageAdd.els.image = image;
 		params['appendTo']
 			.append(image)
 			.append(uploadBtn);
@@ -122,15 +135,21 @@ app['imageAdd'] = new function() {
 		})
 		.done(function(response) {
 			if (response.success == 'true') {
-				var imgSrc = app.config.studentImagePath + response.value + "?z=" + _imageAdd.cacheBuster();
-
-				imgEl.attr('src', imgSrc);
+				var img = $.tmpl(_imageAdd.templates.userImage, {
+					userImg: response.value,
+					cacheBuster: _imageAdd.cacheBuster(response.value)
+				})
+				
+				// Update dom
+				$(_imageAdd.els.image).replaceWith(img);
+				_imageAdd.els.image = img;
+				
+				// Update data
 				params.user[response.field] = response.value;
 				app.login.saveUserData();
-
 				app.global.alert({
 					msg	:'Saved', 
-					icon: 'fa-check-circle'
+					icon: 'check-circle'
 				});
 			}
 		});

@@ -16,4 +16,14 @@ function TableInsert($table, $data) {
 		return null;
 	}
 }
+
+function TableInsertSql($table, $data) {
+	$sql = "INSERT INTO $table (";
+	$sql .= implode(", ", array_keys($data));
+	$sql .= ") VALUES ('";
+	$sql .= implode("', '", sql_escape_array($data));
+	$sql .= "');";
+	
+	return $sql;
+}
 ?>

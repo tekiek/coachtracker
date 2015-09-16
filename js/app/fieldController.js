@@ -1,28 +1,13 @@
 app['fieldController'] = new function() {
 	_fieldController = this;
 	
-	this.templates = {
-		'input'			: '<input data-regex="${regex}" data-action="${gtAct}" name="${name}" value="${value}" data-field="${dbId}" data-valid="${validLength}" type="${inputType}" class="form-control" placeholder="${placeholder}" data-mask="${mask}">',
-		'textarea' 		: '<textarea data-action="${gtAct}" data-field="${dbId}" data-valid="${validLength}" class="form-control" placeholder="${placeholder}">${value}</textarea>',
-		'select'		: '<select data-action="${gtAct}" data-field="${dbId}" class="form-control ${classes}" data-valid="true"></select>',
-		'option'		: '<option data-action="${gtAct}" value="${key}" data-field="${dbId}" ${disabled} ${selected}>${value}</option>',
-		'multi'			: '<div data-type="MULTI" class="form-control multi" data-valid="${validLength}" ></div>',
-		'multi_option'	: '<input data-action="${gtAct}" type="checkbox" name="${key}" id="${key}"><label for="${key}">${value}</label>',
-		'field_wrapper'	: '\
-			<div class="input-group input-group-${size} ${classes}">\
-				<span class="input-group-addon">\
-					<i class="fa ${icon} fa-fw">${text}</i>\
-				</span>\
-			</div>'
-	}
-	
 	this.getFields = function(fields) {
 		return jQuery.extend(true, {}, fields);
 	}
 	
 	this.createField = function(fieldData) {
 		var fieldType = fieldData['type'],
-			templates = _fieldController.templates;
+			templates = app.templates;
 
 		// Create Field
 		if (fieldType == 'select') {
@@ -55,9 +40,31 @@ app['fieldController'] = new function() {
 						'disabled'	: (defaultOption ? 'disabled' : ''),
 						'selected'	: (defaultOption ? 'selected' : '')
 					});
-				fieldEl.append(optionEl)
+				fieldEl.append(optionEl);
 			});
 			if (fieldData['value']) fieldEl.val(fieldData['value']);
+			
+			
+			fieldEl.find('input[type=checkbox]').click(function() {
+				var _optionElId = $(this).attr('id');
+
+				if (fieldData.maxLength) {
+					var selectedEls = fieldEl.find('input[type=checkbox]:checked'),
+						selectedCount = selectedEls.length;
+
+					if (selectedCount > fieldData.maxLength) {
+						$.each(selectedEls, function(i, el) {
+							var _elId = $(el).attr('id');
+							
+							if (_elId != _optionElId) {
+								$(el).attr('checked', false);
+								return false;
+							}
+						})
+					}
+					$(this).attr('checked', true);
+				}
+			})
 		}
 
 		// Add autocomplete?
@@ -69,9 +76,22 @@ app['fieldController'] = new function() {
 		}
 		
 		// Default Timestamp to current time
-		if (fieldData['inputType'] == 'date') {
+		if (fieldData['inputType'] == 'pickadate') {
+			// Add current date
 			$(fieldEl).val(new Date().toDateInputValue());
-			if (!app.config.isMobile && !app.config.isChrome) $(fieldEl).datepicker();
+			
+			// Add datepicker
+			$(fieldEl).one('click', function() {
+				$(fieldEl).pickadate({
+					clear: '',
+					format: 'yyyy-mm-dd',
+					onClose: function() {
+						var pos = $(fieldEl).offset().top;
+						window.scrollTo(pos, 0);
+					}
+				})
+			})
+			
 		}
 		
 		// Add input mask?
@@ -88,7 +108,7 @@ app['fieldController'] = new function() {
 	this.createFieldWrapper = function(params) {
 		if (!params['size']) params['size'] = 'lg';
 
-		var templates = _fieldController.templates,
+		var templates = app.templates,
 			fieldWrapper = $.tmpl(templates['field_wrapper'], params);
 		
 		return fieldWrapper;
@@ -127,6 +147,11 @@ app['fieldController'] = new function() {
 			app.global.inputToggleError(this, error);
 		});
 		
+		if (!isValid) {
+			$('html, body').animate({
+				scrollTop: $(".has-error").offset().top
+			}, 500);
+		}
 		
 		return isValid;
 	}
@@ -134,7 +159,6 @@ app['fieldController'] = new function() {
 	this.inputMask = function(opts) {
 		if (!opts['el']) return false;
 		if (!opts['mask']) return false;
-		console.log('*********');
 		$(opts['el']).mask(opts['mask']);
 	}
 	

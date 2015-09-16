@@ -2,36 +2,35 @@
 	require '_config.php';
 	
 	$params = get_params();
-	$userid = $params['userid'];
+	$selectedUserId = $params['selectedUserId'];
 	$type = $params['type'];
 	$filter = $params['filter'];
-	$acl = getAcl($userid);
+	
+	// Column config
+	$colConfig = array(
+		'student' => array('id', 'dbId', 'cbo', 'dob', 'fname', 'lname', 'school', 'college', 'major', 'notes'),
+		'user' => array('id', 'name', 'email', 'admin', 'coach', 'counselor', 'captain', 'connect')
+	);
+	
+	// Get logged in user
+	$user = $_SESSION["loggedin-user"];
+	$userId = $user['id'];
+	$isAdmin = $user['admin'];
 	
 	// Get table columns
-	if ($type == 'student') {
-		$tableDetails = getTableColsByName('students');
-	}
-	else if ($type == 'user') {
-		$tableDetails = getTableColsByName('users');
-	}
-	$tableCols = array_keys($tableDetails);
+	$cols = $colConfig[$type];
 	
-	// Admin
-	if ($acl == 'admin' || $acl == 'captain') {
-		// Get universe
+	// Get universe data
+	if ($user['admin'] == '1') {
 		$universeIds = ($type == 'student' ? getAllStudentIds() : getAllUserIds($filter));
-		$universeData = ($type == 'student' ? getStudentsData($universeIds) : getUsersData($universeIds));
+		$universeData = ($type == 'student' ? getStudentsData($universeIds, $cols) : getUsersData($universeIds, $cols));
 	} else {
-		// Get superior ids
-		$superiorIds = getConnectedUserIdsToUsers($userid);
-		
-		// Get universe
-		$universeIds = ($type == 'student' ? getConnectedStudentIdsOfUsers($superiorIds) : getConnectedUserIdsOfUsers($superiorIds));
-		$universeData = ($type == 'student' ? getStudentsData($universeIds) : getUsersData($universeIds));
+		$universeIds = ($type == 'student' ? getConnectedStudentIdsOfUsers($userId) : getConnectedUserIdsOfUsers($userId));
+		$universeData = ($type == 'student' ? getStudentsData($universeIds) : getUsersData($universeIds, $cols, $filter));
 	}
 	
-	// Get currently connected
-	$connectedIds = ($type == 'student' ? getConnectedStudentIdsOfUsers($userid) : getConnectedUserIdsOfUsers($userid));
+	// Get currently connected to selected user
+	$connectedIds = ($type == 'student' ? getConnectedStudentIdsOfUsers($selectedUserId) : getConnectedUserIdsOfUsers($selectedUserId));
 	
 	// Hack to include current connected ids to universe
 	$universeIds = array_merge($universeIds, $connectedIds);
@@ -43,7 +42,7 @@
 		"success" => "true",
 		"available" => $splitData['available'],
 		"selected" => $splitData['selected'],
-		"columns" => $tableCols,
+		"columns" => $cols,
 		"params" => $params
 	);
 	

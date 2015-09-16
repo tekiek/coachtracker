@@ -1,4 +1,14 @@
 <?php
+	$tables = array(
+		'users',
+		'students',
+		'events',
+		'schedule',
+		'colleges',
+		'schools',
+		'connections'
+	);
+
 	function getTableColsByName($table) {
 		if ($table == 'users') return tableUsersCols();
 		if ($table == 'students') return tableStudentsCols();
@@ -6,7 +16,7 @@
 		if ($table == 'schedule') return tableScheduleCols();
 		if ($table == 'colleges') return tableCollegesCols();
 		if ($table == 'schools') return tableSchoolsCols();
-		if ($table == 'connection') return tableConnections();
+		if ($table == 'connections') return tableConnections();
 	}
 
 	function tableUsersCols() {
@@ -22,6 +32,8 @@
 			'password' 		=> 'varchar(255) DEFAULT "cuny"',
 			'pwReset' 		=> 'BOOLEAN DEFAULT 0',
 			'connect' 		=> 'BOOLEAN DEFAULT 0',
+			'upload' 		=> 'BOOLEAN DEFAULT 0',
+			'uploadedBy'	=> 'INT'
 		);
 		return $users;
 	}
@@ -43,6 +55,7 @@
 			'userImg' 		=> 'varchar(255) NOT NULL DEFAULT "default.jpg"',
 			'notes' 		=> 'varchar(255)',
 			'createdTime' 	=> 'TIMESTAMP DEFAULT CURRENT_TIMESTAMP',
+			'uploadedBy'	=> 'INT'
 		);
 		return $students;
 	}

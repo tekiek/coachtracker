@@ -1,6 +1,6 @@
 <?php
-function TableCreate($table, $config) {
-	DBConnect();
+function TableCreate($table, $config, $env) {
+	DBConnect($env);
 	
 	// Delete Table If Exist
 	$sql = 'DROP TABLE ' . $table;

@@ -2,49 +2,61 @@
 
 require '_config.php';
 $params = get_params();
+$con = DBConnect();
 
 $response = array(
 	"success" => "false",
 	"params" => $params,
-	"msg" => "Server Error!"
+	"msg" => "Server Error!",
+	"test" => ""
 );
 
+// Params
+$failedRows = array();
 $table = $params['table'];
 $file_path = $params['file'];
-$file_data = get_file_data($file_path);
-$file_rows = $file_data['data'];
-$table_cols = $file_data['header'];
-$success_upload = array(); 
-$failed_upload = array();
-$successCount = 0;
 
-// Add data to table
-foreach($file_rows as $row) {
-	$index = 0; $table_values = array();
+// Logged in user
+$loggedInUser = loggedInUser();
+$loggedInId = $loggedInUser['id'];
 
-	// Turn into array
-	foreach($table_cols as $col) {
-		if ($row[$index]) {
-			$table_values[$col] = $row[$index];
-		} else {
-			$table_values[$col] = NULL;
-		}
-		$index++;
-	}
+// Loop through each row of data
+$rowIds = array();
+$connectionType = ($table == 'users' ? 'user' : 'student');
 
-	// Add to database
-	if (TableInsert($table, $table_values)) {
-		//array_push($success_upload, $table_values);
-		$successCount += 1;
-	} else {
-		//array_push($failed_upload, $table_values);
+// Created time
+$createdTime = date('Y-m-d H:i:s.', time());
+
+// Get SQL
+$uplaod = uploadSql($file_path, $table, $loggedInId, $createdTime);
+$file_values = $uplaod['values'];
+$file_sqls = $uplaod['sql'];
+
+// Add to table
+foreach($file_sqls as $sql) {
+	$result = mysql_query($sql);
+	logTableChange($sql, json_encode(debug_backtrace()));
+}
+
+// Add Connection
+foreach($file_values as $fvalues) {
+	$insertedRow = TableRow($table, $fvalues);
+	
+	if ($insertedRow && $insertedRow['id']) {
+		$connectionParams = array(
+			'type' 			=> $connectionType,
+			'userid' 		=> $loggedInId,
+			'connectionid'	=> $insertedRow['id'],
+			'createdUser'	=> $loggedInId
+		);
+			
+		// Add connection
+		TableInsert('connections', $connectionParams);
 	}
 }
 
-if ($successCount > 0) {
-	$response['success'] = "true";
-	$response['msg'] = $successCount . " of " . count($file_rows) . " inserted!";
-}
+$response['success'] = "true";
+$response['msg'] = 'Success!';
 
 
 echo json_encode($response);

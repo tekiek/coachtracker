@@ -1,27 +1,39 @@
 app['controller'] = new function() {
 	_controller = this;
-	this.firstScreen = 'menu';
+	this.firstScreen = null;
 	this.screenListOrder = [];
 	this.subScreen = null;
-	
-	this.loadFirstScreen = function() {
-		var currSlide = _controller.currSlide();
-		if (currSlide) currSlide.els['parent'].empty();
-		
-		_controller.screenListOrder = [];
-		_controller.screenListOrder.push(app[_controller.firstScreen]);
-
-		app.header.destroy();
-		_controller.showSlide();
-
-		// Lazy Load Files
-		if (typeof lazyLoadJs != 'undefined') app.lazyLoadFiles(lazyLoadJs);
+	this.animate = {
+		'speed': 'default',
+		'in': 'slideInLeft',
+		'out': 'slideOutRight'
 	}
 	
+	this.init = function() {
+		_controller.firstScreen = $('body').attr('data-firstScreen')
+	}
+	
+	this.loadFirstScreen = function() {
+		
+		var currSlide = app[_controller.firstScreen]; //_controller.currSlide();
+		console.log(_controller.firstScreen);
+		//console.log('currSlide', currSlide);
+		//if (currSlide) currSlide.els['parent'].empty();
+		
+		_controller.screenListOrder = [];
+		_controller.screenListOrder.push(currSlide);
+
+		//_controller.showSlide();
+		currSlide['init']()
+		EventManager.fire('loadFirstScreen');
+	}
+	
+	/*
+	 * Move forward to a new slide
+	 */
 	this.nextSlide = function(nextSlide) {
 		var currSlide = _controller.currSlide();
 
-		nextSlide.els['parent'].empty();
 		_controller.screenListOrder.push(nextSlide);
 		_controller.slideTransfer(currSlide, nextSlide);
 	}
@@ -39,16 +51,19 @@ app['controller'] = new function() {
 	}
 	
 	this.slideTransfer = function(currSlide, nextSlide) {
-		var speed = 'default',
-			animation = 'slideOutRight';
 
-		window.scrollTo(0, 0);
-		app.global.spinner({ show: true });
-		app.header.destroy(animation, speed);
+		// Setup transfer
+		app.header.destroy(_controller.animate.out, _controller.animate.speed);
 
-		app.global.animate(currSlide.els['parent'], animation, speed, function() {
-			currSlide.els['parent'].empty();
+		$(document).overlay({ show: true });
+		app.global.animate(currSlide.els['parent'], _controller.animate.out, _controller.animate.speed, function() {
+
+			if (currSlide.els['parent']) currSlide.els['parent'].empty();
+			currSlide.els = {};
+			
+			// Show next slide
 			_controller.showSlide();
+			$(document).overlay({ show: false });
 		});
 	}
 
@@ -58,10 +73,15 @@ app['controller'] = new function() {
 			animation = 'slideInLeft',
 			currSlide = _controller.currSlide();
 
+		// Make sure slide is empty
+		if (currSlide.els['parent']) currSlide.els['parent'].empty();
+		
+		// Scroll back to top
+		window.scrollTo(0, 0);
+
 		$.when(currSlide['init']()).done(function() {
-			app.header.show(animation, speed);
-			app.global.animate(currSlide.els['parent'], animation, speed, function() {
-				app.global.spinner(false);
+			app.header.show(_controller.animate.in, _controller.animate.speed);
+			app.global.animate(currSlide.els['parent'], _controller.animate.in, _controller.animate.speed, function() {
 			});
 		});
 	}

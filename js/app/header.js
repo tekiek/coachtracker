@@ -1,10 +1,17 @@
 app['header'] = new function() {
 	var _header = this;
+	this.els = {}
 
-	this.data = {};
+	this.data = {
+		scrollDelta: 5,
+		scrolled: false,
+		hasShadow: false,
+		currScroll: 0,
+		lastScroll: 0
+	};
 
 	this.templates = {
-		'backText'		: '<span class="text-shadow">Back</span>',
+		'backText'		: '<span class="text-shadow"></span>',
 		'backWrapper'	: '<div class="back-btn-wrapper left pointer"></div>',
 		'searchWrapper'	: '<div class="search-wrapper"></div>',
 		'searchField'	: '<div class="input-group input-group"></div>',
@@ -20,63 +27,112 @@ app['header'] = new function() {
 			'classes'		: 'left logo-wrapper text-shadow'
 		},
 		'logoIcon': {
-			'icon'		: 'fa-comments-o logo-icon',
-			'iconSize'	: 'fa-3x',
+			'icon'		: 'comments-o',
+			'classes'	: 'header__logo-icon',
 			'gtAct'		: 'logo'
 		},
 		'backBtnIcon': {
-			'icon'			: 'fa-chevron-left text-shadow',
-			'iconSize'		: '',
+			'icon'			: 'chevron-left',
+			'classes'		: 'fa-lg header__back-icon',
 			'gtAct'			: 'back'
 		},
 		'iconSearch': {
-			'icon'			: 'fa-search',
-			'iconSize'		: 'fa-lg',
+			'icon'			: 'search',
 			'gtAct'			: 'search:go'
 		},
 		'iconCancel': {
-			'icon'			: 'fa-times-circle',
-			'iconSize'		: 'fa-lg',
+			'icon'			: 'times-circle',
 			'gtAct'			: 'search:cancel'
 		},
 		'iconUser': {
-			'icon'			: 'fa-user text-shadow pointer',
-			'iconSize'		: 'fa-2x',
+			'classes'		: 'pointer header__user',
+			'icon'			: 'user',
 			'gtAct'			: 'signout'
 		},
 		'helpWrapper': {
 			'classes'		: 'right text-shadow help-wrapper'
 		},
 		'help': {
-			'icon'			: 'fa-question-circle text-shadow pointer',
-			'iconSize'		: 'fa-2x',
+			'classes'		: 'pointer header__help',
+			'icon'			: 'question-circle',
 			'gtAct'			: 'help'
+		},
+		'signup': {
+			'classes'		: 'header__sign-up-btn',
+			'input'			: 'Sign Up'
 		}
-	}
-
-	this.els = {
-		parent: $('#header-fields')
 	}
 	
 	this.init = function() {
-		_header.scrollShadow();
+		_header.getEls();
+		_header.scroll();
 	}
 	
-	this.scrollShadow = function() {
-		_header.data['hasShadow'] = false;
-		
+	this.getEls = function() {
+		_header.els = {
+			parent: $('#header-fields'),
+			header: $('header')
+		}
+	}
+	
+	this.scroll = function() {
+		// Scroll listener
 		$(window).scroll(function() {
-			var scrollTop = $(this).scrollTop();
-
-			if (scrollTop > 10 && !_header.data.hasShadow) {
-				$('header').addClass('shadow');
-				_header.data.hasShadow = true;
-			} 
-			else if (scrollTop <= 10 && _header.data.hasShadow) {
-				$('header').removeClass('shadow');
-				_header.data.hasShadow = false;
-			}
+			_header.data.scrolled = true;
 		})
+		
+		// Check if scrolled
+		setInterval(function() {
+			if (_header.data.scrolled) {
+				_header.data.scrolled = false;
+				_header.data.currScroll = $(window).scrollTop();
+				
+				// Ignore minimal scroll
+				if (! (Math.abs(_header.data.lastScroll - _header.data.currScroll) <= _header.data.scrollDelta) ) {
+					_header.scrollHideHeader();
+					_header.toggleShadow();
+				}
+			}
+		}, 250);
+	}
+	
+	/*
+	 * Add shadow to header if on top of elements
+	 */
+	this.toggleShadow = function() {
+		if (_header.data.currScroll > 10 && !_header.data.hasShadow) {
+			_header.els.header.addClass('shadow');
+			_header.data.hasShadow = true;
+		} 
+		else if (_header.data.currScroll <= 10 && _header.data.hasShadow) {
+			_header.els.header.removeClass('shadow');
+			_header.data.hasShadow = false;
+		}
+	}
+
+	/*
+	 * Add shadow to header if on top of elements
+	 */
+	this.scrollHideHeader = function() {
+		var headerHeight = _header.els.header.outerHeight();
+
+		if (_header.data.currScroll > _header.data.lastScroll && _header.data.currScroll > headerHeight) {
+			// Hide header
+			_header.els.header
+				.removeClass('nav-down')
+				.addClass('nav-up');
+		} else {
+			if (_header.data.currScroll + $(window).height() < $(document).height()) { 
+				// Show header
+				_header.els.header
+					.removeClass('nav-up')
+					.addClass('nav-down');
+			}
+		}
+		
+		// Save last scroll
+		_header.data.lastScroll = _header.data.currScroll;
+
 	}
 
 	this.destroy = function() {
@@ -104,7 +160,7 @@ app['header'] = new function() {
 	this.addBackButton = function() {
 		var backWrapper = $.tmpl(_header.templates.backWrapper, {}),
 			backBtnTxt = $.tmpl(_header.templates.backText, {}),
-			backBtnIcon = $.tmpl(app.global.templates.icon, _header.template_data['backBtnIcon']);
+			backBtnIcon = $.tmpl(app.templates.svg, _header.template_data['backBtnIcon']);
 		
 		$(backWrapper)
 			.append(backBtnIcon)
@@ -118,16 +174,25 @@ app['header'] = new function() {
 	}
 	
 	this.addLogo = function() {
-		var logoWrapper = $.tmpl(app.global.templates.div, _header.template_data['logoWrapper']),
-			logoIcon = $.tmpl(app.global.templates.icon, _header.template_data['logoIcon']);
+		var logoWrapper = $.tmpl(app.templates.div, _header.template_data['logoWrapper']),
+			logoIcon = $.tmpl(app.templates.svg, _header.template_data['logoIcon']);
 			
 		logoWrapper.append(logoIcon);
 		_header['els']['parent'].append(logoWrapper);
 	}
 	
+	this.addSignUpButton = function() {
+		var helpWrapper = $.tmpl(app.templates.div, _header.template_data['signup']);
+		
+		_header.els.parent.append(helpWrapper);
+		helpWrapper.click(function() {
+			window.location.href = "/signup";
+		})
+	}
+	
 	this.addHelp = function() {
-		var helpWrapper = $.tmpl(app.global.templates.div, _header.template_data['helpWrapper']),
-			helpIcon = $.tmpl(app.global.templates.icon, _header.template_data['help']),
+		var helpWrapper = $.tmpl(app.templates.div, _header.template_data['helpWrapper']),
+			helpIcon = $.tmpl(app.templates.svg, _header.template_data['help']),
 			userName = $.tmpl(_header.templates.userName, { name: 'Help!' });
 			
 		helpWrapper
@@ -137,10 +202,10 @@ app['header'] = new function() {
 		
 		helpWrapper.click(function() {
 			app.email.init({
-				'message': 'I had the following issue ...',
+				'placeholder': 'I had the following issue ...',
 				'subject': 'Error Email',
 				'to': false,
-				'api': 'backend/forms/help_email.php'
+				'api': 'backend/backend/_services.php?service=helpEmail'
 			});
 		})
 	}
@@ -150,7 +215,7 @@ app['header'] = new function() {
 		var isLoggedIn = app.login.getLoggedInStatus(),
 			userField = $.tmpl(_header.templates.userField),
 			userName = $.tmpl(_header.templates.userName), 
-			userImg = $.tmpl(app.global.templates.icon, _header.template_data['iconUser']);
+			userImg = $.tmpl(app.templates.svg, _header.template_data['iconUser']);
 
 		// Add UI
 		$(userField)
@@ -198,28 +263,11 @@ app['header'] = new function() {
 	}
 	
 	this.addSearch = function(searchField) {
-		var speed = 'default',
-			animationOut = 'flipOutX',
-			animationIn = 'flipInX';
+		var speed = 'default';
 
 		_header.els['searchField'] = searchField;
 		_header.addField(searchField);
 		app.global.els['body'].addClass('hasSearchField');
-
-		$(document).bind('scroll.search', function() {
-			var currVisible = searchField.is(':visible'),
-				currPos = $(document).scrollTop();
-			
-			if (currVisible && currPos > 80) {
-				app.global.animate(searchField, animationOut, speed, function() {
-					searchField.hide();
-				});
-			} 
-			else if (!currVisible && currPos < 60) {
-				searchField.show();
-				app.global.animate(searchField, animationIn, speed);
-			}
-		});
 	}
 	
 	this.destroySearch = function() {

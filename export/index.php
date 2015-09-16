@@ -3,14 +3,14 @@
 <html>
 	<head>
 		<?php head_includes(); ?>
-		<link rel="stylesheet" type="text/css" href="../min/g=css-tools&v=<?php echo $version ?>">
+		<?php load_basket_js(); ?>
 	</head>
 
-	<body class="export">
-
+	<body data-firstScreen="dataExport" class="export">
+		<?php echo svgDegs(); ?>
 		<?php tools_header(); ?>
 
-		<div id='content'>
+		<div id='content' style="display:none;">
 
 			<div id="data-picker-wrapper" class="field_wrapper">
 				<div class="input-group">
@@ -21,18 +21,37 @@
 					<span class="input-group-addon">To</span>
 					<input class="form-control" type="text" id="date-picker-to" name="to">
 				</div>
-				<div id="table-type" style="display:none">
-				    <input type="radio" value="events" id="events" name="table-type" checked="checked"><label for="events">Meeting Notes</label>
-				    <input type="radio" value="signatures" id="signatures" name="table-type"><label for="signatures">Signatures</label>
-				  </div>
 			</div>
 
-			<div id="table-wrapper" class="field_wrapper"></div>
+			<div id="data-wrapper" class="xfield_wrapper">
+				<div id="tableTabs" class="field_wrapper">
+					<ul>
+					<?php
+						foreach($tables as $key => $table) {
+							echo "<li  data-table='" . $key . "'><a href='#tab-" . $key . "'>" . $table .  "</a></li>";
+						}
+					?>
+					</ul>
+					<?php
+						foreach($tables as $key => $table) {
+							echo "<div id='tab-" . $key . "'>";
+					?>
+							<? # Upload/Template ?>
+							<div id="table-wrapper-<?php echo $key; ?>"></div>
+					<?php
+							echo "</div>";
+						}
+					?>
+				</div>
+				
+
+			</div>
 		</div>
-	
-		<input type="hidden" id="userId" value="<?php echo $params['user']; ?>">
-		<script type="text/javascript" src="../min/g=js-tools-libs&v=<?php echo $version ?>"></script>
-		<script type="text/javascript" src="../min/g=js-tools-core&v=<?php echo $version ?>"></script>
+		
+		<div id="dialog"></div>
+		<?php load_js(); ?>
+		<?php load_css(); ?>
+		<?php ga_lib(); ?>
 	</body>
 </html>
 

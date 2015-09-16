@@ -1,70 +1,52 @@
-tools['connection'] = new function() {
+app['connection'] = new function() {
 	_connection = this;
-	
+	this.els = {};
 	this.data = {};
 	this.apis = {
 		'getUserData'		: '_userDetails.php',
-		'connectionList'	: '_connections.php',
+		'connectionList'	: '_connections4.php',
 		'connectUpdate'		: '_update.php',
 		'userEidt'			: '_userEdit.php',
 		'userDelete'		: '_userDelete.php'
 	}
 
-	this.els = {
-		user_select 				: $('#user_select'),
-		not_selected_table			: $('.not_selected_wrapper table'),
-		selected_table				: $('.selected_wrapper table'),
-		filter_tabs					: $('.filter-tabs'),
-		connection_tabs				: $('.connection-tabs'),
-		addStudentsBtn				: $('#add_selected_students'),
-		removeStudentsBtn			: $('#remove_selected_students'),
-		not_selected_selected_count	: $('#not_selected_selected_count'),
-		selected_selected_count		: $('#selected_selected_count')
-	}
-
 	this.init = function() {
-		// Get User Info
+		_connection.getEls();
+		
+		// Get selected user id
 		_connection.data['userid'] = _connection.els['user_select'].val();
-		_connection.getUserData();
-
-		// Setup
-		_connection.setupTabs();
 		
 		// Events
 		_connection.els['user_select'].on('change', _connection.userSelect);
 		_connection.els['addStudentsBtn'].click(_connection.addSelected);
 		_connection.els['removeStudentsBtn'].click(_connection.removeSelected);
-		$(window).overlay({show: false, delay: 250 });
-	}
-	
-	this.getUserData = function() {
-		$.ajax({
-			url: _connection.apis.getUserData,
-			data: {
-				id: _connection.data['userid']
-			}
-		})
-		.done(function(response) {
-			response = $.parseJSON(response);
-			console.log('response', response);
-
-			_connection.data['user'] = response;
-			_connection.hideTabs();
+		
+		// Setup
+		app.libs.waitForLib({
+			lib: 'jqueryui',
+			cb: _connection.buildUi
 		});
 	}
 	
-	this.hideTabs = function() {
-		var isAdmin = Number(_connection.data.user.admin),
-			isCaptain = Number(_connection.data.user.captain),
-			isCoach = Number(_connection.data.user.coach),
-			isCounselor = Number(_connection.data.user.counselor);
-
-		if (isAdmin) { _tools.els.body.addClass('admin'); }
-		else if (isCaptain) { _tools.els.body.addClass('captain'); }
-		else if (isCoach) { _tools.els.body.addClass('coach'); }
-		else if (isCounselor) { _tools.els.body.addClass('counselor'); }
+	this.buildUi = function() {
+		_connection.setupTabs();
+		_connection.els.content.show();
 	}
-
+	
+	this.getEls = function() {
+		_connection.els = {
+			content						: $('#content'),
+			user_select 				: $('#user_select'),
+			not_selected_table			: $('.not_selected_wrapper table'),
+			selected_table				: $('.selected_wrapper table'),
+			filter_tabs					: $('.filter-tabs'),
+			connection_tabs				: $('.connection-tabs'),
+			addStudentsBtn				: $('#add_selected_students'),
+			removeStudentsBtn			: $('#remove_selected_students'),
+			not_selected_selected_count	: $('#not_selected_selected_count'),
+			selected_selected_count		: $('#selected_selected_count')
+		}
+	}
 	
 	this.userSelect = function() {
 		var user = $(this).val();
@@ -122,25 +104,21 @@ tools['connection'] = new function() {
 	this.getTableData = function() {
 		var ajaxTime = new Date().getTime(),
 			params = {
-				'type'		: _connection['data']['activeTab']['type'],
-				'filter'	: _connection['data']['activeTab']['filter'],
-				'userid'	: _connection.data['userid']
+				'type'				: _connection['data']['activeTab']['type'],
+				'filter'			: _connection['data']['activeTab']['filter'],
+				'selectedUserId'	: _connection.els['user_select'].val()
 			}
 
-		console.log('params', params)
 		$.ajax({
 			url: _connection.apis.connectionList,
 			data: params
 		})
 		.done(function(response) {
 			response = $.parseJSON(response);
-			var totalTime = new Date().getTime()-ajaxTime;
-			console.log('totalTime', totalTime);
-			console.log('response', response);
 			
 			if (response.success == 'true') {
 				// Available table
-				tools.table.createTable({
+				app.table.createTable({
 					'data'			: response.available,
 					'columns'		: response.columns,
 					'paging'		: false,
@@ -153,7 +131,7 @@ tools['connection'] = new function() {
 				
 
 				// Selected table
-				tools.table.createTable({
+				app.table.createTable({
 					'data'			: response.selected,
 					'columns'		: response.columns,
 					'paging'		: false,
@@ -164,6 +142,8 @@ tools['connection'] = new function() {
 					'editModeToggle': ['add', 'edit', 'delete']
 				});
 				
+				// Show ui
+				_connection.els.filter_tabs.show();
 			}
 		});
 	}
@@ -260,10 +240,6 @@ tools['connection'] = new function() {
 		var params = e.data;
 		if (!params) return false;
 		if (!params['ids'] || params['ids'].length == 0) return false;
-		
-		console.log('AddSelected', params);
-		console.log(_connection['data']['activeTab']['available']['selectedIds']);
-		//params['ids'] = _connection['data']['activeTab']['available']['selectedIds'];
 
 		$.ajax({
 			url: _connection.apis.connectUpdate,
@@ -272,7 +248,6 @@ tools['connection'] = new function() {
 		})
 		.done(function(response) {
 			response = $.parseJSON(response);
-			console.log('response', response);
 
 			if (response.success == '1') {
 				_connection.moveTableRows({
@@ -295,7 +270,6 @@ tools['connection'] = new function() {
 		if (!params) return false;
 		if (!params['ids'] || params['ids'].length == 0) return false;
 
-		console.log('REMOVE STUDENT');
 		$.ajax({
 			url: _connection.apis.connectUpdate,
 			type: "POST",
@@ -303,7 +277,6 @@ tools['connection'] = new function() {
 		})
 		.done(function(response) {
 			response = $.parseJSON(response);
-			console.log('response', response);
 			
 			if (response.success == '1') {
 				_connection.moveTableRows({
@@ -335,11 +308,11 @@ tools['connection'] = new function() {
 		$.each(fromRows, function(x, row) {
 			var rowIndex = row._DT_RowIndex,
 				rowData = from['table'].fnGetData(rowIndex),
-				tableId = rowData[0];
+				tableId = app.global.removeHTML(rowData[0]);
 	
 			if ($.inArray(tableId, row_ids) >= 0) {
 				// Clear selected id
-				tools['table'].toggleSelectedIds({
+				app['table'].toggleSelectedIds({
 					storage: from['selectedIds'],
 					ids: [tableId],
 					action: 'remove'
@@ -369,10 +342,11 @@ tools['connection'] = new function() {
 		rowEl.addClass('ui-selected');
 		var wrapper = $('<div class="edit-form"></div>');
 		$.each(cols, function(x, col) {
-			var dbId = col.title,
+			var value = app.global.removeHTML(rowData[x]),
+				dbId = col.title,
 				inputGroup = $('<div class="input-group ' + dbId + '"></div>'),
 				inputGroupAddon = $('<span class="input-group-addon">' + dbId + '</span>'),
-				inputGroupField = $('<input type="text" data-col="' + dbId + '" class="valueEl form-control" value="' + rowData[x] + '">');
+				inputGroupField = $('<input type="text" data-col="' + dbId + '" class="valueEl form-control" value="' + value + '">');
 
 			inputGroup
 				.append(inputGroupAddon)
@@ -382,46 +356,32 @@ tools['connection'] = new function() {
 		});
 
 		// Show dialog
-		wrapper.dialog({
-			modal: true,
-			width: 500,
-			title: 'Edit User',
-			show: {
-				effect: "size",
-				duration: 250
+		app.global.dialogConfirm({
+			msg: wrapper,
+			width: 600,
+			yesBtn: 'Save',
+			noBtn: 'Cancel',
+			cancelCallback: function() {
+				rowEl.removeClass('ui-selected');
 			},
-			close: function() {
-				wrapper.dialog('destroy');
-				setTimeout(function() {
-					rowEl.removeClass('ui-selected');
-				}, 500);
-			},
-			buttons: {
-				Cancel: function() {
-					wrapper.dialog('close');
-				},
-				Save: function() {
-					var valueEls = wrapper.find('.valueEl'),
-						data = {};
+			saveCallback: function() {
+				var valueEls = wrapper.find('.valueEl'),
+					data = {};
 
-					// Scrape ui for data
-					$.each(valueEls, function(x, valueEl) {
-						var col = $(valueEl).data('col'),
-							val = $(valueEl).val();
-						data[col] = val;
-					});
+				// Scrape ui for data
+				$.each(valueEls, function(x, valueEl) {
+					var col = $(valueEl).data('col'),
+						val = $(valueEl).val();
+					data[col] = val;
+				});
 
-					// Save data
-					_connection.editRowSave({
-						data: data,
-						row: rowEl,
-						table: table,
-						cb: function() {
-							wrapper.dialog('close');
-						}
-					})
-				}
-			}
+				// Save data
+				_connection.editRowSave({
+					data: data,
+					row: rowEl,
+					table: table
+				})
+			}	
 		});
 	}
 	
@@ -440,18 +400,17 @@ tools['connection'] = new function() {
 		})
 		.done(function(response) {
 			response = $.parseJSON(response);
-			console.log('response', response);
 
 			// Create array
 			var ary = [];
-			$.each(response, function(k,v) {
+			$.each(user, function(k,v) {
 				ary.push(v);
 			});
 
 			// Update table
 			table.fnUpdate(ary, row);
 			if (cb) cb();
-			row.effect('pulsate', {}, 500);
+			app.global.animate(row, 'flash');
 		});
 	}
 	
@@ -476,10 +435,9 @@ tools['connection'] = new function() {
 		})
 		.done(function(response) {
 			response = $.parseJSON(response);
-			console.log('response', response);
 		
 			if (response.status) {
-				rowEl.effect('pulsate', {}, 500, function() {
+				app.global.animate(rowEl, 'flash', null, function() {
 					table.fnDeleteRow(rowEl);
 				});
 			}
