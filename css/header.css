@@ -1,0 +1,177 @@
+@media(min-width: 800px) {
+	#header-fields {
+		min-height: 60px;
+	}
+	
+	header .back-btn-wrapper {
+		font-size: 32px;
+		padding: 5px 10px 0 10px;
+		opacity: .5;
+	}
+
+	header .back-btn-wrapper:hover {
+		opacity: 1;
+	}
+	
+	.header__logo-icon:after {
+		content: " coach tracker";
+		font-size: 40px;
+		line-height: 40px;
+		vertical-align: top;
+		font-weight: 300;
+	}
+	header .search-wrapper {
+		top: 55px;
+	}
+	header .search-wrapper .input-group .input-group-addon {
+		width: 65px;
+	}
+}
+@media(max-width: 800px) {
+	#header-fields {
+		min-height: 60px;
+	}
+	
+	header .back-btn-wrapper {
+		font-size: 32px;
+		padding: 5px 10px 0 10px;
+	}
+	
+	.header__logo-icon:after {
+		content: " CT";
+		font-size: 40px;
+		line-height: 40px;
+		vertical-align: top;
+		font-weight: 300;
+	}
+	header .search-wrapper {
+		top: 55px;
+	}
+	header .search-wrapper .input-group .input-group-addon {
+		width: 55px;
+		line-height: 1;
+	}
+}
+
+header {
+	position: fixed; 
+	top: 0px;
+	padding: 0px;
+	z-index: 99;
+	width: 100%;
+	color: #ffffff;
+	fill: #ffffff;
+	background: #4285f4;
+	transition: top 0.2s ease-in-out;
+}
+
+.header__back-icon {
+	position: relative;
+	margin: 0 10px 0 0;
+}
+.header__logo-icon svg {
+	height: 40px;
+}
+.header__user {
+	display: block;
+	margin: 5px 0 0 0;
+}
+.header__user svg {
+	height: 25px;
+}
+.header__help {
+	display: block;
+	margin: 5px 0 0 0;
+}
+.header__help svg {
+	height: 25px;
+}
+
+header.shadow {
+	box-shadow: 0 0 4px rgba(0,0,0,.14), 0 4px 8px rgba(0,0,0,.28);
+}
+
+header.nav-up {
+	top: -60px;
+	box-shadow: none;
+}
+
+header .logo-wrapper {
+	margin: 5px 0;
+	padding: 0 0 0 10px;
+}
+
+
+
+
+body.offline header {
+	background: #f04124;
+}
+
+header #header-offline-alert {
+	display: none;
+	position: absolute;
+	width: 100%;
+	text-align: center;
+	opacity: .5;
+}
+
+body.offline header #header-offline-alert {
+	display: block;
+}
+
+header #header-fields {
+	xmax-width: 960px;
+	position: relative; 
+	margin: 0 auto;
+}
+
+
+header .userField {
+	text-align: center;
+	float: right;
+	xmargin: 0px 10px 0px 0px;
+	min-width: 80px;
+	overflow: hidden;
+	height: 60px;
+  background: #43ac6a;
+  box-shadow: 0px -3px 10px rgba(34,25,25,.5);
+}
+
+header .search-wrapper {
+	width: 100%;
+	padding: 0px;
+	margin: 5px 0 0 0;
+	position: absolute;
+}
+header .search-wrapper .input-group {
+	width: 100%;
+}
+
+header .help-wrapper {
+	padding: 0 10px;
+	margin: 0px 10px 0 0;
+	text-align: center;
+}
+header .help-wrapper > * {
+	opacity: .6;
+}
+header .help-wrapper:hover > * {
+	opacity: 1.0;
+	cursor: pointer;
+}
+
+.header__sign-up-btn {
+	float: right;
+	background: #43ac6a;
+	font-size: 20px;
+	box-shadow: 0px -3px 10px rgba(34,25,25,.5);
+	height: 60px;
+	width: 100px;
+	text-align: center;
+	line-height: 60px;
+}
+
+.header__sign-up-btn:hover {
+	cursor: pointer;
+}

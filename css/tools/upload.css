@@ -1,0 +1,49 @@
+/*
+ * Upload / Download
+ */
+body.upload #uploadWrapper {
+	float: right;
+	width: 500px;
+	font-size: 15px;
+}
+
+body.upload #uploadWrapper button.btn svg {
+	fill: #777;
+}
+
+#content #uploadWrapper.input-group {
+	margin: 0px;
+}
+
+body.upload #file_upload_form,
+body.upload #database_insert_form {
+	margin: 0px;
+}
+
+body.upload #loading-message {
+	text-align: center; 
+	height: 50px; 
+	line-height:4em
+}
+
+#file_import {
+	border-radius: 10px;
+	position: fixed;
+	width: 125px;
+	bottom: 25px;
+	left: 25px;
+}
+
+/* Data Tables */
+body .dataTables_filter {
+	padding: 5px 10px;
+	clear: both;
+}
+body .dataTables_filter input {
+	padding: 2px 10px;
+	margin: 0px 10px;
+}
+body .dataTables_filter .select-toggle:hover {
+	color: blue;
+	cursor: pointer;
+}

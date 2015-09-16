@@ -1,0 +1,13 @@
+/*#content {
+	margin: 80px auto;
+	width: 100%;
+	max-width: 100%;
+}*/
+
+.field_wrapper {
+	background: white;
+	border: 1px solid #ccc;
+	border-radius: 10px;
+	padding: 5px; 
+	margin: 10px;
+}
