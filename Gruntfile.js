@@ -154,63 +154,9 @@ module.exports = function(grunt) {
 			}
 		},
 		watch: {
-			files: ['css/*', 'js/*'],
-			tasks: ['concat', 'cssmin', 'uglify']
+			files: ['css/**/*.css', 'js/**/*.js'],
+			tasks: ['concat', 'cssmin']
 		},
-		// ftpPut: {
-		// 	        options: {
-		// 	            host: 'ftp.coachtracker.org',
-		// 	            user: 'ct',
-		// 	            pass: 'TowrXSn+]t.~'
-		// 	        },
-		// 	        upload: {
-		// 	            files: {
-		// 	                'public_html': 'test/*'
-		// 	            }
-		// 	        }
-		// 	    }
-		// 'ftp-deploy': {
-		// 	build: {
-		// 		auth: {
-		// 			host: '23.229.247.201',
-		// 			authKey: 'stage',
-		// 			authPath: '.ftpconfig'
-		// 		},
-		// 		src: './test/',
-		// 		dest: 'stage/js/test',
-		// 		forceVerbose: true,
-		// 		exclusions: [
-		// 			'/app', 
-		// 			'/data',
-		// 			'/min',
-		// 			'/node_modules',
-		// 			'.ftpconfig',
-		// 			'.ftpquota',
-		// 			'.htaccess',
-		// 			'.*'
-		// 		]
-		// 	}
-		// }
-		ftp_push: {
-		    your_target: {
-		      options: {
-		        authKey: "stage",
-		        host: "ftp.coachtracker.org",
-		        dest: ".",
-		        port: 21,
-				debug: false
-		      },
-		      files: [
-		        {
-		          expand: true,
-		          cwd: '.',
-		          src: [
-		            "file.txt"
-		          ]
-		        }
-		      ]
-		    }
-		  }
     });
 
 	grunt.loadNpmTasks('grunt-contrib-concat');
@@ -218,18 +164,14 @@ module.exports = function(grunt) {
 	grunt.loadNpmTasks('grunt-contrib-watch');
 	grunt.loadNpmTasks('grunt-contrib-cssmin');
 	
-	// grunt.registerTask('default', [ 
-	// 	'concat:css_critical',
-	// 	'cssmin:css_critical', 
-	// 	'concat:css',
-	// 	'cssmin:css',
-	// 	'concat:js_mobile', 
-	// 	'uglify:js_mobile',
-	// 	'concat:js_desktop', 
-	// 	'uglify:js_desktop',
-	// ]);
-	grunt.loadNpmTasks('grunt-ftp-push');
-	grunt.loadNpmTasks('grunt-ftp');
-	//grunt.registerTask('default', ['ftpPut']);
-	grunt.loadNpmTasks('grunt-ftp-deploy');
+	grunt.registerTask('default', [ 
+		'concat:css_critical',
+		'cssmin:css_critical', 
+		'concat:css',
+		'cssmin:css',
+		'concat:js_mobile', 
+		//'uglify:js_mobile',
+		'concat:js_desktop', 
+		//'uglify:js_desktop',
+	]);
 };

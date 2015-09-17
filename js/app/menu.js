@@ -106,7 +106,7 @@ app['menu'] = new function() {
 		_menu.getEls();
 		_menu.setupHeader();
 		_menu.addButtons();
-		if (!app.config.isMobile) _menu.addAdminButtons();
+		if (1 || !app.config.isMobile) _menu.addAdminButtons();
 	}
 	
 	this.getEls = function() {

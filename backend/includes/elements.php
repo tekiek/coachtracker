@@ -47,7 +47,7 @@
 	
 	function load_js() {
 		global $version;
-		$js = file_root() . (isMobile() ? "js/min/mobile.js" : "js/min/desktop.js");
+		$js = file_root() . (0 && isMobile() ? "js/min/mobile.js" : "js/min/desktop.js");
 
 		echo '
 			<script>

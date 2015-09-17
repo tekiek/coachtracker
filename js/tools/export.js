@@ -128,7 +128,7 @@ app['dataExport'] = new function() {
 				'columns'		: response.cols,
 				'colLabels'		: response.colLabels,
 				'prependTo'		: tableWrapperEl,
-				'export'		: true,
+				'export'		: false,//true,
 				'exportBtns'	: exportBtns,
 				'paging'		: false,
 				'dataObj'		: _dataExport.data,
