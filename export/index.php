@@ -4,6 +4,7 @@
 	<head>
 		<?php head_includes(); ?>
 		<?php load_basket_js(); ?>
+		<?php mobile_css(); ?>
 	</head>
 
 	<body data-firstScreen="dataExport" class="export">

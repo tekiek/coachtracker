@@ -14,6 +14,8 @@ if ($params['email'] && $params['password']) {
 		// Get user info
 		$user = TableRow($table, $user_creds);
 		
+		//if ($user['enabled'] == 0) return false;
+		
 		// Save user to session data
 		userLoggedIn($user);
 

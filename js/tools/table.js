@@ -55,7 +55,7 @@ app['table'] = new function() {
 		wrapper.append(table);
 
 		table.dataTable({
-			'scrollY': '400px',
+			//'scrollY': '400px',
 			//bAutoWidth: false,
 			"order"				: params['sort'] ? params['sort'] : [],
 			'data'				: data,

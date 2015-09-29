@@ -4,41 +4,41 @@ module.exports = function(grunt) {
 		concat: {
 			css_critical: {
 				src: [
-					"css/bootstrap/bootstrap-critical.css",
-					"css/default.css",
-					"css/header.css",
-					"css/tools/tools.css",
-					"css/app/app.css",
-					"css/app/site_info.css",
-					"css/app/acls.css",
-					"css/app/login.css",
-					"css/app/studentEdit.css",
+					"css/critical/bootstrap-critical.css",
+					"css/critical/default.css",
+					"css/critical/header.css",
+					"css/critical/tools.css",
+					"css/critical/app.css",
+					"css/critical/site_info.css",
+					"css/critical/acls.css",
+					"css/critical/login.css",
+					"css/critical/studentEdit.css",
 				],
 				dest: 'css/min/critical.css'
 			},
 			css: {
 				src: [
-					"css/bootstrap/bootstrap-lazy.css",
-					"css/spinner.css",
+					"css/app/bootstrap-lazy.css",
+					"css/app/spinner.css",
 					"css/app/menu.css",
-					"css/animate.css",
-					"css/jquery.ui.css",
-					"css/datepicker.css",
+					"css/app/animate.css",
+					"css/app/jquery.ui.css",
+					"css/app/datepicker.css",
 					"css/app/signature.css",
 					"css/app/studentList.css",
 					"css/app/eventAdd.css",
 					"css/app/emailBlast.css",
-					"css/addtohomescreen.css",
-					"css/jquery.tabletools.css",
-					"css/tools/table.css",
-					"css/tools/connection.css",
-					"css/tools/export.css",
-					"css/tools/upload.css",
-					"css/tools/reports.css",
+					"css/app/addtohomescreen.css",
+					"css/app/jquery.tabletools.css",
+					"css/app/table.css",
+					"css/app/connection.css",
+					"css/app/export.css",
+					"css/app/upload.css",
+					"css/app/reports.css",
 				],
 				dest: 'css/min/app.css'
 			},
-			js_mobile : {
+			js: {
 				src : [
 					"js/libs/a/jquery.js",
 					"js/libs/a/jquery.addons.js",
@@ -46,6 +46,8 @@ module.exports = function(grunt) {
 					"js/libs/a/jquery.blockui.js",
 					"js/libs/a/jquery.template.js",
 					"js/libs/a/event.manager.js",
+					
+					
 					'js/app/app.js',
 					"js/app/timer.js",
 					"js/app/global.js",
@@ -68,68 +70,30 @@ module.exports = function(grunt) {
 					"js/app/fieldsStudent.js",
 					"js/app/fieldsEmailBlast.js",
 					"js/app/email.js",
-
-					"js/libs/b/jquery.datepicker.js",
+					
 					"js/libs/a/jquery.ui.js",
+					
+					"js/libs/b/jquery.datepicker.js",
 					"js/libs/b/jquery.form.js",
 					"js/libs/b/jquery.upload.js",
 					"js/libs/b/jquery.inputmask.js",      
 					"js/libs/b/jquery.touch.js",
 					"js/libs/b/jquery.signature.js",
 					"js/libs/b/jquery.scrollintoview.js",
-				],
-				dest : 'js/min/mobile.js'
-			},
-			js_desktop : {
-				src : [
-					"js/libs/a/jquery.js",
-					"js/libs/a/jquery.addons.js",
-					"js/libs/a/jquery.storage.js",
-					"js/libs/a/jquery.blockui.js",
-					"js/libs/a/jquery.template.js",
-					"js/libs/a/event.manager.js",
-					'js/app/app.js',
-					"js/app/timer.js",
-					"js/app/global.js",
-					"js/app/ajax.js",
-					"js/app/header.js",
-					"js/app/gtrack.js",
-					"js/app/controller.js",
-					"js/app/waitForLib.js",
-					"js/app/templates.js",
-					"js/app/acl.js",
-					"js/app/login.js",
-					"js/app/menu.js",
-					"js/app/signature.js",
-					"js/app/studentSearch.js",
-					"js/app/studentEdit.js",
-					"js/app/eventAdd.js",
-					"js/app/emailBlast.js",
-					"js/app/fieldController.js",
-					"js/app/fieldsEvent.js",
-					"js/app/fieldsStudent.js",
-					"js/app/fieldsEmailBlast.js",
-					"js/app/email.js",
+					
 					'js/tools/table.js',
 					'js/tools/charts.js',
 					'js/tools/upload.js',
 					'js/tools/export.js',
 					'js/tools/connection.js',
 					'js/tools/reports.js',
-					"js/libs/b/jquery.datepicker.js",
-					"js/libs/a/jquery.ui.js",
-					"js/libs/b/jquery.form.js",
-					"js/libs/b/jquery.upload.js",
-					"js/libs/b/jquery.inputmask.js",      
-					"js/libs/b/jquery.touch.js",
-					"js/libs/b/jquery.signature.js",
-					"js/libs/b/jquery.scrollintoview.js",
+					
 					"js/libs/table/data.tables.js",
 					"js/libs/table/table.tools.js",
 					"js/libs/table/charts.js",
 				],
-				dest : 'js/min/desktop.js'
-			}
+				dest : 'js/min/app.js'
+			},	
 		},
 		cssmin: {
 			css_critical:{
@@ -142,20 +106,101 @@ module.exports = function(grunt) {
 			}
 		},
 		uglify : {
-			js_mobile: {
+			js: {
 				files: {
-					'js/min/mobile.js' : [ 'js/min/mobile.js' ]
-				}
-			},
-			js_desktop: {
-				files: {
-					'js/min/desktop.js' : [ 'js/min/desktop.js' ]
+					'js/min/app.js' : [ 'js/min/app.js' ]
 				}
 			}
 		},
 		watch: {
-			files: ['css/**/*.css', 'js/**/*.js'],
+			files: [
+				'css/critical/*.css',
+				'css/app/*.css', 
+				'js/libs/a/*.js',
+				'js/app/*.js',
+				'js/libs/b/*.js',
+				'js/tools/*.js',
+				'js/libs/table/*.js',
+			],
 			tasks: ['concat', 'cssmin']
+		},
+		'string-replace': {
+			dist: {
+				files: {
+					'backend/common.php': 'backend/common.php',
+				},
+				options: {
+					replacements: [{
+						pattern: /version = '([a-z0-9]+).([a-z0-9]+).([a-z0-9]+)'/g,
+						replacement: "version = '<%= pkg.version %>'"
+					}]
+				}
+			}
+		},
+		bumpup: {
+			file: 'package.json'
+		},
+		ftpscript: {
+			stage: {
+				options: {
+					host: 'ftp.coachtracker.org',
+					passive: 'on',
+					port: 21,
+					type: 0,
+				},
+				files: [{
+					expand: true,
+					src: [
+						'backend/*',
+						'backend/db/*',
+						'backend/forms/*',
+						'backend/includes/*',
+						'backend/scripts/*',
+						'backend/tools/*',
+						'connect/*',
+						'css/min/*',
+						'export/*',
+						'images/**',
+						'js/min/*',
+						'reports/*',
+						'upload/*',
+						'index.php',
+						'Gruntfile.js',
+						'.htaccess',
+					],
+					dest: '/stage' 
+				}]
+			},
+			prod: {
+				options: {
+					host: 'ftp.coachtracker.org',
+					passive: 'on',
+					port: 21,
+					type: 0,
+				},
+				files: [{
+					expand: true,
+					src: [
+						'backend/*',
+						'backend/db/*',
+						'backend/forms/*',
+						'backend/includes/*',
+						'backend/scripts/*',
+						'backend/tools/*',
+						'connect/*',
+						'css/min/*',
+						'export/*',
+						'images/**',
+						'js/min/*',
+						'reports/*',
+						'upload/*',
+						'index.php',
+						'Gruntfile.js',
+						'.htaccess',
+					],
+					dest: '/' 
+				}]
+			}
 		},
     });
 
@@ -163,15 +208,40 @@ module.exports = function(grunt) {
 	grunt.loadNpmTasks('grunt-contrib-uglify');
 	grunt.loadNpmTasks('grunt-contrib-watch');
 	grunt.loadNpmTasks('grunt-contrib-cssmin');
+	grunt.loadNpmTasks('grunt-bumpup');
+	grunt.loadNpmTasks('grunt-string-replace');
+	grunt.loadNpmTasks('grunt-ftpscript');
 	
 	grunt.registerTask('default', [ 
 		'concat:css_critical',
 		'cssmin:css_critical', 
 		'concat:css',
 		'cssmin:css',
-		'concat:js_mobile', 
-		//'uglify:js_mobile',
-		'concat:js_desktop', 
-		//'uglify:js_desktop',
+		'concat:js',
+		//'uglify:js',
+	]);
+	
+	grunt.registerTask('deploy:stage', [
+		'bumpup:patch',
+		'concat:css_critical',
+		'cssmin:css_critical', 
+		'concat:css',
+		'cssmin:css',
+		'concat:js', 
+		'uglify:js',
+		'string-replace',
+		'ftpscript:stage'
+	]);
+	
+	grunt.registerTask('deploy:prod', [
+		'bumpup:minor',
+		'concat:css_critical',
+		'cssmin:css_critical', 
+		'concat:css',
+		'cssmin:css',
+		'concat:js', 
+		'uglify:js',
+		'string-replace',
+		'ftpscript:stage'
 	]);
 };

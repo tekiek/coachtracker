@@ -207,10 +207,22 @@ app['login'] = new function() {
 		.done(function(r) {
 			var response =  $.parseJSON(r);
 			if (response.students) {
-				app.data.user['students'] = response.students;
+				app.data.user['students'] = _login.sortStudents(response.students);
 				_login.saveUserData();
 			}
 		});
+	}
+	
+	/*
+	 * Sort students list in Alpha order
+	 */
+	this.sortStudents = function(students) {
+		students.sort(function(a, b) {
+			var aName = a.fname.toLowerCase(),
+				bName = b.fname.toLowerCase();
+			return ((aName < bName) ? -1 : ((aName > bName) ? 1 : 0));
+		});
+		return students;
 	}
 	
 	/*

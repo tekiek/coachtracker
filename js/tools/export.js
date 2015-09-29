@@ -22,10 +22,10 @@ app['dataExport'] = new function() {
 		_dataExport.getEls();
 		
 		// Listen for row selection in Delete Mode
-		EventManager.observe('RowSelect:delete', _dataExport.rowDelete);
+		//EventManager.observe('RowSelect:delete', _dataExport.rowDelete);
 		
 		// Listen for row selection in Edit Mode
-		EventManager.observe('RowSelect:edit', _dataExport.rowEdit);
+		//EventManager.observe('RowSelect:edit', _dataExport.rowEdit);
 		
 		// Setup
 		app.libs.waitForLib({
@@ -119,7 +119,8 @@ app['dataExport'] = new function() {
 		})
 		.done(function(response) {
 			response = $.parseJSON(response);
-			var exportBtns = _dataExport.getExportButtons();
+			var exportBtns = _dataExport.getExportButtons(),
+				exportOption = (app.config.isMobile ? false : true);
 
 			tableWrapperEl.empty();
 			app.table.createTable({
@@ -128,12 +129,12 @@ app['dataExport'] = new function() {
 				'columns'		: response.cols,
 				'colLabels'		: response.colLabels,
 				'prependTo'		: tableWrapperEl,
-				'export'		: false,//true,
+				'export'		: exportOption,
 				'exportBtns'	: exportBtns,
 				'paging'		: false,
 				'dataObj'		: _dataExport.data,
 				'editModeToggle': _dataExport.data.editModeToggle,
-				'expandRows'	: true
+				'expandRows'	: false
 			});
 		});
 	}

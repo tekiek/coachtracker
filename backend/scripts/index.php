@@ -11,19 +11,22 @@ $files_clean = array_diff($files_all, $files_remove);
 $file_times = array();
 foreach($files_clean as $file) {
 	array_push($file_times, filemtime($file));
-	// echo date ("F d Y", filemtime($file)) . ": ";
+	//echo date ("F d Y", filemtime($file)) . ": ";
+	echo $file;
+	echo "<br>";
 
 }
 
-sort($file_times);
-echo "<br><br>";
-foreach($file_times as $time) {
-//	foreach($files_clean as $file) {
-		if (filemtime($file) == $time) {
-			echo date ("m-d-Y", $time) . " : ";
-			echo "<a href='" . $file . "'>" . $file . "</a>";
-			echo "<br>";
-		}
-//	}
-}
+
+// sort($file_times);
+// echo "<br><br>";
+// foreach($file_times as $time) {
+// //	foreach($files_clean as $file) {
+// 		if (filemtime($file) == $time) {
+// 			echo date ("m-d-Y", $time) . " : ";
+// 			echo "<a href='" . $file . "'>" . $file . "</a>";
+// 			echo "<br>";
+// 		}
+// //	}
+// }
 ?>

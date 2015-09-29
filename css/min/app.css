@@ -3667,6 +3667,18 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 	height: auto !important;
 	margin: 0 auto;
 }
+
+.ui-dialog.signatureDialog .ui-dialog-content {
+	margin: 0px;
+	padding: 0px;
+}
+
+/* Styles for signature plugin v1.1.0. */
+.kbw-signature {
+	display: inline-block;
+	border: 0px;
+}
+
 /*
  * STUDENT LIST 
  */
@@ -4252,6 +4264,73 @@ table[data-mode="delete"] tr:hover:not(.ui-selected) td {
 table[data-mode="delete"] tr.ui-selected td {
 	background: rgba(255,0,0,0.4) !important;
 }
+
+/*
+ * Mobile 
+ */
+@media(max-width: 800px) {
+	
+	/* Force table to not be like tables anymore */
+	table, 
+	thead, 
+	tbody, 
+	th, 
+	td, 
+	tr { 
+		display: block; 
+	}
+	
+	.field_wrapper {
+		margin: 5px 0px;
+		padding: 5px 0px;
+		background-color: transparent;
+		border: 0px !important;
+	}
+	
+	/* Hide table headers (but not display: none;, for accessibility) */
+	table thead tr { 
+		position: absolute;
+		top: -9999px;
+		left: -9999px;
+	}
+	
+	/* Behave  like a "row" */
+	table.table > tbody > tr > td {
+		border: none;
+		border-bottom: 1px solid #ddd;
+		position: relative;
+		padding-left: 50%;
+	}
+	
+	/* Now like a table header */
+	table.table > tbody > tr > td:before { 
+		position: absolute;
+		top: 8px;
+		left: 8px;
+		width: 45%;
+		padding-right: 10px;
+		white-space: nowrap;
+		text-transform: capitalize;
+		font-weight: bold;
+		border-right: 1px solid #ddd;
+	}
+	
+	/* Row colors */
+	.table-striped > tbody > tr:nth-of-type(odd) {
+		background-color: white !important;
+	}
+	
+	.table-striped > tbody > tr:nth-of-type(even) {
+		background: rgba(223,240,216,0.4) !important;
+	}
+	
+	/* Row height */
+	table.table > tbody > tr > td > .cell-wrapper {
+		height: auto;
+		min-height: 15px;
+		overflow: hidden;
+	}
+}
 body.connection .btn-selected-action {
 	width: 150px;
 }
@@ -4371,116 +4450,6 @@ body.connection .ui-selected td {
 /* 
  * Export 
  */
-body.export .field_wrapper {
-	margin: 5px 0px !important;
-	padding: 5px 0px !important;
-}
-
-body.export th {
-	margin: 0px;
-	padding: 5px 0;
-}
-
-body.export .ui-tabs .ui-tabs-nav li {
-	width: 100%;
-	border-radius: 0px;
-}
-
-body.export .ui-tabs .ui-tabs-nav li a {
-	width: 100%;
-	text-align: center;
-}
-
-/*.interviewer,
-.entered,
-.duration,
-.coach,
-.dbId,
-.DOB,
-.CBO,
-.college,
-.notes,*/
-
-
-
-@media(max-width: 800px) {
-	
-	.field_wrapper {
-		background-color: transparent !important;
-		border: 0px !important;
-	}
-	
-	.table-striped>tbody>tr:nth-of-type(odd) {
-		background-color: #eee !important;
-	}
-	
-	.DTTT_container,
-	.table-mode-toggle,
-	.dataTables_filter,
-	.ui-tabs-nav {
-		display: none; 
-	}
-	
-	table tr td .cell-wrapper {
-		height: 20px;
-		overflow: hidden;
-	}
-
-	/* Force table to not be like tables anymore */
-	table, thead, tbody, th, td, tr { 
-		display: block !important; 
-	}
-	
-	/* Hide table headers (but not display: none;, for accessibility) */
-	thead tr { 
-		position: absolute;
-		top: -9999px !important;
-		left: -9999px !important;
-	}
-	
-	tr { 
-		border: 0px solid #ccc !important;
-		
-	}
-	
-	td { 
-		/* Behave  like a "row" */
-		border: none !important;
-		border-bottom: 1px solid #ddd !important;
-		position: relative !important;
-		padding-left: 50% !important;
-	}
-	
-	td:before { 
-		/* Now like a table header */
-		position: absolute !important;
-		/* Top/left values mimic padding */
-		top: 6px !important;
-		left: 6px !important;
-		width: 45% !important;
-		padding-right: 10px !important;
-		white-space: nowrap !important;
-	}
-	
-	/*
-	Label the data
-	*/
-	td:nth-of-type(1):before { content: "entered"; }
-	td:nth-of-type(2):before { content: "id"; }
-	td:nth-of-type(3):before { content: "interviewer"; }
-	td:nth-of-type(4):before { content: "coach"; }
-	td:nth-of-type(5):before { content: "dbId"; }
-	td:nth-of-type(6):before { content: "first"; }
-	td:nth-of-type(7):before { content: "last"; }
-	td:nth-of-type(8):before { content: "DOB"; }
-	td:nth-of-type(9):before { content: "CBO"; }
-	td:nth-of-type(10):before { content: "college"; }
-	td:nth-of-type(11):before { content: "date"; }
-	td:nth-of-type(12):before { content: "location"; }
-	td:nth-of-type(13):before { content: "reason"; }
-	td:nth-of-type(14):before { content: "duration"; }
-	td:nth-of-type(15):before { content: "notes"; }
-}
 
 body.export .DTTT_container {
 	position: absolute;
@@ -4555,6 +4524,34 @@ body.export #table-wrapper {
 body.export table td.signature img {
 	width: 100%;
 	max-width: 300px;
+}
+
+/*
+ * Mobile 
+ */
+@media(max-width: 800px) {
+	body.export .DTTT_container,
+	body.export .table-mode-toggle,
+	body.export .dataTables_filter,
+	body.export .table-mode-toggle,
+	body.export .ui-tabs-nav {
+		display: none; 
+	}
+	
+	body.export #data-picker-wrapper .input-group:nth-child(1) .input-group-addon {
+		border-radius: 0px;
+	}
+
+	body.export #data-picker-wrapper .input-group:nth-child(2) .form-control {
+		border-radius: 0px;
+	}
+	
+	body.export #data-picker-wrapper,
+	body.export #tableTabs,
+	body.export #tab-events {
+		padding: 0px !important;
+		margin: 0px !important;
+	}
 }
 /*
  * Upload / Download

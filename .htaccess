@@ -1,4 +1,4 @@
-#release 2.00.01
+#release 2.00.02
 <IfModule mod_deflate.c>
 AddOutputFilterByType DEFLATE text/html
 AddOutputFilterByType DEFLATE text/css

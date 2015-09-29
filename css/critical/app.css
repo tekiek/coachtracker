@@ -1,0 +1,215 @@
+.ui-dialog .ui-dialog-titlebar-close {
+	background: transparent !important;
+	border: 0px !important;
+}
+
+button:focus,
+textarea:focus,
+input:focus {
+	outline-color: transparent !important;
+	outline: none !important;
+	box-shadow: none !important;
+	border-color: #ccc !important;
+}
+
+/* 
+ * Fix for android 
+ */
+.input-group .input-group-addon {
+	height: 100% !important;
+	border-radius: 0px;
+}
+.input-group input,
+.input-group .form-control  {
+	width: 100% !important;
+	border-radius: 0px;
+}
+.input-group select {
+	width: 100% !important;
+	height: 100% !important;
+	-webkit-appearance: listbox;
+}
+
+/**************** ????? ****************/
+.input-group .form-control.expand {
+	height: auto;
+	min-height: 55px;
+}
+
+.login_dialog span.details {
+	color: #333;
+	font-size: 12px;
+}
+
+
+/**************** JQUERY UI ****************/
+.ui-dialog {
+	max-width: 95% !important;
+	padding: 0px;
+}
+.ui-dialog .ui-dialog-content {
+	text-align: center;
+	color: #777;
+}
+.ui-dialog-buttonpane {
+	background: #f7f7f7;
+	border: 0px;
+	border-top: 1px solid #ddd;
+	padding: 10px !important;
+}
+.ui-dialog-buttonpane button {
+	background: white !important;
+	border: 0px !important;
+	color: #337ab7 !important;
+}
+.ui-dialog-buttonpane button.width_50.right {
+	border-left: 1px solid #ccc !important;
+}
+.ui-button-text {
+	overflow: hidden !important;
+}
+.noTitleStuff .ui-dialog-titlebar {
+	display: none
+}
+.yesTitleStuff .ui-dialog-titlebar {
+	display: block
+}
+.ui-dialog-buttonset { 
+	float: none; 
+	width: 100%; 
+}
+.ui-dialog-titlebar {
+	background: transparent !important;
+	border: 0px !important;
+	xborder-bottom: 1px solid #ddd !important;
+	margin: 5px 5px 0 0;
+}
+.ui-autocomplete { 
+	z-index: 9999 !important; 
+	max-height: 200px;
+	overflow-y: auto;
+	overflow-x: hidden;
+	border: 1px solid #222;
+	position: absolute;
+	white-space: nowrap;
+}
+.ui-autocomplete li.ui-menu-item {
+	border-bottom: 1px solid #aaa;
+	padding: 5px 0;
+}
+.ui-autocomplete li.ui-menu-item:nth-child(odd) {
+	background: #FAFAFA;
+	box-shadow: 0 1px 0px rgba(34,25,25,0.1);
+	-moz-box-shadow: 0 1px 0px rgba(34,25,25,0.1);
+	-webkit-box-shadow: 0 1px 0px rgba(34,25,25,0.1);
+}
+.ui-autocomplete li.ui-menu-item:last-child {
+	border-bottom: 0px transparent;
+}
+.ui-autocomplete .media {
+	border: 0px;
+	margin: 0px;
+	border-top: 1px solid #ccccccc;
+} 
+.ui-helper-hidden-accessible { 
+	display: none !important; 
+}
+
+
+
+/**************** ALERT & SPINNER ****************/
+#spinner,
+#alert {
+	background: black;
+	color: #eee;
+	padding: 10px;
+	opacity: .8;
+	border-radius: 10px;
+	display: none;
+	z-index: 9999;
+}
+
+#spinner span,
+#alert span {
+	margin: 0 5px;
+	font-size: 24px;
+}
+
+#spinner i,
+#alert i {
+	margin: 0 5px;
+}
+
+/**************** CONTENT ****************/
+@media(min-width: 800px) {
+	#content {
+		margin: 80px auto 120px auto;
+	}
+	
+	body.hasSearchField #content {
+		margin: 120px 0 160px 0 !important;
+	}
+}
+
+@media(max-width: 800px) {
+	#content {
+		margin: 60px auto 100px auto;
+	}
+	
+	body.hasSearchField #content {
+		margin: 120px 0 150px 0 !important;
+	}
+}
+
+#content {
+	left: 0px; 
+	width: 100%;
+	xmax-width: 960px;
+}
+
+body.noHeader #content {
+	margin-top: 0px !important;
+}
+#content .input-group {
+	margin: 10px 0;
+}
+#content .user-image {
+	display: block;
+	min-height: 180px;
+	max-height: 180px;
+	max-width: 300px;
+	margin: 10px auto;
+	border-radius: 10px;
+	border: 2px solid #eee;
+	box-shadow: 0 0 4px rgba(0,0,0,.14), 0 4px 8px rgba(0,0,0,.28);
+	-moz-box-shadow: 0 0 4px rgba(0,0,0,.14), 0 4px 8px rgba(0,0,0,.28);
+	-webkit-box-shadow: 0 0 4px rgba(0,0,0,.14), 0 4px 8px rgba(0,0,0,.28);
+	background: #c3cadc;
+	text-align: center;
+	margin: 15px auto;
+}
+
+#content .user-image svg {
+	width: 80px;
+	fill: white;
+	opacity: .5;
+	bottom: -45px;
+	position: relative;
+}
+
+
+/**************** User Edit ****************/
+#user-edit .btn-success {
+	margin: 0 0 20px 0;
+}
+
+/**************** Student Edit ****************/
+body.acl-can-coach #user-screen .input-group.fname .edit-user-btn,
+body.acl-can-coach #user-screen .input-group.lname .edit-user-btn,
+body.acl-can-coach #user-screen .input-group.cbo .edit-user-btn,
+body.acl-can-coach #user-screen .input-group.college .edit-user-btn,
+body.acl-can-coach #user-screen .input-group.school .edit-user-btn { visibility: hidden !important; }
+
+body.acl-can-counselor #user-screen .input-group.cbo .edit-user-btn,
+body.acl-can-counselor #user-screen .input-group.college .edit-user-btn,
+body.acl-can-counselor #user-screen .input-group.school .edit-user-btn { visibility: hidden !important; }

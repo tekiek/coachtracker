@@ -168,5 +168,20 @@
 			)
 		)
 	);
+	
+	function mobile_css() {
+		global $acl;
+		global $config;
+		$headerLabels = headerLabels($config['events'][$acl]['header']);
+		
+		echo "<style>";
+		echo "@media(max-width: 800px) {";
+		foreach($headerLabels as $key => $value) {
+			$key = ($key + 1);
+			echo "td:nth-of-type($key):before { content: '$value'; }";
+		}
+		echo "}";
+		echo "</style>";
+	}
 
 ?>

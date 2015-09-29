@@ -1,0 +1,80 @@
+#user-login {
+	max-width: 600px;
+	margin: 0 auto;
+}
+
+#user-login .input-group-addon i {
+	width: 19px;
+}
+
+.login_dialog .alert {
+	padding: 5px;
+	text-align: center;
+	font-size: 16px;
+	border-radius: 5px;
+}
+
+@media(max-width: 800px) {
+	
+	body, html {
+		height: 100%;
+	}
+	
+	body.acl-can-loggedOut #content {
+		margin: -50px 0 0 0 !important;
+	}
+	
+	#user-login {
+		margin: 0px;
+		padding: 20px;
+		display: table;
+	    position: absolute;
+	    height: 100%;
+	    width: 100%;
+	}
+	
+	.login_dialog {
+		display: table-cell;
+	    vertical-align: middle;
+	}
+	
+}
+
+
+.login_dialog hr {
+	border-top: 0px !important;
+}
+
+.login_dialog h2 {
+	border: 1px solid transparent;
+	background-color: #d9edf7;
+	    border-color: #bce8f1;
+	    color: #31708f;
+	    padding: 5px;
+	    text-align: center;
+	    font-size: 16px;
+	    border-radius: 5px;
+	    margin-bottom: 20px;
+	    
+}
+
+.login_dialog .input-group .input-group-addon {
+	background-color: transparent;
+    border: 0px;
+    border-bottom: 1px solid #ccc;
+}
+
+.login_dialog .input-group input {
+	background-color: transparent;
+    border: 0px;
+    border-bottom: 1px solid #ccc;
+    box-shadow: none !important;
+}
+
+.input-group.valid-field svg {
+	fill: #5cb85c;
+}
+
+.input-group.invalid-field svg {
+	fill: #d9534f;
+}

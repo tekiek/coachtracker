@@ -48,7 +48,7 @@ app['menu'] = new function() {
 			'iconSize'		: 'fa-lg'
 		},
 		'studentEdit': {
-			'color'			: 'btn-primary',
+			'color'			: 'btn-success',
 			'btnSize'		: 'btn-lg',
 			'classes'		: 'marginBottom10',
 			'acls'			: '',
@@ -106,7 +106,7 @@ app['menu'] = new function() {
 		_menu.getEls();
 		_menu.setupHeader();
 		_menu.addButtons();
-		if (1 || !app.config.isMobile) _menu.addAdminButtons();
+		_menu.addAdminButtons();
 	}
 	
 	this.getEls = function() {
@@ -122,7 +122,7 @@ app['menu'] = new function() {
 	}
 	
 	this.addButtons = function() {
-		var buttons = ['studentEdit', 'eventAdd', 'emailBlast'],
+		var buttons = ['eventAdd', 'emailBlast'],
 			panel = $.tmpl(app.templates.div, _menu.template_data['panel']),
 			panelHead = $.tmpl(app.templates.div, _menu.template_data['actionsPanelHead']),
 			panelBody = $.tmpl(app.templates.div, _menu.template_data['panelBody']);
@@ -147,7 +147,7 @@ app['menu'] = new function() {
 	}
 	
 	this.addAdminButtons = function() {
-		var buttons = ['export', 'upload', 'connect'],
+		var buttons = (app.config.isMobile ? ['studentEdit', 'export'] : ['studentEdit', 'export', 'upload', 'connect']),
 			panel = $.tmpl(app.templates.div, _menu.template_data['panel']),
 			panelHead = $.tmpl(app.templates.div, _menu.template_data['toolsPanelHead']),
 			panelBody = $.tmpl(app.templates.div, _menu.template_data['panelBody']);
@@ -167,8 +167,12 @@ app['menu'] = new function() {
 			
 			// Add Events
 			button.click(function() {
-				var href = template['href'] + "?user=" + app.data.user.id;
-				window.open(href, '_self');
+				if (template['href']) {
+					var href = template['href'] + "?user=" + app.data.user.id;
+					window.open(href, '_self');
+				} else {
+					app.controller.nextSlide(app[buttonId]);
+				}
 			})
 		});
 	}

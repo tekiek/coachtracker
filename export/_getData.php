@@ -3,6 +3,7 @@
 	require '_config.php';
 	$params = get_params();
 	$rows = array();
+	$max_count = 20;
 
 	// user config
 	$config = $config[$params['table']];
@@ -15,6 +16,7 @@
 	// Row Data
 	foreach($events as $event) {
 		if (!validEvent($params['table'], $event, $params)) { continue; }
+		if (count($rows) >= $max_count) { continue; }
 		$row = array();
 	
 		// User Data

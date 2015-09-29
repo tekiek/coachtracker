@@ -101,20 +101,6 @@ app['studentSearch'] = new function() {
 		app.header.addSearch(_studentSearch.els['searchWrapper']);
 		_studentSearch.els['inputSearch'].focus();
 	}
-	
-	/*
-	 * Get students list in Alpha order
-	 */
-	this.getStudentsSorted = function() {
-		var students = app.data.user.students;
-
-		students.sort(function(a, b) {
-			var aName = a.fname.toLowerCase(),
-				bName = b.fname.toLowerCase();
-			return ((aName < bName) ? -1 : ((aName > bName) ? 1 : 0));
-		});
-		return students;
-	}
 
 	/*
 	 * Create Student List
@@ -123,7 +109,7 @@ app['studentSearch'] = new function() {
 		var studentListEL = $.tmpl(app.templates.listGroup, {
 				'classes': 'studentList'
 			}),
-			students = _studentSearch.getStudentsSorted();
+			students = app.data.user.students;
 
 		_studentSearch.els['studentListEL'] = studentListEL;
 

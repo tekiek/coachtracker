@@ -44,8 +44,11 @@ app['signature'] = new function() {
 
 		app.global.dialogConfirm({
 			msg: _eventSignature.els.signatureWrapper,
-			width: ($(window).width() > 600 ? 600 : $(window).width()),
+			// width: ($(window).width() > 600 ? 600 : $(window).width()),
 			height: ($(window).height() / 2),
+			width: $(window).width(),
+			//height: $(window).height(),
+			className: 'signatureDialog',
 			modal: true,
 			animate: true,
 			transition: 'slideInUp',

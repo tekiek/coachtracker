@@ -1,0 +1,19 @@
+/*
+ * ACLs
+ */
+.acl-admin, 
+.acl-coach,
+.acl-captain,
+.acl-counselor,
+.acl-connect,
+.acl-loggedIn,
+.acl-loggedOut,
+.acl-upload { display: none !important; }
+body.acl-can-loggedIn .acl-loggedIn { display: block !important; }
+body.acl-can-loggedOut .acl-loggedOut { display: block !important; }
+body.acl-can-admin .acl-admin { display: block !important; }
+body.acl-can-coach .acl-coach { display: block !important; }
+body.acl-can-counselor .acl-counselor { display: block !important; }
+body.acl-can-captain .acl-captain { display: block !important; }
+body.acl-can-connect .acl-connect { display: block !important; }
+body.acl-can-upload .acl-upload { display: block !important; }

@@ -33,7 +33,8 @@
 			'pwReset' 		=> 'BOOLEAN DEFAULT 0',
 			'connect' 		=> 'BOOLEAN DEFAULT 0',
 			'upload' 		=> 'BOOLEAN DEFAULT 0',
-			'uploadedBy'	=> 'INT'
+			'uploadedBy'	=> 'INT',
+			'enabled' 		=> 'BOOLEAN DEFAULT 1',
 		);
 		return $users;
 	}
