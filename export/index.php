@@ -52,7 +52,6 @@
 		<div id="dialog"></div>
 		<?php load_js(); ?>
 		<?php load_css(); ?>
-		<?php ga_lib(); ?>
 	</body>
 </html>
 

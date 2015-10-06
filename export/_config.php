@@ -28,10 +28,7 @@
 		$valid = true;
 		global $myStudents;
 
-		if (!in_array($event['studentid'], $myStudents)) { 
-			$valid = false; 
-		}
-		elseif ($params['fromDate'] && strtotime($params['fromDate']) > strtotime($event['timestamp'])) { 
+		if ($params['fromDate'] && strtotime($params['fromDate']) > strtotime($event['timestamp'])) { 
 			$valid = false; 
 		}
 		elseif ($params['toDate'] && strtotime($params['toDate'] . '+ 1 day') < strtotime($event['timestamp'])) { 
@@ -51,6 +48,9 @@
 			if ($event['signature'] == "") { 
 				$valid = false; 
 			}
+		}
+		elseif (!in_array($event['studentid'], $myStudents)) { 
+			$valid = false; 
 		}
 		
 		return $valid;
@@ -178,7 +178,7 @@
 		echo "@media(max-width: 800px) {";
 		foreach($headerLabels as $key => $value) {
 			$key = ($key + 1);
-			echo "td:nth-of-type($key):before { content: '$value'; }";
+			echo ".dataTables_wrapper td:nth-of-type($key):before { content: '$value'; }";
 		}
 		echo "}";
 		echo "</style>";

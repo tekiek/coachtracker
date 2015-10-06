@@ -46,6 +46,7 @@ module.exports = function(grunt) {
 					"js/libs/a/jquery.blockui.js",
 					"js/libs/a/jquery.template.js",
 					"js/libs/a/event.manager.js",
+					"js/libs/a/ga.js",
 					
 					
 					'js/app/app.js',
@@ -198,10 +199,13 @@ module.exports = function(grunt) {
 						'Gruntfile.js',
 						'.htaccess',
 					],
-					dest: '/' 
+					dest: '/'
 				}]
 			}
 		},
+		curl: {
+			'js/libs/a/ga.js': 'http://www.google-analytics.com/analytics.js',
+		}
     });
 
 	grunt.loadNpmTasks('grunt-contrib-concat');
@@ -211,6 +215,7 @@ module.exports = function(grunt) {
 	grunt.loadNpmTasks('grunt-bumpup');
 	grunt.loadNpmTasks('grunt-string-replace');
 	grunt.loadNpmTasks('grunt-ftpscript');
+	grunt.loadNpmTasks('grunt-curl');
 	
 	grunt.registerTask('default', [ 
 		'concat:css_critical',
@@ -218,11 +223,11 @@ module.exports = function(grunt) {
 		'concat:css',
 		'cssmin:css',
 		'concat:js',
-		//'uglify:js',
 	]);
 	
 	grunt.registerTask('deploy:stage', [
 		'bumpup:patch',
+		'curl',
 		'concat:css_critical',
 		'cssmin:css_critical', 
 		'concat:css',
@@ -235,6 +240,7 @@ module.exports = function(grunt) {
 	
 	grunt.registerTask('deploy:prod', [
 		'bumpup:minor',
+		'curl',
 		'concat:css_critical',
 		'cssmin:css_critical', 
 		'concat:css',
@@ -242,6 +248,6 @@ module.exports = function(grunt) {
 		'concat:js', 
 		'uglify:js',
 		'string-replace',
-		'ftpscript:stage'
+		'ftpscript:prod'
 	]);
 };

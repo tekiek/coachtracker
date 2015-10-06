@@ -125,11 +125,13 @@ function userLoggedIn($user) {
 
 function loginStatus() { 
 	session_start();
+	$login_status = false;
+	
 	if ($_SESSION["loggedin-user"]) { 
-		return true; 
-	} else { 
-		return false; 
+		$login_status = true; 
 	}
+	
+	return $login_status;
 };
 
 function loginUserid() {

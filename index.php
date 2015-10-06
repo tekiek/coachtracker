@@ -40,6 +40,5 @@
 		<div id="dialog"></div>
 	</body>
 	<?php load_js(); ?>
-	<?php load_css(); ?>
-	<?php ga_lib(); ?>                                                               
+	<?php load_css(); ?>                                                            
 </html>

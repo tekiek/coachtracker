@@ -87,6 +87,5 @@
 		<div id="dialog"></div>
 	</body>
 	<?php load_js(); ?>
-	<?php ga_lib(); ?>
 </html>
 

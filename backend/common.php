@@ -26,6 +26,6 @@ require 'includes/simpleImage.php';
 require 'db/queryTable.php';
 require 'db/queryColumn.php';
 
-$version = '2.0.21';
+$version = '2.4.1';
 if (env() == 'dev') $version = rand(1, 9999);
 ?>

@@ -11,7 +11,7 @@ var app = new function() {
 		isIOS: (/iPhone|iPad|iPod/i.test(navigator.userAgent) ) ? true : false,
 		studentImagePath: 'images/students/'
 	}
-	this.requiredComponents = ['global', 'timer', 'gtrack', 'ajax', 'header', 'controller', 'libs'];
+	this.requiredComponents = ['global', 'gtrack', 'timer', 'ajax', 'header', 'controller', 'libs'];
 
 	this.init = function() {
 		

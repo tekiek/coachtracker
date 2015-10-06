@@ -4266,17 +4266,33 @@ table[data-mode="delete"] tr.ui-selected td {
 }
 
 /*
+ * Search Cancel
+ */
+.dataTables_filter .search__cancel {
+	display: inline-block;
+	width: 18px;
+    height: 18px;
+    fill: #6f6f6f;
+    top: 3px;
+    position: relative
+}
+
+.dataTables_filter .search__cancel:hover {
+	cursor: pointer;
+}
+
+/*
  * Mobile 
  */
 @media(max-width: 800px) {
 	
 	/* Force table to not be like tables anymore */
-	table, 
-	thead, 
-	tbody, 
-	th, 
-	td, 
-	tr { 
+	.dataTables_wrapper table, 
+	.dataTables_wrapper thead, 
+	.dataTables_wrapper tbody, 
+	.dataTables_wrapper th, 
+	.dataTables_wrapper td, 
+	.dataTables_wrapper tr { 
 		display: block; 
 	}
 	
@@ -4502,6 +4518,7 @@ body.export #data-picker-wrapper .input-group:nth-child(2) .form-control {
 	border-radius: 0 5px 5px 0;
 }
 
+
 /*
  * Table
  */
@@ -4530,12 +4547,12 @@ body.export table td.signature img {
  * Mobile 
  */
 @media(max-width: 800px) {
-	body.export .DTTT_container,
-	body.export .table-mode-toggle,
-	body.export .dataTables_filter,
-	body.export .table-mode-toggle,
-	body.export .ui-tabs-nav {
-		display: none; 
+	.ui-tabs-nav {
+		display: none;
+	}
+	
+	.dataTables_filter {
+		border: 0px;
 	}
 	
 	body.export #data-picker-wrapper .input-group:nth-child(1) .input-group-addon {

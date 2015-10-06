@@ -14,16 +14,11 @@ app['controller'] = new function() {
 	}
 	
 	this.loadFirstScreen = function() {
-		
-		var currSlide = app[_controller.firstScreen]; //_controller.currSlide();
-		console.log(_controller.firstScreen);
-		//console.log('currSlide', currSlide);
-		//if (currSlide) currSlide.els['parent'].empty();
+		var currSlide = app[_controller.firstScreen];
 		
 		_controller.screenListOrder = [];
 		_controller.screenListOrder.push(currSlide);
 
-		//_controller.showSlide();
 		currSlide['init']()
 		EventManager.fire('loadFirstScreen');
 	}

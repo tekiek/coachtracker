@@ -266,15 +266,31 @@ app['table'] = new function() {
 	this.searchField = function(params) {
 		var table = params['table'],
 			dataTable = params['dataTable'],
-			searchEl = dataTable.find('input[type="search"]');
+			searchEl = dataTable.find('input[type="search"]'),
+			clearBtn = $('<div class="search__cancel"><svg role="img" viewBox="0 0 1792 1792"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#times-circle"></use></svg></div>');
 		
 		searchEl	
 			.unbind()
-			.keydown(function(event){
+			.after(clearBtn)
+			.keyup(function(event){
 				if (event.which == 13) {
 					table.fnFilter($(this).val());
 				}
+				
+				if ($(this).val().length > 0) {
+					clearBtn.show();
+				} else {
+					clearBtn.hide();
+				}
+			});
+			
+		clearBtn
+			.click(function() {
+				searchEl.val('');
+				table.fnFilter('');
+				$(this).hide();
 			})
+			.hide();
 	}
 	
 	this.modeToggle = function(params, editModeToggle) {

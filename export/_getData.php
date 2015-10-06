@@ -3,9 +3,10 @@
 	require '_config.php';
 	$params = get_params();
 	$rows = array();
-	$max_count = 20;
-
+	$max_count = 100000000; //($params['rows'] ? (int)$params['rows'] : (isMobile() ? 20 : 100));
+	
 	// user config
+	if (!$params['table']) $params['table'] = 'events';
 	$config = $config[$params['table']];
 	$config = $config[$acl];
 	$headerLabels = headerLabels($config['header']);
@@ -16,7 +17,6 @@
 	// Row Data
 	foreach($events as $event) {
 		if (!validEvent($params['table'], $event, $params)) { continue; }
-		if (count($rows) >= $max_count) { continue; }
 		$row = array();
 	
 		// User Data
@@ -53,9 +53,10 @@
 		}
 		
 		array_push($rows, $row);
+		if (count($rows) >= $max_count) { break; }
 	}
 	
-
+	
 	$response = array(
 		'rows' => $rows,
 		'cols' => $config['header'],

@@ -24,20 +24,33 @@
 	function load_css() {
 		global $version;
 		$cssFile = file_root() . "css/min/app.min.css";
-
-		echo '
-			<script>
-				document.addEventListener("DOMContentLoaded", function() {
-					basket.require(
-						{ url: "' . $cssFile . '", execute: false, unique: "' . $version . '" }
-					)
-					.then(function(responses) {
-						var css = responses[0];
-						_stylesheet.appendStyleSheet(css, function(err, style) {});
-					});
-				}, false);
-			</script>
-		';
+		
+		if (false && env() == 'dev') {
+			echo '
+				<script>
+					document.addEventListener("DOMContentLoaded", function() {
+							var stylesheet = document.createElement("link");
+							stylesheet.href = "' . $cssFile . '?v=' . $version . '";
+							stylesheet.rel = "stylesheet";
+							stylesheet.type = "text/css";
+							document.getElementsByTagName("head")[0].appendChild(stylesheet);
+					}, false);
+				</script>';
+		} else {
+			echo '
+				<script>
+					document.addEventListener("DOMContentLoaded", function() {
+						basket.require(
+							{ url: "' . $cssFile . '", execute: false, unique: "' . $version . '" }
+						)
+						.then(function(responses) {
+							var css = responses[0];
+							_stylesheet.appendStyleSheet(css, function(err, style) {});
+						});
+					}, false);
+				</script>
+			';
+		}
 	}
 	
 	function load_basket_js() {
@@ -49,30 +62,31 @@
 		global $version;
 		$js = file_root() . "js/min/app.js";
 
-		echo '
-			<script>
-				document.addEventListener("DOMContentLoaded", function() {
-					basket.require(
-						{ url: "' . $js . '", unique: "' . $version . '" }
-					)
-				}, false);
-			</script>
-		';
-	}
-	
-	function ga_lib() {
-		echo "
-			<script>
-				document.addEventListener('DOMContentLoaded', function() {
-					(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-					(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-					m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-					})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
-					ga('create', 'UA-56217002-1', 'auto');
-					ga('send', 'pageview');
-				}, false);
-			</script>
-		";
+		if (false && env() == 'dev') {
+			echo '
+				<script>
+					document.addEventListener("DOMContentLoaded", function() {
+							var d=document, 
+							h=d.getElementsByTagName("head")[0], 
+							s=d.createElement("script"); 
+							s.type="text/javascript"; 
+							s.async=true; 
+							s.src="' . $js . '?v=' . $version . '"; 
+							h.appendChild(s);
+					}, false);
+				</script>';
+		} else {
+			echo '
+				<script>
+					document.addEventListener("DOMContentLoaded", function() {
+						basket.require(
+							{ url: "' . $js . '", unique: "' . $version . '" }
+						)
+					}, false);
+				</script>
+			';
+		}
+		
 	}
 	
 	function tools_header() {

@@ -20,21 +20,20 @@ app['dataExport'] = new function() {
 
 	this.init = function() {
 		_dataExport.getEls();
+
+		if (!app.config.isMobile) {
+			//Listen for row selection in Delete Mode
+			EventManager.observe('RowSelect:delete', _dataExport.rowDelete);
+
+			//Listen for row selection in Edit Mode
+			EventManager.observe('RowSelect:edit', _dataExport.rowEdit);
+		}
+
+		_dataExport.datePicker();
+		_dataExport.setupTabs();
 		
-		// Listen for row selection in Delete Mode
-		//EventManager.observe('RowSelect:delete', _dataExport.rowDelete);
-		
-		// Listen for row selection in Edit Mode
-		//EventManager.observe('RowSelect:edit', _dataExport.rowEdit);
-		
-		// Setup
-		app.libs.waitForLib({
-			lib: 'jqueryui',
-			cb: function() {
-				_dataExport.setupTabs();
-				_dataExport.datePicker();
-				_dataExport.els.content.show();
-			}
+		EventManager.observe_once('Table:loaded', function() {
+			_dataExport.els.content.show();
 		});
 	}
 	
@@ -120,7 +119,8 @@ app['dataExport'] = new function() {
 		.done(function(response) {
 			response = $.parseJSON(response);
 			var exportBtns = _dataExport.getExportButtons(),
-				exportOption = (app.config.isMobile ? false : true);
+				exportOption = (app.config.isMobile ? false : true),
+				editMode = (app.config.isMobile ? false : _dataExport.data.editModeToggle);
 
 			tableWrapperEl.empty();
 			app.table.createTable({
@@ -133,9 +133,14 @@ app['dataExport'] = new function() {
 				'exportBtns'	: exportBtns,
 				'paging'		: false,
 				'dataObj'		: _dataExport.data,
-				'editModeToggle': _dataExport.data.editModeToggle,
-				'expandRows'	: false
+				'editModeToggle': editMode,
+				'expandRows'	: false,
+				'cb'			: function() {
+					EventManager.fire('Table:loaded');
+				}
 			});
+			
+			
 		});
 	}
 	

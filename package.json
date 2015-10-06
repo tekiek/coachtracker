@@ -1,7 +1,7 @@
 {
   "name": "coachtracker",
   "title": "test",
-  "version": "2.0.22",
+  "version": "2.5.0",
   "devDependencies": {
     "grunt": "0.4.1",
     "grunt-bumpup": "^0.6.2",

@@ -13,8 +13,10 @@ app['gtrack'] = new function() {
 				var el = $(event.currentTarget).closest(selector)[0];
 				_gtrack.click(el);
 			});
-		})
+		});
 		
+		ga('create', 'UA-56217002-1', 'auto');
+		ga('send', 'pageview');
 	}
 
 	this.click = function(el) {
