@@ -1,5 +1,6 @@
 <?php
 
+$uri = $_SERVER[REQUEST_URI];
 session_start();
 
 require 'db/table_config.php';
@@ -26,6 +27,10 @@ require 'includes/simpleImage.php';
 require 'db/queryTable.php';
 require 'db/queryColumn.php';
 
-$version = '2.4.1';
+if (strpos($uri, 'export') !== false) {
+	require 'export/_config.php';
+}
+
+$version = '2.5.3';
 if (env() == 'dev') $version = rand(1, 9999);
 ?>

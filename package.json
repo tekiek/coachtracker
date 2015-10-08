@@ -1,7 +1,7 @@
 {
   "name": "coachtracker",
   "title": "test",
-  "version": "2.5.0",
+  "version": "2.5.4",
   "devDependencies": {
     "grunt": "0.4.1",
     "grunt-bumpup": "^0.6.2",
@@ -15,6 +15,7 @@
     "grunt-ftp-push": "^0.3.6",
     "grunt-ftpscript": "^0.1.7",
     "grunt-ssh": "^0.12.6",
-    "grunt-string-replace": "^1.2.0"
+    "grunt-string-replace": "^1.2.0",
+    "grunt-svg-sprite": "^1.2.11"
   }
 }

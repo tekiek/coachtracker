@@ -205,7 +205,18 @@ module.exports = function(grunt) {
 		},
 		curl: {
 			'js/libs/a/ga.js': 'http://www.google-analytics.com/analytics.js',
-		}
+		},
+		svg_sprite: {
+			your_target: {
+				expand                  : true,
+				//cwd                     : 'assets',
+				src		: ['images/svg/*.svg'],
+				dest	: 'css/',
+				options     : {
+			        // Target-specific options
+			    }
+			}
+		},
     });
 
 	grunt.loadNpmTasks('grunt-contrib-concat');
@@ -216,6 +227,7 @@ module.exports = function(grunt) {
 	grunt.loadNpmTasks('grunt-string-replace');
 	grunt.loadNpmTasks('grunt-ftpscript');
 	grunt.loadNpmTasks('grunt-curl');
+	grunt.loadNpmTasks('grunt-svg-sprite');
 	
 	grunt.registerTask('default', [ 
 		'concat:css_critical',

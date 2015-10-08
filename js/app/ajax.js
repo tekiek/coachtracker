@@ -17,9 +17,18 @@ app['ajax'] = new function() {
 	}
 	
 	this.cleanUrl = function(url) {
+		var service = app.global.getUrlParameter(url, 'service');
+
+		// Remove url params
 		if (url.indexOf('?') != -1) {
 			url = url.slice(0, url.indexOf('?'));
 		}
+		
+		// add service param
+		if (service) {
+			url = url + "?service=" + service;
+		}
+		
 		return url;
 	}
 	

@@ -1,4 +1,4 @@
-<?php require '_config.php';  ?>
+<?php require '../backend/common.php';  ?>
 <!doctype html>
 <html>
 	<head>

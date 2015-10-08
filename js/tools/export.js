@@ -12,10 +12,10 @@ app['dataExport'] = new function() {
 	};
 
 	this.apis = {
-		'events'		: '_getData.php',
-		'signatures'	: '_getData.php',
-		'emailBlast'	: '_getData.php',
-		'eventDelete'	: '_eventDelete.php'
+		'events'		: '../backend/_services.php?service=exportData',
+		'signatures'	: '../backend/_services.php?service=exportData',
+		'emailBlast'	: '../backend/_services.php?service=exportData',
+		'eventDelete'	: '../backend/_services.php?service=exportDelete'
 	}
 
 	this.init = function() {

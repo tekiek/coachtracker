@@ -25,21 +25,22 @@
 		global $version;
 		$cssFile = file_root() . "css/min/app.min.css";
 		
-		if (false && env() == 'dev') {
+		if (true || env() == 'dev') {
 			echo '
 				<script>
 					document.addEventListener("DOMContentLoaded", function() {
-							var stylesheet = document.createElement("link");
-							stylesheet.href = "' . $cssFile . '?v=' . $version . '";
-							stylesheet.rel = "stylesheet";
-							stylesheet.type = "text/css";
-							document.getElementsByTagName("head")[0].appendChild(stylesheet);
+						var stylesheet = document.createElement("link");
+						stylesheet.href = "' . $cssFile . '?v=' . $version . '";
+						stylesheet.rel = "stylesheet";
+						stylesheet.type = "text/css";
+						document.getElementsByTagName("head")[0].appendChild(stylesheet);
 					}, false);
 				</script>';
 		} else {
 			echo '
 				<script>
 					document.addEventListener("DOMContentLoaded", function() {
+						endStart = new Date().getTime();
 						basket.require(
 							{ url: "' . $cssFile . '", execute: false, unique: "' . $version . '" }
 						)
@@ -54,17 +55,22 @@
 	}
 	
 	function load_basket_js() {
-		$basket_js = file_get_contents(file_root() . 'js/libs/basket.js');
-		echo '<script>' . $basket_js . '</script>';
+		// $basket_js = file_get_contents(file_root() . 'js/libs/basket.js');
+		// echo '<script>' . $basket_js . '</script>';
 	}
 	
 	function load_js() {
 		global $version;
 		$js = file_root() . "js/min/app.js";
 
-		if (false && env() == 'dev') {
+		
+		if (true) {
+			echo '<script async src="' . $js . '?v=' . $version . '"></script>';
+		}
+		elseif (false || env() == 'dev') {
 			echo '
 				<script>
+					
 					document.addEventListener("DOMContentLoaded", function() {
 							var d=document, 
 							h=d.getElementsByTagName("head")[0], 

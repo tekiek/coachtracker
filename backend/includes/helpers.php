@@ -36,10 +36,10 @@ function getAcl($userid) {
 }
 
 function logTableChange($sql, $caller) {
-	$tableLogFile = logs_dir() . date('Y-m', time()) . ".txt";
-	$newData .= date("Y.m.d.h.i") . " : " . loginUserid() . " : " . $sql . "\n";
-	file_put_contents($tableLogFile,  $newData, FILE_APPEND);
-	return true;
+	// $tableLogFile = logs_dir() . date('Y-m', time()) . ".txt";
+	// $newData .= date("Y.m.d.h.i") . " : " . loginUserid() . " : " . $sql . "\n";
+	// file_put_contents($tableLogFile,  $newData, FILE_APPEND);
+	// return true;
 }
 
 function string_clean($str) {

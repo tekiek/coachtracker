@@ -210,69 +210,70 @@ app['eventAdd'] = new function() {
 		app.global.dialogConfirm({
 			msg: 'Would you like to save this event?',
 			saveCloseCallback: function() {
-				_eventAdd.followUpConfirm();
-			}
-		});
-	}
-	
-	this.followUpConfirm = function() {
-		app.global.dialogConfirm({
-			msg: "Does this student need follow up?",
-			animate: true,
-			saveCloseCallback: function() {
-				_eventAdd.getFollowUpEmails();
-			},
-			cancelCloseCallback: function() {
+				//_eventAdd.followUpConfirm();
 				_eventAdd.saveExit();
 			}
 		});
 	}
 	
-	/*
-	 * Get connected users to student
-	 */
-	this.getFollowUpEmails = function() {
-
-		$.ajax({
-			type: "POST",
-			url: _eventAdd.apis.followConnections,
-			data: {
-				'id': app.studentSearch.selectedStudent.id
-			},
-			dataType: 'json',
-			offline: true
-		})
-		.always(function(response) {
-			if (response && response.users) {
-				_eventAdd.data['connectedUsers'] = response.users;
-			} else {
-				_eventAdd.data['connectedUsers'] = new Array();
-			}
-			_eventAdd.followUpDialog();
-		});
-	}
-	
-	this.followUpDialog = function() {
-		var eventData = _eventAdd.getFieldData(),
-			message = "",
-			subject = "Student Followup",
-			studentName = (app.studentSearch.selectedStudent.fname + " " + app.studentSearch.selectedStudent.lname);
-
-		message += "This student requires followup:\n"
-		message += "Student: " + studentName + "\n";
-		if (eventData.timestamp) message += "Date: " + eventData.timestamp + "\n";
-		if (eventData.duration) message += "Duration: " + eventData.duration + "\n";
-		if (eventData.reason) message += "Reason: " + eventData.reason + "\n";
-		if (eventData.notes) message += "Notes: " + eventData.notes + "\n";
-		if (studentName) subject += ": " + studentName;
-
-		EventManager.observe_once('email:exit', _eventAdd.saveExit);
-		app.email.init({
-			'message': message,
-			'subject': subject,
-			'to': _eventAdd.data['connectedUsers'],
-			'api': _eventAdd.apis.followup,
-		});
-	}
+	// this.followUpConfirm = function() {
+	// 	app.global.dialogConfirm({
+	// 		msg: "Does this student need follow up?",
+	// 		animate: true,
+	// 		saveCloseCallback: function() {
+	// 			_eventAdd.getFollowUpEmails();
+	// 		},
+	// 		cancelCloseCallback: function() {
+	// 			_eventAdd.saveExit();
+	// 		}
+	// 	});
+	// }
+	// 
+	// /*
+	//  * Get connected users to student
+	//  */
+	// this.getFollowUpEmails = function() {
+	// 
+	// 	$.ajax({
+	// 		type: "POST",
+	// 		url: _eventAdd.apis.followConnections,
+	// 		data: {
+	// 			'id': app.studentSearch.selectedStudent.id
+	// 		},
+	// 		dataType: 'json',
+	// 		offline: true
+	// 	})
+	// 	.always(function(response) {
+	// 		if (response && response.users) {
+	// 			_eventAdd.data['connectedUsers'] = response.users;
+	// 		} else {
+	// 			_eventAdd.data['connectedUsers'] = new Array();
+	// 		}
+	// 		_eventAdd.followUpDialog();
+	// 	});
+	// }
+	// 
+	// this.followUpDialog = function() {
+	// 	var eventData = _eventAdd.getFieldData(),
+	// 		message = "",
+	// 		subject = "Student Followup",
+	// 		studentName = (app.studentSearch.selectedStudent.fname + " " + app.studentSearch.selectedStudent.lname);
+	// 
+	// 	message += "This student requires followup:\n"
+	// 	message += "Student: " + studentName + "\n";
+	// 	if (eventData.timestamp) message += "Date: " + eventData.timestamp + "\n";
+	// 	if (eventData.duration) message += "Duration: " + eventData.duration + "\n";
+	// 	if (eventData.reason) message += "Reason: " + eventData.reason + "\n";
+	// 	if (eventData.notes) message += "Notes: " + eventData.notes + "\n";
+	// 	if (studentName) subject += ": " + studentName;
+	// 
+	// 	EventManager.observe_once('email:exit', _eventAdd.saveExit);
+	// 	app.email.init({
+	// 		'message': message,
+	// 		'subject': subject,
+	// 		'to': _eventAdd.data['connectedUsers'],
+	// 		'api': _eventAdd.apis.followup,
+	// 	});
+	// }
 
 };
